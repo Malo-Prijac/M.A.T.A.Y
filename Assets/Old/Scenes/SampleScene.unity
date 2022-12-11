@@ -499,46 +499,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2382302055627123646, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
-      propertyPath: speed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2382302055627123646, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
-      propertyPath: speedX
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 2382302055627123646, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
-      propertyPath: groundDrag
-      value: 24.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2382302055627123646, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
-      propertyPath: acceleration
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 2382302055627123646, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
-      propertyPath: deceleration
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2382302055627123646, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
-      propertyPath: dampingRotation
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 2382302055627123646, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
-      propertyPath: groundLayer.m_Bits
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3796806423833911641, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3796806423833911641, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: a7658b16822edba47b90bb7af0d81a7f, type: 2}
-    - target: {fileID: 3796806423833911641, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7084403590897826595, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -582,14 +542,6 @@ PrefabInstance:
     - target: {fileID: 7084403590897826595, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7339287370887994564, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
-      propertyPath: m_Drag
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7339287370887994564, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
-      propertyPath: m_Mass
-      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 7573659479313949081, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
       propertyPath: m_Name
