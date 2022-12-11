@@ -1,48 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class PlayerCharacterController : MonoBehaviour
 {
-   [SerializeField] private float walkSpeed = 4;
-   [SerializeField] private float runSpeed = 8;
-   [SerializeField] private float rotationSpeedX = 10;
-   
-   [SerializeField] private float acceleration = 0.5f;
-   [SerializeField] private float deceleration = 0.5f;
-
-    private float _actualSpeed = 0;
-    private Rigidbody _rb;
-    private Vector2 _cameraRotate;
-
-    private bool _isRunning;
-    private bool _inMotion;
-    private float _verticalInput;
-    private float _horizontalInput;
-    //private Vector2 _inputDirection;
-    private float _xRotation;
-
-    private Vector3 _moveDirection;
-    
-    public float velocity;
-
-    [SerializeField]private float dampingRotation = 10f;
-    
-    
-    
-    /*
-    public float rotationSpeedY = 10;
-    public float playerHeight;
-    public LayerMask groundLayer;
-    
-    bool grounded;
-    public float groundDrag;
-    */
-
-    //[SerializeField] private float _jumpForce = 300;
-    // Start is called before the first frame update
-
     [SerializeField] private Animator characterAnimator;
     private static readonly int IsWalkingForward = Animator.StringToHash("IsWalkingForward");
     private static readonly int IsWalkingBackward = Animator.StringToHash("IsWalkingBackward");    
@@ -51,93 +10,117 @@ public class PlayerCharacterController : MonoBehaviour
     private static readonly int IsDashing = Animator.StringToHash("IsDashing");
     private static readonly int IsRunning = Animator.StringToHash("IsRunning");
     private static readonly int IsJumping = Animator.StringToHash("IsJumping");
-    
     private static readonly int VelocityHash = Animator.StringToHash("Velocity");
-    
-    
+
+    [Header("Movement")]
     [SerializeField] private Transform toFollow;
+    [SerializeField] private float walkSpeed = 4;
+    [SerializeField] private float runSpeed = 8;
+    [SerializeField] private float acceleration = 0.5f;
+    [SerializeField] private float deceleration = 0.5f;
+    [SerializeField]private float dampingRotation = 10f;
+    [ReadOnly][SerializeField]private float velocity;
+    private float _actualSpeed;
+    private Rigidbody _rb;
+    
+    [Header("Camera Rotation")]
+    [SerializeField] private float dampingCamera = 10f;
+    [SerializeField] private float speedX = 80f;
+    private Vector2 _cameraRotate;
+    
+    private bool _isRunning;
+    private bool _inMotion;
+    private float _verticalInput;
+    private float _horizontalInput;
+    //private Vector2 _inputDirection;
+    private float _xRotation;
+    private Vector3 _moveDirection;
+
+    [Header("Ground Check")]
+    [SerializeField]private LayerMask groundLayer;
+    [SerializeField]private float groundDrag;
+    [ReadOnly][SerializeField]private float playerHeight;
+    [ReadOnly][SerializeField]private bool grounded;
+    
+
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
+        playerHeight = GetComponent<CapsuleCollider>().height;
     }
 
     // Update is called once per frame
     void Update()
     {
         InputPlayer();
-        /*
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, groundLayer);
+        CheckGrounded();
+        
+        RotateTargetForCamera();
+        AnimationBehavior();
+    }
+
+    private void CheckGrounded()
+    {
+        grounded = Physics.Raycast(transform.position+(playerHeight/2)*Vector3.up, Vector3.down, playerHeight * 0.5f + 0.3f, groundLayer);
+
+        
         if (grounded)
             _rb.drag = groundDrag;
         else
             _rb.drag = 0;
-        */
-
-        RotateTarget();
-        AnimationBehavior();
+        
     }
     
     private void FixedUpdate()
     {
-
-        _inMotion = _horizontalInput != 0 || _verticalInput != 0;
-
-        if ((_inMotion && velocity < walkSpeed / runSpeed)|| (_isRunning && velocity < 1.0f))
-        {
-            velocity += Time.deltaTime * acceleration;
-            //velocity = Input.GetButton("Run") ? Mathf.Min(velocity, 1) : Mathf.Min(velocity, walkSpeed / runSpeed);
-            print("no");
-        }
-        else if((_inMotion == false && velocity > 0.0f) || (_isRunning == false && _actualSpeed > walkSpeed))
-        {
-            print("ok");
-            velocity -= Time.deltaTime * deceleration;
-        }
-
-        if (_inMotion && velocity < 0.0f)
-        {
-            velocity = 0;
-        }
-
-        //velocity = Mathf.Max(velocity, 0);
-        //velocity = Mathf.Min(velocity,1);
-        
-        
-        
-        _actualSpeed = velocity*runSpeed;
-        
-        /*
-        if (velocity == 0)
-            return;
-        */
-
+        UpdateVelocity();
         MovePlayer();
         RotatePlayer();
     }
 
-    private void RotateTarget()
+    private void UpdateVelocity()
     {
-        float damping = 10;
-        toFollow.transform.rotation = Quaternion.Slerp(toFollow.transform.rotation,Quaternion.Euler(0, _xRotation, 0),damping);
+        if ((_inMotion && velocity < walkSpeed / runSpeed)|| (_isRunning && velocity < 1.0f))
+        {
+            velocity += Time.deltaTime * acceleration;
+            velocity = Input.GetButton("Run") ? Mathf.Min(velocity, 1) : Mathf.Min(velocity, walkSpeed / runSpeed);
+        }
+        else if((_inMotion == false && velocity > 0.0f) || (_isRunning == false && _actualSpeed > walkSpeed))
+        {
+            velocity -= Time.deltaTime * deceleration;
+            velocity = Mathf.Max(velocity, 0);
+        }
+
+        _actualSpeed = velocity*runSpeed;
+    }
+
+    private void RotateTargetForCamera()
+    {
+        toFollow.rotation = Quaternion.Slerp(toFollow.rotation,Quaternion.Euler(0, _xRotation, 0),dampingCamera);
     }
     
     void InputPlayer()
     {
         _verticalInput = Input.GetAxisRaw("Vertical");
         _horizontalInput = Input.GetAxisRaw("Horizontal");
+        
+        _inMotion = _horizontalInput != 0 || _verticalInput != 0;
 
         _isRunning = Input.GetButton("Run");
         
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.fixedDeltaTime * rotationSpeedX;
+        float mouseX = Input.GetAxisRaw("Mouse X") * Time.fixedDeltaTime * speedX;
         _xRotation += mouseX;
     }
     void MovePlayer()
     {
         if (_inMotion)
-            _moveDirection = toFollow.transform.forward * _verticalInput + toFollow.right * _horizontalInput;
+        {
+            _moveDirection = toFollow.forward * _verticalInput + toFollow.right * _horizontalInput;
+        }
 
-        _rb.velocity = _actualSpeed * _moveDirection.normalized;
+        if (grounded)
+            _rb.AddForce(_actualSpeed * _moveDirection.normalized,ForceMode.VelocityChange);
     }
 
     void RotatePlayer()
@@ -157,20 +140,6 @@ public class PlayerCharacterController : MonoBehaviour
         characterAnimator.SetBool(IsWalkingLeft, _horizontalInput < 0);
 
         characterAnimator.SetBool(IsRunning, Mathf.Approximately(_actualSpeed,runSpeed) && (_verticalInput != 0 || _horizontalInput != 0));
-
-    /*
-        if ((_horizontalInput != 0 || _verticalInput != 0) && velocity < 1.0f)
-        {
-            velocity += Time.deltaTime *0.5f;
-        }
-        
-        if (_horizontalInput == 0 && _verticalInput == 0 && velocity > 0.0f)
-        {
-            velocity -= Time.deltaTime*0.5f;
-        }
-        
-        print(velocity);
-        */
         
         characterAnimator.SetFloat(VelocityHash,velocity);
     }

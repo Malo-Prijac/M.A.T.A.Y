@@ -504,6 +504,14 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2382302055627123646, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
+      propertyPath: speedX
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 2382302055627123646, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
+      propertyPath: groundDrag
+      value: 24.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2382302055627123646, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
       propertyPath: acceleration
       value: 0.8
       objectReference: {fileID: 0}
@@ -511,10 +519,26 @@ PrefabInstance:
       propertyPath: deceleration
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2382302055627123646, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
+      propertyPath: dampingRotation
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2382302055627123646, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3796806423833911641, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3796806423833911641, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: a7658b16822edba47b90bb7af0d81a7f, type: 2}
+    - target: {fileID: 3796806423833911641, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7084403590897826595, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -558,6 +582,14 @@ PrefabInstance:
     - target: {fileID: 7084403590897826595, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7339287370887994564, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
+      propertyPath: m_Drag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7339287370887994564, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
+      propertyPath: m_Mass
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 7573659479313949081, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
       propertyPath: m_Name
@@ -981,7 +1013,7 @@ GameObject:
   - component: {fileID: 439443592}
   - component: {fileID: 439443591}
   - component: {fileID: 439443595}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ground
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -1730,6 +1762,11 @@ MeshFilter:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bf0656262c93a6f43a4ac491bd07f917, type: 3}
   m_PrefabInstance: {fileID: 250827576}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &654514841 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6b206f49991082e4c8ee3d0920c5fc8a, type: 3}
+  m_PrefabInstance: {fileID: 1645148640}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &659444200
 PrefabInstance:
@@ -5128,6 +5165,20 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6b206f49991082e4c8ee3d0920c5fc8a, type: 3}
   m_PrefabInstance: {fileID: 1645148640}
   m_PrefabAsset: {fileID: 0}
+--- !u!64 &1443267751
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 654514841}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!4 &1445631529 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a648e6090af0ce340af210c7adfc84d4, type: 3}
@@ -5705,6 +5756,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 6b206f49991082e4c8ee3d0920c5fc8a, type: 3}
       propertyPath: m_Name
       value: DesertProps-4-GroundRoad (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6b206f49991082e4c8ee3d0920c5fc8a, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6b206f49991082e4c8ee3d0920c5fc8a, type: 3}
       propertyPath: m_TagString
@@ -6957,6 +7012,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 6b206f49991082e4c8ee3d0920c5fc8a, type: 3}
       propertyPath: m_Name
       value: DesertProps-4-GroundRoad (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6b206f49991082e4c8ee3d0920c5fc8a, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6b206f49991082e4c8ee3d0920c5fc8a, type: 3}
       propertyPath: m_TagString
