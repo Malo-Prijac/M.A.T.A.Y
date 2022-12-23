@@ -30,6 +30,7 @@ public class PlayerCharacterController : MonoBehaviour
     
     private bool _isRunning;
     private bool _inMotion;
+    private bool _isJumping;
     private float _verticalInput;
     private float _horizontalInput;
     //private Vector2 _inputDirection;
@@ -39,9 +40,12 @@ public class PlayerCharacterController : MonoBehaviour
     [Header("Ground Check")]
     [SerializeField]private LayerMask groundLayer;
     [SerializeField]private float groundDrag;
+    [SerializeField] private float offsetGround = 0.15f;
     [ReadOnly][SerializeField]private float playerHeight;
     [ReadOnly][SerializeField]private bool grounded;
     
+    [Header("Jump")]
+    [SerializeField] private float impulse = 10f;
 
     void Start()
     {
@@ -62,15 +66,30 @@ public class PlayerCharacterController : MonoBehaviour
 
     private void CheckGrounded()
     {
-        grounded = Physics.Raycast(transform.position+(playerHeight/2)*Vector3.up, Vector3.down, playerHeight * 0.5f + 0.3f, groundLayer);
+        grounded = Physics.Raycast(transform.position+(playerHeight/2)*Vector3.up, Vector3.down, playerHeight * 0.5f + offsetGround, groundLayer);
 
-        
+
         if (grounded)
+        {
             _rb.drag = groundDrag;
+        }
         else
             _rb.drag = 0;
         
     }
+    /*
+    
+    void OnCollisionEnter(Collision collision){
+        if(collision.gameObject.CompareTag("Ground"))
+        {
+            grounded = true;
+        }
+        else
+        {
+            grounded = false;
+        }
+    }
+    */
     
     private void FixedUpdate()
     {
@@ -111,6 +130,22 @@ public class PlayerCharacterController : MonoBehaviour
         
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.fixedDeltaTime * speedX;
         _xRotation += mouseX;
+
+        if (Input.GetButtonDown("Jump"))
+            Jump();
+    }
+
+    private void Jump()
+    {
+        /*
+        _isJumping = true;
+        if(grounded)
+        {
+            print("ui");
+            //characterAnimator.SetBool(IsJumping, true);
+            _rb.AddForce(new Vector3(0,impulse,0), ForceMode.Impulse);
+        }
+        */
     }
     void MovePlayer()
     {
@@ -125,10 +160,11 @@ public class PlayerCharacterController : MonoBehaviour
 
     void RotatePlayer()
     {
-        if (_moveDirection == Vector3.zero)
-            return;
-        Quaternion rotation = Quaternion.LookRotation(_moveDirection);
-        transform.rotation = Quaternion.Slerp (transform.rotation, rotation, Time.deltaTime * dampingRotation);
+        if (_moveDirection != Vector3.zero)
+        {
+            Quaternion rotation = Quaternion.LookRotation(_moveDirection);
+            transform.rotation = Quaternion.Slerp (transform.rotation, rotation, Time.deltaTime * dampingRotation);
+        }
     }
 
     private void AnimationBehavior()
