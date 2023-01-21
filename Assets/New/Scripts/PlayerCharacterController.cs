@@ -4,11 +4,6 @@ using UnityEngine;
 public class PlayerCharacterController : MonoBehaviour
 {
     [SerializeField] private Animator characterAnimator;
-    private static readonly int IsWalkingForward = Animator.StringToHash("IsWalkingForward");
-    private static readonly int IsWalkingBackward = Animator.StringToHash("IsWalkingBackward");    
-    private static readonly int IsWalkingLeft = Animator.StringToHash("IsWalkingLeft");
-    private static readonly int IsWalkingRight = Animator.StringToHash("IsWalkingRight");
-    private static readonly int IsDashing = Animator.StringToHash("IsDashing");
     private static readonly int IsRunning = Animator.StringToHash("IsRunning");
     private static readonly int IsJumping = Animator.StringToHash("IsJumping");
     private static readonly int VelocityHash = Animator.StringToHash("Velocity");
@@ -37,6 +32,7 @@ public class PlayerCharacterController : MonoBehaviour
     [ReadOnly][SerializeField]private float _horizontalInput;
     //private Vector2 _inputDirection;
     private float _xRotation;
+    private float _yRotation;
     private Vector3 _moveDirection;
     private CapsuleCollider _capsuleCollider;
 
@@ -84,7 +80,7 @@ public class PlayerCharacterController : MonoBehaviour
         CheckGrounded();
         RotateTargetForCamera();
         AnimationBehavior();
-        UpdateSizeCapsuleCollision();
+        //UpdateSizeCapsuleCollision();
     }
 
     private void CheckGrounded()
@@ -150,7 +146,7 @@ public class PlayerCharacterController : MonoBehaviour
 
     private void RotateTargetForCamera()
     {
-        toFollow.rotation = Quaternion.Slerp(toFollow.rotation,Quaternion.Euler(0, _xRotation, 0),dampingCamera);
+        toFollow.rotation = Quaternion.Slerp(toFollow.rotation,Quaternion.Euler(_yRotation, _xRotation,0 ),dampingCamera);
     }
     
     void InputPlayer()
@@ -164,6 +160,9 @@ public class PlayerCharacterController : MonoBehaviour
         
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.fixedDeltaTime * speedX;
         _xRotation += mouseX;
+        
+        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.fixedDeltaTime * speedX;
+        _yRotation -= mouseY;
 
         if (Input.GetButton("Jump") && readyToJump && grounded)
         {
@@ -200,6 +199,7 @@ public class PlayerCharacterController : MonoBehaviour
         if (_inMotion)
         {
             _moveDirection = toFollow.forward * _verticalInput + toFollow.right * _horizontalInput;
+            _moveDirection.y = 0;
         }
         
         if (grounded)
@@ -227,16 +227,17 @@ public class PlayerCharacterController : MonoBehaviour
             Quaternion rotation = Quaternion.LookRotation(_moveDirection);
             transform.rotation = Quaternion.Slerp (transform.rotation, rotation, Time.deltaTime * dampingRotation);
         }
+        
     }
 
     private void AnimationBehavior()
     {
-        characterAnimator.SetBool(IsWalkingForward, _verticalInput > 0 && _horizontalInput == 0);
-        characterAnimator.SetBool(IsWalkingBackward, _verticalInput < 0 && _horizontalInput == 0);
+        if (characterAnimator == null)
+        {
+            Debug.LogWarning("No Animator Character on "+name);
+            return;  
+        }
         
-        characterAnimator.SetBool(IsWalkingRight, _horizontalInput > 0);
-        characterAnimator.SetBool(IsWalkingLeft, _horizontalInput < 0);
-
         characterAnimator.SetBool(IsRunning, Mathf.Approximately(_actualSpeed,runSpeed) && (_verticalInput != 0 || _horizontalInput != 0));
         
         characterAnimator.SetFloat(VelocityHash,velocity);
@@ -296,7 +297,7 @@ public class PlayerCharacterController : MonoBehaviour
     private void UpdateSizeCapsuleCollision()
     {
 
-        if(_jumpStarted){
+        if(_jumpStarted && !grounded){
             
         _frameJump += Time.deltaTime*30 ;
             
