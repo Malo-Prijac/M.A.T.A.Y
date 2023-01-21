@@ -91,7 +91,7 @@ public class PlayerCharacterController : MonoBehaviour
     {
         
         Vector3 position = transform.position;
-        print(position);
+        //print(position);
         grounded = Physics.CheckSphere(position, groundDistanceMax, groundLayer); 
         Gizmos.color = Color.red;
         
