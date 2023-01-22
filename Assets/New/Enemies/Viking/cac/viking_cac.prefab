@@ -311,14 +311,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3327069161333187973}
-  m_LocalRotation: {x: 0.24045448, y: 0.6233447, z: -0.5538597, w: -0.4968524}
-  m_LocalPosition: {x: -0.058, y: 0.283, z: -0.198}
+  m_LocalRotation: {x: 0.038038164, y: 0.5546722, z: -0.6078786, w: -0.5668998}
+  m_LocalPosition: {x: -0.156, y: 0.32, z: -0.116}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5777915474757361897}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 40.405, y: -87.383, z: 63.099}
 --- !u!1 &3486695864296355849
 GameObject:
   m_ObjectHideFlags: 0
@@ -984,7 +984,7 @@ GameObject:
   - component: {fileID: 156690675}
   - component: {fileID: 5261922375905232922}
   m_Layer: 0
-  m_Name: viking_skeleton_cc
+  m_Name: viking_cac
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1023,7 +1023,13 @@ Animator:
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'mixamorig:Hips'\n\tTransform 'mixamorig:LeftFoot'\n\tTransform
+    'mixamorig:Spine1'\n\tTransform 'mixamorig:LeftToeBase'\n\tTransform 'mixamorig:RightArm'\n\tTransform
+    'mixamorig:LeftLeg'\n\tTransform 'mixamorig:LeftShoulder'\n\tTransform 'mixamorig:RightFoot'\n\tTransform
+    'mixamorig:Head'\n\tTransform 'mixamorig:LeftUpLeg'\n\tand more ...\n\tFrom animation
+    clip 'Sword And Shield Death'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
@@ -1076,8 +1082,8 @@ MonoBehaviour:
   rotationSlotSpeed: 10
   positionSlotSpeed: 10
   playerTag: Player
-  rangePlayer: 5
-  rotationSpeed: 40
+  rangePlayer: 10
+  rotationSpeed: 10
   isPlayerInSight: 0
   isPlayerInRange: 0
   walkSpeed: 1.5
@@ -1088,10 +1094,13 @@ MonoBehaviour:
   groundDrag: 48
   velocity: 0
   _isRunning: 0
-  delayAttack: 0.5
-  rangeAttack: 1.35
-  attackDuration: 2.4
+  attackTag: Attack
+  delayAttack: 1
+  animationSpeedAttack: 1.5
+  rangeAttack: 1.4
   hasStaticAttack: 1
+  _lastAttack: 0
   _isAttacking: 0
   _isPlayerInRangeToAttack: 0
+  canAttack: 0
   weaponType: {fileID: 4486881214582231548, guid: a7542b21a9b0054419a4d411535ef567, type: 3}

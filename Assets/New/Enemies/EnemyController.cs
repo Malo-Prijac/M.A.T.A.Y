@@ -10,6 +10,7 @@ public class EnemyController : MonoBehaviour
     private static readonly int IsRunning = Animator.StringToHash("IsRunning");
     //private static readonly int IsJumping = Animator.StringToHash("IsJumping");
     private static readonly int VelocityHash = Animator.StringToHash("Velocity");
+    private static readonly int AnimationSpeedAttack = Animator.StringToHash("AnimationSpeedAttack");
     private static readonly int IsAttacking = Animator.StringToHash("IsAttacking");
 
     [Header("Enemy Weapon Slots")] 
@@ -28,7 +29,7 @@ public class EnemyController : MonoBehaviour
 
     [Header("Detect Player")]
     [SerializeField] private float rangePlayer = 5f;
-    [SerializeField]private float rotationSpeed = 50;
+    [SerializeField]private float rotationSpeed = 40;
     
     [ReadOnly] [SerializeField] private bool isPlayerInSight;
     [ReadOnly] [SerializeField] private bool isPlayerInRange;
@@ -36,24 +37,27 @@ public class EnemyController : MonoBehaviour
     
     [Header("Enemy Movement")]
     
-    [SerializeField] private float walkSpeed = 4;
-    [SerializeField] private float runSpeed = 8;
-    [SerializeField] private float acceleration = 0.5f;
-    [SerializeField] private float deceleration = 0.5f;
+    [SerializeField] private float walkSpeed = 1.5f;
+    [SerializeField] private float runSpeed = 3f;
+    [SerializeField] private float acceleration = 0.8f;
+    [SerializeField] private float deceleration = 2f;
     [SerializeField] private float ratioRootMotion = 2f;
     
-    [SerializeField] private float groundDrag;
+    [SerializeField] private float groundDrag = 48;
     [ReadOnly][SerializeField]private float velocity;
     [ReadOnly][SerializeField]private bool _isRunning;
 
     [Header("Enemy Attack")] 
-    [SerializeField] private float delayAttack = 0.5f;
-    [SerializeField] private float rangeAttack = 0.5f;
-    [SerializeField] private float attackDuration = 0.5f;
-    [SerializeField] private bool hasStaticAttack = false;
+    [SerializeField] private string attackTag = "Attack";
+    [SerializeField] private float delayAttack = 1f;
+    [SerializeField] private float animationSpeedAttack = 1f;
+    [SerializeField] private float rangeAttack = 1.35f;
+    [SerializeField] private bool hasStaticAttack;
 
+    [ReadOnly] [SerializeField] private float _lastAttack;
     [ReadOnly] [SerializeField] private bool _isAttacking;
     [ReadOnly] [SerializeField] private bool _isPlayerInRangeToAttack;
+    [ReadOnly] [SerializeField] private bool canAttack;
 
     [SerializeField] private GameObject weaponType;
     
@@ -67,14 +71,21 @@ public class EnemyController : MonoBehaviour
     private bool _inMotion;
 
 
-
     private GameObject _player;
     void Start()
     {
         _player = GameObject.FindWithTag(playerTag);
-        _weaponGameObject = Instantiate(weaponType,new Vector3(),new Quaternion());
-        _weapon = _weaponGameObject.GetComponent<Weapon>();
-        AttachWeaponToSlot(weaponSlotMovement);
+        if (weaponType)
+        {
+            _weaponGameObject = Instantiate(weaponType,new Vector3(),new Quaternion());
+            _weapon = _weaponGameObject.GetComponent<Weapon>();
+            AttachWeaponToSlot(weaponSlotMovement);
+        }
+        else
+        {
+            Debug.LogWarning(name+" has no weapon type. ");
+        }
+
 
         _rb = GetComponent<Rigidbody>();
     }
@@ -92,14 +103,18 @@ public class EnemyController : MonoBehaviour
         
         ChangeSlot();
 
-        if (PlayerInRangeToAttack() && !_isAttacking)
+        if (PlayerInRangeToAttack() && canAttack)
         {
-            _inMotion = false;
             Attack();
         }
 
-        
 
+        if (!_isAttacking)
+        {
+            _lastAttack+= Time.deltaTime;
+        }
+        
+        canAttack = _lastAttack - delayAttack > 0;
 
     }
     
@@ -108,16 +123,22 @@ public class EnemyController : MonoBehaviour
         UpdateVelocity();
         FollowPlayer(_player.transform.position-transform.position);
 
-        if (IsPlayerDetected() && !_isAttacking)
+        if (IsPlayerDetected())
         {
-            _inMotion = true;
-            _isRunning = true;
+            if (!PlayerInRangeToAttack())
+            {
+                _inMotion = true;
+                _isRunning = true; 
+            }
+            else
+            {
+                _inMotion = false;
+                _isRunning = false;
+            }
+            
             LookAtPlayer();
         }
-        else
-        {
-            _isRunning = false;
-        }
+
     }
 
     private void ChangeSlot()
@@ -177,7 +198,6 @@ public class EnemyController : MonoBehaviour
     
     private void UpdateVelocity()
     {
-        bool detectedPlayer = IsPlayerDetected();
         if ((_inMotion && velocity < walkSpeed / runSpeed)|| (_isRunning && velocity < 1.0f))
         {
             velocity += Time.deltaTime * acceleration;
@@ -202,7 +222,11 @@ public class EnemyController : MonoBehaviour
     
     void Attack()
     {
+        if(_isAttacking)
+            return;
+        
         _isAttacking = true;
+        _lastAttack = 0;
         if (_weapon)
         {
             _weapon.Attack();
@@ -216,10 +240,35 @@ public class EnemyController : MonoBehaviour
 
     IEnumerator StopAttack()
     {
-        yield return new WaitForSeconds(attackDuration);
+        
+        //print(attackDuration/animationSpeedAttack);
+        while (!IsAnimationCurrentAnimation(attackTag))
+        {
+            yield return null;
+        }
+        while (IsAnimationCurrentAnimation(attackTag))
+        {
+            yield return null;
+        }
+
         _isAttacking = false;
     }
+
+    bool IsAnimationCurrentAnimation(string tagAnim)
+    {
+       // print(enemyAnimator.GetCurrentAnimatorStateInfo(0).IsTag(tagAnim));
+        return enemyAnimator.GetCurrentAnimatorStateInfo(0).IsTag(tagAnim);
+    }
     
+    bool AnimatorIsPlaying(string tagAnim){
+        return AnimatorIsPlaying() && enemyAnimator.GetCurrentAnimatorStateInfo(0).IsTag(tagAnim);
+    }
+    
+    bool AnimatorIsPlaying(){
+        //print(enemyAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1 < 0.99f);
+        return enemyAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1 < 0.99f;
+    }
+
     private void AnimationBehavior()
     {
         if (enemyAnimator == null)
@@ -230,8 +279,9 @@ public class EnemyController : MonoBehaviour
         //enemyAnimator.SetBool(IsRunning, Mathf.Approximately(_actualSpeed,runSpeed) && (_verticalInput != 0 || _horizontalInput != 0));
         
         enemyAnimator.SetFloat(VelocityHash,velocity);
+        enemyAnimator.SetFloat(AnimationSpeedAttack, animationSpeedAttack);
         
-       // enemyAnimator.SetBool(IsJumping, _isJumping);
+        // enemyAnimator.SetBool(IsJumping, _isJumping);
 
 
        enemyAnimator.SetBool(IsAttacking,_isAttacking);
