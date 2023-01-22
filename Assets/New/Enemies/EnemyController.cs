@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MyBox;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class EnemyController : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class EnemyController : MonoBehaviour
     private static readonly int VelocityHash = Animator.StringToHash("Velocity");
     private static readonly int AnimationSpeedAttack = Animator.StringToHash("AnimationSpeedAttack");
     private static readonly int IsAttacking = Animator.StringToHash("IsAttacking");
+    private static readonly int IsAiming = Animator.StringToHash("IsAiming");
 
     [Header("Enemy Weapon Slots")] 
     [SerializeField] private bool HasDifferentSlotForWeapon;
@@ -42,17 +44,36 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float acceleration = 0.8f;
     [SerializeField] private float deceleration = 2f;
     [SerializeField] private float ratioRootMotion = 2f;
-    
     [SerializeField] private float groundDrag = 48;
     [ReadOnly][SerializeField]private float velocity;
     [ReadOnly][SerializeField]private bool _isRunning;
 
+    [Header("Aiming")]
+    [SerializeField] private bool needToAim;
+    [ConditionalField("needToAim")][ReadOnly][SerializeField] 
+    private bool _isAiming;
+
+    [Header("Aiming Animation")]
+    [ConditionalField("needToAim")][SerializeField] 
+    private float offsetAiming;
+    [ConditionalField("needToAim")][SerializeField] 
+    private float rotationSpeedAiming;
+
+    [ConditionalField("needToAim")][ReadOnly] [SerializeField] 
+    private float _offsetRotationYCounterAiming;
+    [Header("Attack Animation")] 
+    
+    [SerializeField] private bool hasStaticAttack;
+    [SerializeField] private float offsetRotationY;
+    [SerializeField] private float rotationSpeedAttack;
+    [ReadOnly] [SerializeField] private float _offsetRotationYCounterAttack;
+    
     [Header("Enemy Attack")] 
+
     [SerializeField] private string attackTag = "Attack";
     [SerializeField] private float delayAttack = 1f;
     [SerializeField] private float animationSpeedAttack = 1f;
     [SerializeField] private float rangeAttack = 1.35f;
-    [SerializeField] private bool hasStaticAttack;
 
     [ReadOnly] [SerializeField] private float _lastAttack;
     [ReadOnly] [SerializeField] private bool _isAttacking;
@@ -72,6 +93,7 @@ public class EnemyController : MonoBehaviour
 
 
     private GameObject _player;
+
     void Start()
     {
         _player = GameObject.FindWithTag(playerTag);
@@ -88,34 +110,58 @@ public class EnemyController : MonoBehaviour
 
 
         _rb = GetComponent<Rigidbody>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        AnimationBehavior();
-
         if (_player == null)
         {
             Debug.LogWarning("No Player set");
             return;
         }
         
+        #if UNITY_EDITOR
+        Assert.IsFalse(rangePlayer < rangeAttack);
+        #endif
+
+        AnimationBehavior();
         ChangeSlot();
 
-        if (PlayerInRangeToAttack() && canAttack)
+        if (PlayerInRangeToAttack())
         {
-            Attack();
+            if (needToAim)
+            {
+                Aim();
+            }
+            if(canAttack)
+            {
+                Attack();
+            }
+        }
+        else
+        {
+            _isAiming = false;
         }
 
-
-        if (!_isAttacking)
+        if (needToAim)
         {
-            _lastAttack+= Time.deltaTime;
+            if (!_isAttacking && _isAiming)
+            {
+                _lastAttack+= Time.deltaTime;
+            }
         }
+        else
+        {
+            if (!_isAttacking && !canAttack)
+            {
+                _lastAttack+= Time.deltaTime;
+            }
+        }
+
         
         canAttack = _lastAttack - delayAttack > 0;
-
     }
     
     private void FixedUpdate()
@@ -125,22 +171,49 @@ public class EnemyController : MonoBehaviour
 
         if (IsPlayerDetected())
         {
-            if (!PlayerInRangeToAttack())
-            {
-                _inMotion = true;
-                _isRunning = true; 
-            }
-            else
+            if (PlayerInRangeToAttack() || _isAttacking)
             {
                 _inMotion = false;
                 _isRunning = false;
             }
+            else
+            {
+                _inMotion = true;
+                _isRunning = true;
+            }
             
             LookAtPlayer();
         }
-
     }
 
+    IEnumerator CorrectAttackingPosition()
+    {
+        while (_isAttacking)
+        {
+            Vector3 interpolation = new Vector3(0,_offsetRotationYCounterAttack,0);
+            _offsetRotationYCounterAttack = Mathf.Lerp(_offsetRotationYCounterAttack, offsetRotationY, Time.deltaTime * rotationSpeedAttack);
+            interpolation = new Vector3(0, _offsetRotationYCounterAttack, 0) - interpolation;
+            transform.rotation = Quaternion.Euler(transform.eulerAngles + interpolation );
+            //transform.rotation = Quaternion.Euler(transform.eulerAngles + new Vector3(0,Time.deltaTime * rotationSlotSpeed,0));
+            yield return null;
+        }
+
+        _offsetRotationYCounterAttack = 0;
+    }
+
+    IEnumerator CorrectAimingPosition()
+    {
+        while (_isAiming){
+            Vector3 interpolation = new Vector3(0,_offsetRotationYCounterAiming,0);
+            _offsetRotationYCounterAiming = Mathf.Lerp(_offsetRotationYCounterAiming, offsetAiming, Time.deltaTime * rotationSpeedAiming);
+            interpolation = new Vector3(0, _offsetRotationYCounterAiming, 0) - interpolation;
+            transform.rotation = Quaternion.Euler(transform.eulerAngles + interpolation );
+            //transform.rotation = Quaternion.Euler(transform.eulerAngles + new Vector3(0,Time.deltaTime * rotationSlotSpeed,0));
+            yield return null;
+        }
+
+        _offsetRotationYCounterAiming = 0;
+    }
     private void ChangeSlot()
     {
         if (!HasDifferentSlotForWeapon)
@@ -219,17 +292,25 @@ public class EnemyController : MonoBehaviour
         Quaternion rotation = Quaternion.LookRotation(_player.transform.position - transform.position);
         transform.rotation = Quaternion.Slerp (transform.rotation, rotation, Time.deltaTime * rotationSpeed);
     }
-    
+
+    void Aim()
+    {
+        StartCoroutine(CorrectAimingPosition());
+        _isAiming = true;
+    }
+
     void Attack()
     {
         if(_isAttacking)
             return;
         
         _isAttacking = true;
+        StartCoroutine(CorrectAttackingPosition());
         _lastAttack = 0;
         if (_weapon)
         {
             _weapon.Attack();
+            //transform.rotation = Quaternion.Euler(transform.eulerAngles - offsetRotation);
         }
         else
         {
@@ -250,7 +331,7 @@ public class EnemyController : MonoBehaviour
         {
             yield return null;
         }
-
+        
         _isAttacking = false;
     }
 
@@ -282,9 +363,10 @@ public class EnemyController : MonoBehaviour
         enemyAnimator.SetFloat(AnimationSpeedAttack, animationSpeedAttack);
         
         // enemyAnimator.SetBool(IsJumping, _isJumping);
+        if(needToAim)
+            enemyAnimator.SetBool(IsAiming,_isAiming);
 
-
-       enemyAnimator.SetBool(IsAttacking,_isAttacking);
+        enemyAnimator.SetBool(IsAttacking,_isAttacking);
     }
 }
 
