@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MyBox;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,9 +10,9 @@ public class Weapon : MonoBehaviour
 {
     [SerializeField]private float damage;
 
-    [SerializeField] public bool isFiringProjectiles;
+    [SerializeField] private bool IsFiringProjectiles;
     
-    [HideInInspector] public GameObject projectile;
+    [ConditionalField("IsFiringProjectiles")][SerializeField] private GameObject projectile;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +27,7 @@ public class Weapon : MonoBehaviour
 
     public void Attack()
     {
-        if (isFiringProjectiles)
+        if (IsFiringProjectiles)
         {
             
         }

@@ -62,7 +62,7 @@ public class PlayerCharacterController : MonoBehaviour
     [SerializeField] private float transitionFrame;
     [SerializeField] private float endFrame;
 
-    private Vector3 rigidbodyDrag;
+    private Vector3 _rigidbodyDrag;
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -175,9 +175,10 @@ public class PlayerCharacterController : MonoBehaviour
     void Jump()
     {
         //_rb.velocity = new Vector3(_rb.velocity.x, 0f,_rb.velocity.z);
-        _rb.AddForce(transform.up*jumpForce, ForceMode.VelocityChange);
         _jumpStarted = true;
         _isJumping = true;
+        _rb.AddForce(transform.up*jumpForce, ForceMode.VelocityChange);
+
         /*
         if(grounded)
         {
@@ -206,17 +207,17 @@ public class PlayerCharacterController : MonoBehaviour
         {
             _rb.AddForce(_actualSpeed * _moveDirection.normalized,ForceMode.VelocityChange);
             
-            rigidbodyDrag = new Vector3(-_rb.velocity.x, 0, -_rb.velocity.z)*groundDrag;
+            _rigidbodyDrag = new Vector3(-_rb.velocity.x, 0, -_rb.velocity.z)*groundDrag;
         }
 
         if (!grounded)
         {
-            rigidbodyDrag = -_rb.velocity*airDrag;
-            _rb.AddForce(rigidbodyDrag*groundDrag, ForceMode.Acceleration);
+            _rigidbodyDrag = -_rb.velocity*airDrag;
+            _rb.AddForce(_rigidbodyDrag*groundDrag, ForceMode.Acceleration);
 
         }
         
-        _rb.AddForce(rigidbodyDrag, ForceMode.Acceleration);
+        _rb.AddForce(_rigidbodyDrag, ForceMode.Acceleration);
 
     }
 

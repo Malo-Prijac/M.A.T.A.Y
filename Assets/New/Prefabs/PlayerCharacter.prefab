@@ -932,7 +932,7 @@ GameObject:
   - component: {fileID: 5868336982018673990}
   m_Layer: 0
   m_Name: PlayerCharacter
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -969,7 +969,7 @@ Animator:
   m_Avatar: {fileID: 9000000, guid: 67b8aa7b4d14b0648858baec2bcd2f12, type: 3}
   m_Controller: {fileID: 9100000, guid: a7658b16822edba47b90bb7af0d81a7f, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 1
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -1021,8 +1021,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterAnimator: {fileID: 3796806423833911641}
   toFollow: {fileID: 7339287370936714867}
-  walkSpeed: 1.5
-  runSpeed: 3
+  walkSpeed: 2.5
+  runSpeed: 4.5
   acceleration: 0.8
   deceleration: 1.8
   dampingRotation: 7
@@ -1036,7 +1036,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  groundDrag: 25
+  groundDrag: 48
   groundDistanceMax: 0.15
   playerHeight: 0
   grounded: 0
