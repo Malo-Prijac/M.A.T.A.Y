@@ -101,6 +101,7 @@ public class EnemyController : MonoBehaviour
         {
             _weaponGameObject = Instantiate(weaponType,new Vector3(),new Quaternion());
             _weapon = _weaponGameObject.GetComponent<Weapon>();
+            _weapon.Owner = gameObject;
             AttachWeaponToSlot(weaponSlotMovement);
         }
         else
@@ -289,13 +290,15 @@ public class EnemyController : MonoBehaviour
     {
         if (hasStaticAttack && _isAttacking)
             return;
-        Quaternion rotation = Quaternion.LookRotation(_player.transform.position - transform.position);
+
+        Vector3 playerPosition = new Vector3(_player.transform.position.x,0,_player.transform.position.z);
+        Quaternion rotation = Quaternion.LookRotation(playerPosition - transform.position);
         transform.rotation = Quaternion.Slerp (transform.rotation, rotation, Time.deltaTime * rotationSpeed);
     }
 
     void Aim()
     {
-        StartCoroutine(CorrectAimingPosition());
+        //StartCoroutine(CorrectAimingPosition());
         _isAiming = true;
     }
 
@@ -303,10 +306,13 @@ public class EnemyController : MonoBehaviour
     {
         if(_isAttacking)
             return;
+
+        if (needToAim && !_isAiming)
+            return;
         
         _isAttacking = true;
-        StartCoroutine(CorrectAttackingPosition());
         _lastAttack = 0;
+
         if (_weapon)
         {
             _weapon.Attack();
@@ -314,14 +320,15 @@ public class EnemyController : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning(name+" has no weapon");
+            Debug.LogWarning(name+" Weapon has no weapon script");
         }
+        
+        StartCoroutine(CorrectAttackingPosition());
         StartCoroutine(StopAttack());
     }
 
     IEnumerator StopAttack()
     {
-        
         //print(attackDuration/animationSpeedAttack);
         while (!IsAnimationCurrentAnimation(attackTag))
         {

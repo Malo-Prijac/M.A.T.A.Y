@@ -329,6 +329,7 @@ GameObject:
   - component: {fileID: 420231879}
   - component: {fileID: 420231878}
   - component: {fileID: 420231880}
+  - component: {fileID: 140744562}
   m_Layer: 0
   m_Name: egyptian_cac
   m_TagString: Untagged
@@ -387,7 +388,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!136 &420231878
 CapsuleCollider:
@@ -426,24 +427,46 @@ MonoBehaviour:
   rotationSpeed: 10
   isPlayerInSight: 0
   isPlayerInRange: 0
-  walkSpeed: 1.5
-  runSpeed: 3
+  walkSpeed: 2
+  runSpeed: 4
   acceleration: 0.8
   deceleration: 2
   ratioRootMotion: 2
   groundDrag: 48
   velocity: 0
   _isRunning: 0
+  needToAim: 0
+  _isAiming: 0
+  offsetAiming: 0
+  rotationSpeedAiming: 0
+  _offsetRotationYCounterAiming: 0
+  hasStaticAttack: 1
+  offsetRotationY: 20
+  rotationSpeedAttack: 2.5
+  _offsetRotationYCounterAttack: 0
   attackTag: Attack
   delayAttack: 1
-  animationSpeedAttack: 1.3
+  animationSpeedAttack: 1.4
   rangeAttack: 1.4
-  hasStaticAttack: 1
   _lastAttack: 0
   _isAttacking: 0
   _isPlayerInRangeToAttack: 0
   canAttack: 0
   weaponType: {fileID: 3745342784214530544, guid: 4db16d2b20bc88c40bc8ce1d1783cef2, type: 3}
+--- !u!136 &140744562
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2345371090655143737}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.25
+  m_Height: 1.7
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!1 &2542290622410753122
 GameObject:
   m_ObjectHideFlags: 0
@@ -565,14 +588,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3392905770339282401}
-  m_LocalRotation: {x: -0.27806515, y: -0.8190945, z: 0.067882806, w: 0.49714786}
-  m_LocalPosition: {x: 0.05, y: 0.3, z: -0.057}
+  m_LocalRotation: {x: -0.34846255, y: -0.82013494, z: -0.053875305, w: 0.4506108}
+  m_LocalPosition: {x: 0.116, y: 0.327, z: -0.057}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1143449951503986624}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -23.729, y: -129.971, z: 34.842}
 --- !u!1 &4176077840860952275
 GameObject:
   m_ObjectHideFlags: 0
