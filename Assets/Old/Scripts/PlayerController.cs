@@ -12,12 +12,12 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        //On active un des deux objets au départ
+        //On active un des deux objets au dÃ©part
         Object1.GetComponent<CharacterPlayerController>().enabled = true;
         cam1.SetActive(true);
-        Object2.GetComponent<MoveBall>().enabled = false;
-        cam2.SetActive(false);
-        Object2.GetComponent<Timer>().enabled = false;
+        //Object2.GetComponent<MoveBall>().enabled = false;
+        //cam2.SetActive(false);
+        //Object2.GetComponent<Timer>().enabled = false;
 
         choice = false;
     }
@@ -30,17 +30,17 @@ public class PlayerController : MonoBehaviour
         {
             Object1.GetComponent < CharacterPlayerController > ().enabled = false;
             cam1.SetActive(false);
-            Object2.GetComponent < MoveBall > ().enabled = true;
-            cam2.SetActive(true);
-            Object2.GetComponent<Timer>().enabled = true;
+            //Object2.GetComponent < MoveBall > ().enabled = true;
+            //cam2.SetActive(true);
+            //Object2.GetComponent<Timer>().enabled = true;
         }
         else
         {
             Object1.GetComponent<CharacterPlayerController>().enabled = true;
             cam1.SetActive(true);
-            Object2.GetComponent<MoveBall>().enabled = false;
-            cam2.SetActive(false);
-            Object2.GetComponent<Timer>().enabled = false;
+            //Object2.GetComponent<MoveBall>().enabled = false;
+            //cam2.SetActive(false);
+            //Object2.GetComponent<Timer>().enabled = false;
         }
     }
 }
