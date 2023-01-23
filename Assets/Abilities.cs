@@ -61,7 +61,14 @@ public class Abilities : MonoBehaviour
     {
         Debug.Log(currentJumpCount);
         Debug.Log("Jumping");
-        jumpSound.Play();
+        if (jumpSound)
+        {
+            jumpSound.Play();
+        }
+        else
+        {
+            Debug.LogWarning("no sound for jump");
+        }
         if (currentJumpCount == 1)
         {
             jumpForce = 6;
