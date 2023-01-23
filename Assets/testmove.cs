@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class testmove : MonoBehaviour
 {
-        [SerializeField] private Animator characterAnimator;
+    [SerializeField] private Animator characterAnimator;
     private static readonly int IsWalkingForward = Animator.StringToHash("IsWalkingForward");
     private static readonly int IsWalkingBackward = Animator.StringToHash("IsWalkingBackward");    
     private static readonly int IsWalkingLeft = Animator.StringToHash("IsWalkingLeft");
