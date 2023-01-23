@@ -46,9 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTag: Player
-  damageMultiplicator: 0
+  damageMulti: 1
   IsFiringProjectiles: 1
-  launchVelocity: 16
+  launchVelocity: 20
   airDragY: 150
   delayThrowProjectile: 0.2
   projectile: {fileID: 1584816582823105528, guid: ea57981f1dc4f324ca80f2d3692d2fab, type: 3}

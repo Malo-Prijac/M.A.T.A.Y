@@ -46,9 +46,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 175e964e6654280499557f2572752391, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
+  playerTag: Player
+  damageMulti: 20
   IsFiringProjectiles: 0
+  launchVelocity: 0
+  airDragY: 0
+  delayThrowProjectile: 0.2
   projectile: {fileID: 0}
+  owner: {fileID: 0}
 --- !u!65 &3714295015243899971
 BoxCollider:
   m_ObjectHideFlags: 0

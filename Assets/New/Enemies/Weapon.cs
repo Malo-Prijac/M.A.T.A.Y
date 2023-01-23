@@ -11,9 +11,8 @@ public class Weapon : MonoBehaviour
     [Header("Player Tag")]
     [ReadOnly] [SerializeField] private string playerTag ="Player";
     [Header("Weapon Stats")]
-    [SerializeField]private float damageMultiplicator;
+    [SerializeField]private float damageMulti;
 
-    [Header("Projectile")]
     [SerializeField] private bool IsFiringProjectiles;
     [ConditionalField("IsFiringProjectiles")][SerializeField] 
     private float launchVelocity;
@@ -36,6 +35,12 @@ public class Weapon : MonoBehaviour
     {
         _player = GameObject.FindWithTag(playerTag);
         _playerheight = _player.GetComponent<CapsuleCollider>().height;
+    }
+
+    public float DamageMulti
+    {
+        get => damageMulti;
+        set => damageMulti = value;
     }
 
     // Update is called once per frame
@@ -62,6 +67,7 @@ public class Weapon : MonoBehaviour
         yield return new WaitForSeconds(delayThrowProjectile);
         GameObject projectileGameObject = Instantiate(projectile, transform.position,  
             transform.rotation);
+        projectileGameObject.GetComponent<Projectile>().Damage *= DamageMulti;
         Quaternion aim = Quaternion.LookRotation(_player.transform.position + new Vector3(0,_playerheight/2,0) - transform.position).normalized;
         
         Rigidbody rb = projectileGameObject.GetComponent<Rigidbody>();
@@ -78,7 +84,7 @@ public class Weapon : MonoBehaviour
             PlayerHealthSystem playerHealthSystem = other.gameObject.GetComponent<PlayerHealthSystem>();
             if (!playerHealthSystem)
                 return;
-            playerHealthSystem.TakeDamage(damageMultiplicator);
+            playerHealthSystem.TakeDamage(damageMulti);
             
         }
     }

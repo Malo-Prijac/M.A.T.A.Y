@@ -172,6 +172,7 @@ public class EnemyController : MonoBehaviour
 
         if (IsPlayerDetected())
         {
+            LookAtPlayer();
             if (PlayerInRangeToAttack() || _isAttacking)
             {
                 _inMotion = false;
@@ -183,7 +184,11 @@ public class EnemyController : MonoBehaviour
                 _isRunning = true;
             }
             
-            LookAtPlayer();
+        }
+        else
+        {
+            _inMotion = false;
+            _isRunning = false;
         }
     }
 
@@ -359,6 +364,7 @@ public class EnemyController : MonoBehaviour
 
     private void AnimationBehavior()
     {
+        
         if (enemyAnimator == null)
         {
             Debug.LogWarning("No Animator Enemy on "+name);
@@ -368,9 +374,9 @@ public class EnemyController : MonoBehaviour
         
         enemyAnimator.SetFloat(VelocityHash,velocity);
         enemyAnimator.SetFloat(AnimationSpeedAttack, animationSpeedAttack);
-        
+
         // enemyAnimator.SetBool(IsJumping, _isJumping);
-        if(needToAim)
+        if(needToAim) 
             enemyAnimator.SetBool(IsAiming,_isAiming);
 
         enemyAnimator.SetBool(IsAttacking,_isAttacking);
