@@ -21,7 +21,7 @@ public class Abilities : MonoBehaviour
 
     public GameObject bulletPrefab;
     public Transform bulletSpawn;
-    public float bulletSpeed = 30f;
+    public float bulletSpeed = 100f;
 
     // Start is called before the first frame update
     void Start()

@@ -2330,7 +2330,7 @@ MonoBehaviour:
   trail: {fileID: 400874928}
   bulletPrefab: {fileID: 2079385883819679281, guid: 64bfa0f184c9063469f7366c6672429b, type: 3}
   bulletSpawn: {fileID: 1906321227}
-  bulletSpeed: 20
+  bulletSpeed: 50
 --- !u!1 &648569450
 GameObject:
   m_ObjectHideFlags: 0
