@@ -1,11 +1,14 @@
 fileFormatVersion: 2
-guid: caa5b12c845b86d4987453f3a029eb7e
+guid: c9258bc2832c10d4db38a370a6e923d7
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: Right Strafe Walking
+    second: mixamo.com
+  - first:
+      74: 5522812681064789136
+    second: Dash
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -36,11 +39,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Right Strafe Walking
+      name: Dash
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 31
+      lastFrame: 19
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
