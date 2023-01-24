@@ -18,6 +18,6 @@ public class PlayerHealthSystem : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        print("PLAYER TAKE " + damage);
+        //print("PLAYER TAKE " + damage);
     }
 }
