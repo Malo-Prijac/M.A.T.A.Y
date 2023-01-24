@@ -9,7 +9,14 @@ public class SwitchTest : MonoBehaviour
     [SerializeField] private Material _onMaterial;
     [SerializeField] private Material _offMaterial;
     [SerializeField] private List<GameObject> _linkedDoors;
-    [SerializeField] private float delayDoor;
+    
+    [Header("Delay Door")]
+    [SerializeField] private float delayDoorOpen;
+    [SerializeField] private float delayDoorClose;
+
+    [Header("Animation Speed")]
+    [SerializeField] private float speedMoveUp = 1f;
+    [SerializeField] private float speedMoveDown = 1f;
 
     private static readonly int ButtonOn = Animator.StringToHash("ButtonOn");
     private int compteur = 0;
@@ -29,18 +36,19 @@ public class SwitchTest : MonoBehaviour
         {
             compteur++;
             _meshRenderer.material = _onMaterial;
-            StartCoroutine(MoveGrille());
+            StartCoroutine(MoveGrilleUp());
         }
     }
     
-    IEnumerator MoveGrille()
+    IEnumerator MoveGrilleUp()
     {
         foreach (GameObject go in _linkedDoors)
         {
-            Debug.Log(go);
-            go.GetComponent<Animator>().enabled = true;
-            go.GetComponent<Animator>().SetBool(ButtonOn, true);
-            yield return new WaitForSeconds(delayDoor);
+            Animator animator = go.GetComponent<Animator>();
+            animator.enabled = true;
+            animator.SetBool(ButtonOn, true);
+            animator.speed = speedMoveUp;
+            yield return new WaitForSeconds(delayDoorOpen);
         }
     }
 
@@ -61,9 +69,11 @@ public class SwitchTest : MonoBehaviour
     {
         foreach (GameObject go in _linkedDoors)
         {
-            Debug.Log(go);
-            go.GetComponent<Animator>().SetBool(ButtonOn, false);
-            yield return new WaitForSeconds(delayDoor);
+            Animator animator = go.GetComponent<Animator>();
+            animator.enabled = true;
+            animator.SetBool(ButtonOn, false);
+            animator.speed = speedMoveDown;
+            yield return new WaitForSeconds(delayDoorClose);
         }
     }
 }
