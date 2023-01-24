@@ -70,6 +70,7 @@ public class Weapon : MonoBehaviour
         projectileGameObject.GetComponent<Projectile>().Damage *= DamageMulti;
         Quaternion aim = Quaternion.LookRotation(_player.transform.position + new Vector3(0,_playerheight/2,0) - transform.position).normalized;
         
+        //projectileGameObject.transform.rotation = 
         Rigidbody rb = projectileGameObject.GetComponent<Rigidbody>();
         rb.AddForce(aim*Vector3.forward*launchVelocity,ForceMode.VelocityChange);
         Vector3 _rigidbodyDrag = Vector3.up*airDragY;
