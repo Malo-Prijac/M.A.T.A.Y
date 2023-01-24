@@ -164,7 +164,7 @@ public class PlayerCharacterController : MonoBehaviour
         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.fixedDeltaTime * speedX;
         _yRotation -= mouseY;
 
-        if (Input.GetButton("Jump") && readyToJump && grounded)
+        if (Input.GetButton("Jump") && readyToJump)// && grounded)
         {
             readyToJump = false;
             Jump();

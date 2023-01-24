@@ -18,12 +18,13 @@ public class Projectile : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         _collider = GetComponent<BoxCollider>();
+        StartCoroutine(DestroyAfterTime());
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        StartCoroutine(DestroyAfterTime());
     }
 
     IEnumerator DestroyAfterTime()
