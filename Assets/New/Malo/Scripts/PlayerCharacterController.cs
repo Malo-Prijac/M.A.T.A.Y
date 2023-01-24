@@ -1,91 +1,152 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class PlayerCharacterController : MonoBehaviour
 {
-   [SerializeField] private float walkSpeed = 4;
-   [SerializeField] private float runSpeed = 8;
-   [SerializeField] private float rotationSpeedX = 10;
-
-    private float _actualSpeed = 0;
-    private Rigidbody _rb;
-    private Vector2 _cameraRotate;
-    
-    private float _verticalInput;
-    private float _horizontalInput;
-    //private Vector2 _inputDirection;
-    private float _xRotation;
-
-    private Vector3 _moveDirection;
-    
-    
-    
-    
-    /*
-    public float rotationSpeedY = 10;
-    public float playerHeight;
-    public LayerMask groundLayer;
-    
-    bool grounded;
-    public float groundDrag;
-    */
-
-    //[SerializeField] private float _jumpForce = 300;
-    // Start is called before the first frame update
-
     [SerializeField] private Animator characterAnimator;
-    private static readonly int IsWalkingForward = Animator.StringToHash("IsWalkingForward");
-    private static readonly int IsWalkingBackward = Animator.StringToHash("IsWalkingBackward");    
-    private static readonly int IsWalkingLeft = Animator.StringToHash("IsWalkingLeft");
-    private static readonly int IsWalkingRight = Animator.StringToHash("IsWalkingRight");
-    private static readonly int IsDashing = Animator.StringToHash("IsDashing");
     private static readonly int IsRunning = Animator.StringToHash("IsRunning");
     private static readonly int IsJumping = Animator.StringToHash("IsJumping");
-    
-    
+    private static readonly int VelocityHash = Animator.StringToHash("Velocity");
+
+    [Header("Movement")]
     [SerializeField] private Transform toFollow;
+    [SerializeField] private float walkSpeed = 4;
+    [SerializeField] private float runSpeed = 8;
+    [SerializeField] private float acceleration = 0.5f;
+    [SerializeField] private float deceleration = 0.5f;
+    [SerializeField]private float dampingRotation = 10f;
+    [ReadOnly][SerializeField]private float velocity;
+    private float _actualSpeed;
+    private Rigidbody _rb;
+    
+    [Header("Camera Rotation")]
+    [SerializeField] private float dampingCamera = 10f;
+    [SerializeField] private float speedX = 80f;
+    private Vector2 _cameraRotate;
+    
+    [Header("Debug movement")]
+    [ReadOnly][SerializeField]private bool _isRunning;
+    private bool _inMotion;
+    [ReadOnly][SerializeField]private bool _isJumping;
+    [ReadOnly][SerializeField]private float _verticalInput;
+    [ReadOnly][SerializeField]private float _horizontalInput;
+    //private Vector2 _inputDirection;
+    private float _xRotation;
+    private float _yRotation;
+    private Vector3 _moveDirection;
+    private CapsuleCollider _capsuleCollider;
+
+    [Header("Ground Check")]
+    [SerializeField]private LayerMask groundLayer;
+    [SerializeField]private float groundDrag;
+    [SerializeField] private float groundDistanceMax = 0.2f;
+    [ReadOnly][SerializeField]private float playerHeight;
+    [ReadOnly][SerializeField]private bool grounded;
+    [SerializeField] private Transform foot;
+
+    [Header("Jump")]
+    [SerializeField] private float jumpForce;
+    [SerializeField] private float jumpCooldown;
+    [SerializeField] private float airDrag;
+    [ReadOnly][SerializeField] private bool readyToJump;
+    [SerializeField] private float updateColliderSpeedUp;
+    [SerializeField] private float updateColliderSpeedDown;
+    [SerializeField] private float centerJumpCollider;
+    [ReadOnly] [SerializeField] private float originCenterCollider;
+    private bool _jumpStarted = false;
+    
+    [Header("Jump frames")]
+    [ReadOnly] [SerializeField] private float _frameJump = 0;
+    
+    [SerializeField] private float startFrame;
+    [SerializeField] private float transitionFrame;
+    [SerializeField] private float endFrame;
+
+    private Vector3 _rigidbodyDrag;
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
+        _capsuleCollider = GetComponent<CapsuleCollider>();
+        playerHeight = _capsuleCollider.height;
+        originCenterCollider = _capsuleCollider.center.y;
+        ResetJump();
     }
 
     // Update is called once per frame
     void Update()
     {
         InputPlayer();
-        /*
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, groundLayer);
-        if (grounded)
-            _rb.drag = groundDrag;
-        else
-            _rb.drag = 0;
-        */
-
-        RotateTarget();
+        CheckGrounded();
+        RotateTargetForCamera();
         AnimationBehavior();
+        //UpdateSizeCapsuleCollision();
     }
+
+    private void CheckGrounded()
+    {
+        
+        Vector3 position = transform.position;
+        //print(position);
+        grounded = Physics.CheckSphere(position, groundDistanceMax, groundLayer); 
+        Gizmos.color = Color.red;
+        
+        //Vector3 position = transform.position + (playerHeight / 2) * Vector3.up;
+        //float groundDistanceMax = playerHeight * 0.5f + offsetGround;
+        //grounded = Physics.Raycast(position, Vector3.down, groundDistanceMax, groundLayer);
+
+        _isJumping = !grounded;
+
+
+    }
+    
+    void OnDrawGizmosSelected()
+    {
+        Vector3 position = transform.position;
+        // Draw a yellow sphere at the transform's position
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(position,groundDistanceMax);
+    }
+    /*
+    
+    void OnCollisionEnter(Collision collision){
+        if(collision.gameObject.CompareTag("Ground"))
+        {
+            grounded = true;
+        }
+        else
+        {
+            grounded = false;
+        }
+    }
+    */
     
     private void FixedUpdate()
     {
-        if (_horizontalInput == 0 && _verticalInput == 0)
-            return;
-
-        if (Input.GetButton("Run"))
-            _actualSpeed = runSpeed;
-        else
-            _actualSpeed = walkSpeed;
-        
+        UpdateVelocity();
         MovePlayer();
         RotatePlayer();
     }
 
-    private void RotateTarget()
+    private void UpdateVelocity()
     {
-        float damping = 10;
-        toFollow.transform.rotation = Quaternion.Slerp(toFollow.transform.rotation,Quaternion.Euler(0, _xRotation, 0),damping);
+        if ((_inMotion && velocity < walkSpeed / runSpeed)|| (_isRunning && velocity < 1.0f))
+        {
+            velocity += Time.deltaTime * acceleration;
+            velocity = Input.GetButton("Run") ? Mathf.Min(velocity, 1) : Mathf.Min(velocity, walkSpeed / runSpeed);
+        }
+        else if((_inMotion == false && velocity > 0.0f) || (_isRunning == false && _actualSpeed > walkSpeed))
+        {
+            velocity -= Time.deltaTime * deceleration;
+            velocity = Mathf.Max(velocity, 0);
+        }
+
+        _actualSpeed = velocity*runSpeed;
+    }
+
+    private void RotateTargetForCamera()
+    {
+        toFollow.rotation = Quaternion.Slerp(toFollow.rotation,Quaternion.Euler(_yRotation, _xRotation,0 ),dampingCamera);
     }
     
     void InputPlayer()
@@ -93,31 +154,173 @@ public class PlayerCharacterController : MonoBehaviour
         _verticalInput = Input.GetAxisRaw("Vertical");
         _horizontalInput = Input.GetAxisRaw("Horizontal");
         
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.fixedDeltaTime * rotationSpeedX;
+        _inMotion = _horizontalInput != 0 || _verticalInput != 0;
+
+        _isRunning = Input.GetButton("Run");
+        
+        float mouseX = Input.GetAxisRaw("Mouse X") * Time.fixedDeltaTime * speedX;
         _xRotation += mouseX;
+        
+        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.fixedDeltaTime * speedX;
+        _yRotation -= mouseY;
+
+        if (Input.GetButton("Jump") && readyToJump)// && grounded)
+        {
+            readyToJump = false;
+            Jump();
+            Invoke(nameof(ResetJump),jumpCooldown);
+        }
     }
+
+    void Jump()
+    {
+        //_rb.velocity = new Vector3(_rb.velocity.x, 0f,_rb.velocity.z);
+        _jumpStarted = true;
+        _isJumping = true;
+        _rb.AddForce(transform.up*jumpForce, ForceMode.VelocityChange);
+
+        /*
+        if(grounded)
+        {
+            print("ui");
+            //characterAnimator.SetBool(IsJumping, true);
+            _rb.AddForce(new Vector3(0,impulse,0), ForceMode.Impulse);
+        }
+        */
+    }
+
+    void ResetJump()
+    {
+        readyToJump = true;
+    }
+    
+    
     void MovePlayer()
     {
-        _moveDirection = toFollow.transform.forward * _verticalInput + toFollow.right * _horizontalInput;
-        _rb.velocity = _actualSpeed * _moveDirection.normalized;
+        if (_inMotion)
+        {
+            _moveDirection = toFollow.forward * _verticalInput + toFollow.right * _horizontalInput;
+            _moveDirection.y = 0;
+        }
+        
+        if (grounded)
+        {
+            _rb.AddForce(_actualSpeed * _moveDirection.normalized,ForceMode.VelocityChange);
+            
+            _rigidbodyDrag = new Vector3(-_rb.velocity.x, 0, -_rb.velocity.z)*groundDrag;
+        }
+
+        if (!grounded)
+        {
+            _rigidbodyDrag = -_rb.velocity*airDrag;
+            _rb.AddForce(_rigidbodyDrag*groundDrag, ForceMode.Acceleration);
+
+        }
+        
+        _rb.AddForce(_rigidbodyDrag, ForceMode.Acceleration);
+
     }
 
     void RotatePlayer()
     {
-        Quaternion rotation = Quaternion.LookRotation(_moveDirection);
-        float damping = 10;
-        transform.rotation = Quaternion.Slerp (transform.rotation, rotation, Time.deltaTime * damping);
+        if (_moveDirection != Vector3.zero)
+        {
+            Quaternion rotation = Quaternion.LookRotation(_moveDirection);
+            transform.rotation = Quaternion.Slerp (transform.rotation, rotation, Time.deltaTime * dampingRotation);
+        }
+        
     }
 
     private void AnimationBehavior()
     {
-        characterAnimator.SetBool(IsWalkingForward, _verticalInput > 0 && _horizontalInput == 0);
-        characterAnimator.SetBool(IsWalkingBackward, _verticalInput < 0 && _horizontalInput == 0);
+        if (characterAnimator == null)
+        {
+            Debug.LogWarning("No Animator Character on "+name);
+            return;  
+        }
         
-        characterAnimator.SetBool(IsWalkingRight, _horizontalInput > 0);
-        characterAnimator.SetBool(IsWalkingLeft, _horizontalInput < 0);
-
         characterAnimator.SetBool(IsRunning, Mathf.Approximately(_actualSpeed,runSpeed) && (_verticalInput != 0 || _horizontalInput != 0));
+        
+        characterAnimator.SetFloat(VelocityHash,velocity);
+        
+        characterAnimator.SetBool(IsJumping, _isJumping);
+    }
+
+    private void MoveUpCapsuleCollision()
+    {
+        Vector3 capsuleCenter = _capsuleCollider.center;
+        if (_capsuleCollider.height > playerHeight / 1.5)
+        {
+            float updatedCapsuleHeight = _capsuleCollider.height - Time.deltaTime * updateColliderSpeedUp;
+            _capsuleCollider.height = updatedCapsuleHeight;
+        }
+
+        //print("ok");
+
+        if (capsuleCenter.y < centerJumpCollider) //capsuleCenter.y <= originCenterCollider)
+        {
+            float updatedCapsuleCenter = _capsuleCollider.center.y + Time.deltaTime * updateColliderSpeedUp;
+
+            _capsuleCollider.center = new Vector3(capsuleCenter.x, updatedCapsuleCenter, capsuleCenter.z);
+        }
+
+        //flameCollider.center = new Vector3(initFlameCenter.x,initFlameCenter.y,upgradedFlameSize/2);
+
+    }
+    
+    private void MoveDownCapsuleCollision()
+    {
+        Vector3 capsuleCenter = _capsuleCollider.center;
+        if (_capsuleCollider.height < playerHeight)
+        {
+            float updatedCapsuleHeight = _capsuleCollider.height + Time.deltaTime * updateColliderSpeedDown;
+
+            _capsuleCollider.height = updatedCapsuleHeight;
+        }
+        else
+        {
+            _capsuleCollider.height = playerHeight;
+        }
+
+        if (capsuleCenter.y > originCenterCollider) //capsuleCenter.y <= originCenterCollider)
+        {
+            float updatedCapsuleCenter = _capsuleCollider.center.y - Time.deltaTime * updateColliderSpeedDown;
+
+            _capsuleCollider.center = new Vector3(capsuleCenter.x, updatedCapsuleCenter, capsuleCenter.z);
+        }
+        else
+        {
+            _capsuleCollider.center = new Vector3(capsuleCenter.x, originCenterCollider, capsuleCenter.z);
+        }
+
+    }
+    
+    private void UpdateSizeCapsuleCollision()
+    {
+
+        if(_jumpStarted && !grounded){
+            
+        _frameJump += Time.deltaTime*30 ;
+            
+            //jusqu'à 0.15
+            if (startFrame < _frameJump && _frameJump < transitionFrame ) // || _capsuleCollider.height > playerHeight/1.5)//flameCollider.size.z < initFlameCenter.z * stats.range && target)
+            {
+                MoveUpCapsuleCollision();
+            }
+            
+            //jusqu'à la fin
+            else if (transitionFrame < _frameJump && _frameJump < endFrame)
+            {
+                MoveDownCapsuleCollision();
+            }
+            
+            else if (_frameJump > endFrame)
+            {
+                _jumpStarted = false;
+                _frameJump = 0;
+            }
+        }
+
     }
 }
 
