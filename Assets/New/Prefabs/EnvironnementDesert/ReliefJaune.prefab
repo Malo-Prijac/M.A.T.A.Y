@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 9168694490828503848}
   - component: {fileID: 6335034514570199650}
   - component: {fileID: 7408186583551633142}
-  m_Layer: 0
+  - component: {fileID: 1539809565250860511}
+  m_Layer: 3
   m_Name: default
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83,6 +84,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1539809565250860511
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111341433595095059}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2432090755550338912, guid: bf0656262c93a6f43a4ac491bd07f917, type: 3}
 --- !u!1 &2970799782392740195
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,9 +107,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 728398334151917019}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ReliefJaune
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
