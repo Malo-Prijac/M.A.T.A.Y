@@ -13,9 +13,7 @@ public class ButtonPont : MonoBehaviour
     [SerializeField] private List<GameObject> _linkedDoors;
     [SerializeField] private bool _defaultState = false;
     [SerializeField] private GameObject _pillar;
-    public GameObject pressE;
-    public GameObject dead;
-    public TextMeshProUGUI reasonDead;
+    [SerializeField] private GameObject pressO;
 
     private bool _isOn = false;
 
@@ -28,10 +26,6 @@ public class ButtonPont : MonoBehaviour
         {
             go.GetComponent<Animator>().enabled = false;
         }
-        
-        pressE.SetActive(false);
-        dead.SetActive(false);
-        reasonDead.enabled=false;
     }
 
 
@@ -49,10 +43,7 @@ public class ButtonPont : MonoBehaviour
                 _isOn = true;
             }
             
-            pressE.SetActive(false);
-            //dead.SetActive(true);
-            //reasonDead.enabled=true;
-            //reasonDead.text = "Mort car il est con";
+            pressO.SetActive(false);
 
         }
     }
@@ -61,13 +52,13 @@ public class ButtonPont : MonoBehaviour
     {
         if (!_isOn)
         {
-            pressE.SetActive(true);
+            pressO.SetActive(true);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        pressE.SetActive(false);
+        pressO.SetActive(false);
     }
 
 }

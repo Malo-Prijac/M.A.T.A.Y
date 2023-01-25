@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Caisse
   - Ground
+  - Canvas
   layers:
   - Default
   - TransparentFX

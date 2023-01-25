@@ -85,7 +85,7 @@ public class Weapon : MonoBehaviour
             PlayerHealthSystem playerHealthSystem = other.gameObject.GetComponent<PlayerHealthSystem>();
             if (!playerHealthSystem)
                 return;
-            playerHealthSystem.TakeDamage(damageMulti);
+            playerHealthSystem.TakeDamage(damageMulti,"un ennemi");
             
         }
     }
