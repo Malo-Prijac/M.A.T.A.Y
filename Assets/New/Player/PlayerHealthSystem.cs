@@ -7,9 +7,8 @@ public class PlayerHealthSystem : MonoBehaviour
 {
     
     [SerializeField] private float health = 100;
-    public GameObject dead;
+    [SerializeField] private GameObject gameOver;
     private string reason = "";
-    //public GameObject reasonDeath;
     private bool alive = true;
     
     // Start is called before the first frame update
@@ -36,17 +35,27 @@ public class PlayerHealthSystem : MonoBehaviour
             {
                 alive = false;
                 reason = "Mort par "+reasonD;
-                Death();
+                PlayerDeath();
             }
            
         }
     }
     
-    public void Death()
+    public void PlayerDeath()
     {
-        GameObject GameOver = Instantiate(dead, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
-        GameOver.transform.SetParent (GameObject.FindGameObjectWithTag("Canvas").transform, false);
-        GameOver.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = reason;
-        GameOver.SetActive(true);
+        this.GetComponent<PlayerCharacterController>().enabled = false;
+        gameOver.SetActive(true);
+        gameOver.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = reason;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+    }
+    
+    public void Respawn()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        this.GetComponent<PlayerCharacterController>().enabled = true;
+        gameOver.SetActive(false);
+        transform.position = new Vector3(0, 0, 0);
     }
 }
