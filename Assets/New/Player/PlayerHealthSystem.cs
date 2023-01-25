@@ -48,6 +48,7 @@ public class PlayerHealthSystem : MonoBehaviour
         gameOver.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = reason;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
+        transform.position = new Vector3(0, 0, 0);
     }
     
     public void Respawn()
@@ -56,6 +57,7 @@ public class PlayerHealthSystem : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         this.GetComponent<PlayerCharacterController>().enabled = true;
         gameOver.SetActive(false);
-        transform.position = new Vector3(0, 0, 0);
+        health = 100;
+        alive = true;
     }
 }
