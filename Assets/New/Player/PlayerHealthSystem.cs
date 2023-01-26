@@ -12,6 +12,7 @@ public class PlayerHealthSystem : MonoBehaviour
     private bool alive = true;
     private string reason = "";
     [SerializeField] private GameObject gameOver;
+    [SerializeField] private Vector3 spawn;
     
     void Start()
     {
@@ -59,12 +60,12 @@ public class PlayerHealthSystem : MonoBehaviour
     
     public void PlayerDeath()
     {
-        //this.GetComponent<PlayerCharacterController>().enabled = false;
+        this.GetComponent<PlayerCharacterController>().enabled = false;
         gameOver.SetActive(true);
         gameOver.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = reason;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
-        transform.position = new Vector3(36.8699989f,5.44000006f,-8.89000034f);
+        transform.position = spawn;
         Debug.Log("Yo");
     }
     
@@ -73,9 +74,9 @@ public class PlayerHealthSystem : MonoBehaviour
         Debug.Log("COUCOU");
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        //this.GetComponent<PlayerCharacterController>().enabled = true;
+        this.GetComponent<PlayerCharacterController>().enabled = true;
         gameOver.SetActive(false);
-        currentHealth = 100;
+        currentHealth = maxHealth;
         alive = true;
     }
 }
