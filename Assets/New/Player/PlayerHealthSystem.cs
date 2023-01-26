@@ -29,7 +29,7 @@ public class PlayerHealthSystem : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, string t)
     {
         currentHealth-=damage;
         
