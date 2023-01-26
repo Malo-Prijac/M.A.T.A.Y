@@ -5,7 +5,12 @@ using UnityEngine;
 
 public class Abilities : MonoBehaviour
 {
-    public float dashSpeed = 5f;
+    /*
+    [SerializeField] private Animator charaterAnimator;
+    private static readonly int IsDashing = Animator.StringToHash("IsDashing");
+    */
+    
+    public float dashSpeed = 1f;
     public float dashTime = 0.5f;
     public float dashCoolDown = 1f;
     public float jumpForce = 5f;
@@ -13,16 +18,16 @@ public class Abilities : MonoBehaviour
     private int currentJumpCount;
     public AudioSource dashSound;
     public AudioSource jumpSound;
-    public TrailRenderer trail;
     private float currentDashTime;
     private float currentDashCooldown;
     private bool isDashing;
-    private Rigidbody rb;
-
-    public GameObject bulletPrefab;
-    public Transform bulletSpawn;
     public float bulletSpeed = 100f;
 
+    private Rigidbody rb;
+    public GameObject bulletPrefab;
+    public Transform bulletSpawn;
+    public Transform targetCamera;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -34,8 +39,9 @@ public class Abilities : MonoBehaviour
     void Update()
     {
         //Dash
-        if (Input.GetKeyDown(KeyCode.D) == true && !isDashing && currentDashCooldown <= 0)
+        if (Input.GetKeyDown(KeyCode.C) == true && !isDashing && currentDashCooldown <= 0)
         {
+            Debug.Log("Dashing");
             StartCoroutine(DashRoutine());
         }
 
@@ -81,28 +87,26 @@ public class Abilities : MonoBehaviour
     void Shoot()
     {
         Debug.Log("Shooting");
-        var bullet = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
-        bullet.GetComponent<Rigidbody>().velocity = bulletSpawn.forward * bulletSpeed;
-        Destroy(bullet,2);
+        GameObject bullet = Instantiate(bulletPrefab, targetCamera.position, targetCamera.rotation);
+        Rigidbody rb = bullet.GetComponent<Rigidbody>();
+        rb.AddForce(bullet.transform.forward * bulletSpeed, ForceMode.VelocityChange);
+        Destroy(bullet,1);
     }
     
     IEnumerator DashRoutine()
     {
         isDashing = true;
         currentDashTime = dashTime;
-        dashSound.Play();
-        trail.emitting = true;
-        
+        //dashSound.Play();
         while (currentDashTime > 0)
         {
             //rb.velocity = transform.forward * dashSpeed;
-            rb.AddForce(transform.forward*dashSpeed,ForceMode.Impulse);
+            rb.AddForce(transform.forward*dashSpeed,ForceMode.VelocityChange);
             currentDashTime -= Time.deltaTime;
             yield return null;
         }
 
         isDashing = false;
-        trail.emitting = false;
         currentDashCooldown = dashCoolDown;
     }
 

@@ -1,63 +1,59 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealthSystem : MonoBehaviour
 {
+    public float maxHealth = 100f;
+
+    public float currentHealth;
+
+    public TextMeshProUGUI _displayHealth;
+
+    public Image HealthBar;
     
-    [SerializeField] private float health = 100;
-    [SerializeField] private GameObject gameOver;
-    private string reason = "";
-    private bool alive = true;
-    
-    // Start is called before the first frame update
     void Start()
     {
-        
+        currentHealth = maxHealth;
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
-        
-    }
-
-    
-    
-    public void TakeDamage(float damage, string reasonD)
-    {
-        print("PLAYER TAKE " + damage);
-        health = health - damage;
-        if (health <= 0)
+        _displayHealth.text = currentHealth + "/100";
+        HealthBar.fillAmount = currentHealth/maxHealth;
+        if (Input.GetKeyDown(KeyCode.H))
         {
-            if (alive)
-            {
-                alive = false;
-                reason = "Mort par "+reasonD;
-                PlayerDeath();
-            }
-           
+            Heal();
         }
     }
-    
-    public void PlayerDeath()
+
+    public void TakeDamage(float damage)
     {
-        this.GetComponent<PlayerCharacterController>().enabled = false;
-        gameOver.SetActive(true);
-        gameOver.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = reason;
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.Confined;
-        transform.position = new Vector3(0, 0, 0);
+        currentHealth-=damage;
+        
+        if (currentHealth == 0)
+        {
+            Die();
+        }
     }
-    
-    public void Respawn()
+
+    public void Die()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        this.GetComponent<PlayerCharacterController>().enabled = true;
-        gameOver.SetActive(false);
-        health = 100;
-        alive = true;
+        print("Dead");
+        currentHealth = maxHealth;
+    }
+
+    public void Heal()
+    {
+        if (currentHealth >= 50)
+        {
+            currentHealth = maxHealth;
+        }
+        else
+        {
+            currentHealth += 50;
+        }
     }
 }
