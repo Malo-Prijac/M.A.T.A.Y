@@ -27,8 +27,7 @@ public class PlayerHealthSystem : MonoBehaviour
             //Heal();
         }
     }
-
-
+    
 
     public void Heal()
     {
@@ -60,21 +59,17 @@ public class PlayerHealthSystem : MonoBehaviour
     
     public void PlayerDeath()
     {
-        this.GetComponent<PlayerCharacterController>().enabled = false;
         gameOver.SetActive(true);
+        transform.position = spawn;
         gameOver.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = reason;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
-        transform.position = spawn;
-        Debug.Log("Yo");
     }
     
     public void Respawn()
     {
-        Debug.Log("COUCOU");
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        this.GetComponent<PlayerCharacterController>().enabled = true;
         gameOver.SetActive(false);
         currentHealth = maxHealth;
         alive = true;
