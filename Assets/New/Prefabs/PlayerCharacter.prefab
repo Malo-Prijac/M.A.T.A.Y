@@ -546,7 +546,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7339287370936714867}
   m_Layer: 0
-  m_Name: 'ToFollow (Missing Prefab with guid: d6f2d3ce9053feb41b4337cc17aaaed6)'
+  m_Name: ToFollow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -560,7 +560,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4150254963932878274}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1004,8 +1004,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.3
-  m_Height: 1.6
+  m_Radius: 0.25
+  m_Height: 1.7
   m_Direction: 1
   m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!114 &2382302055627123646
@@ -1070,6 +1070,7 @@ MonoBehaviour:
   maxHealth: 100
   healthBar: {fileID: 0}
   gameOver: {fileID: 0}
+  spawn: {x: 0, y: 0, z: 0}
 --- !u!114 &238689356507018292
 MonoBehaviour:
   m_ObjectHideFlags: 0

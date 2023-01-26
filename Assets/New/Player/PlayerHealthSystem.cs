@@ -21,7 +21,10 @@ public class PlayerHealthSystem : MonoBehaviour
     
     void Update()
     {
-        healthBar.fillAmount = currentHealth/maxHealth;
+        if (healthBar)
+        {
+            healthBar.fillAmount = currentHealth/maxHealth;
+        }
         if (Input.GetKeyDown(KeyCode.H))
         {
             //Heal();
