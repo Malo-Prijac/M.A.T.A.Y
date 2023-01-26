@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class Abilities : MonoBehaviour
 {
+    /*
+    [SerializeField] private Animator charaterAnimator;
+    private static readonly int IsDashing = Animator.StringToHash("IsDashing");
+    */
+    
     public float dashSpeed = 1f;
     public float dashTime = 0.5f;
     public float dashCoolDown = 1f;
@@ -93,7 +98,6 @@ public class Abilities : MonoBehaviour
         isDashing = true;
         currentDashTime = dashTime;
         //dashSound.Play();
-        
         while (currentDashTime > 0)
         {
             //rb.velocity = transform.forward * dashSpeed;

@@ -7,7 +7,8 @@ public class PlayerCharacterController : MonoBehaviour
     private static readonly int IsRunning = Animator.StringToHash("IsRunning");
     private static readonly int IsJumping = Animator.StringToHash("IsJumping");
     private static readonly int VelocityHash = Animator.StringToHash("Velocity");
-
+    private static readonly int IsDashing = Animator.StringToHash("IsDashing");
+    
     [Header("Movement")]
     [SerializeField] private Transform toFollow;
     [SerializeField] private float walkSpeed = 4;
