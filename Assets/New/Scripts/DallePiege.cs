@@ -37,7 +37,7 @@ public class DallePiege : MonoBehaviour
     IEnumerator Fall(PlayerHealthSystem playerHealthSystem)
     {
         Debug.Log("TO2");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         Debug.Log("TO222");
         playerHealthSystem.TakeDamage(100,"chute vertigineuse");
     }
