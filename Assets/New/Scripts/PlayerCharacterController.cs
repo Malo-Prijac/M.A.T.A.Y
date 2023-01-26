@@ -63,6 +63,8 @@ public class PlayerCharacterController : MonoBehaviour
     [SerializeField] private float transitionFrame;
     [SerializeField] private float endFrame;
 
+    public bool bague = false;
+
     private Vector3 _rigidbodyDrag;
     void Start()
     {

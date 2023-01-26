@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PrintTextDialogue : MonoBehaviour
+public class Bague : MonoBehaviour
 {
     [SerializeField] private GameObject pressO;
     [SerializeField] private GameObject dialogue;
@@ -11,6 +11,8 @@ public class PrintTextDialogue : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.O) && (other.CompareTag("Player")))
         {
+            PlayerCharacterController playerCharacterController = other.gameObject.GetComponent<PlayerCharacterController>();
+            playerCharacterController.bague = true;
             pressO.SetActive(false);
             dialogue.SetActive(true);
         }
