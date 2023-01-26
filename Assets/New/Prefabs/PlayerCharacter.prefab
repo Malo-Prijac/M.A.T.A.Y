@@ -930,6 +930,7 @@ GameObject:
   - component: {fileID: 7339287370887994567}
   - component: {fileID: 2382302055627123646}
   - component: {fileID: 5868336982018673990}
+  - component: {fileID: 238689356507018292}
   m_Layer: 0
   m_Name: PlayerCharacter
   m_TagString: Player
@@ -1066,8 +1067,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a74fd581ad18b940a2d786dc37eac6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  maxHealth: 100
+  healthBar: {fileID: 0}
   gameOver: {fileID: 0}
+--- !u!114 &238689356507018292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7573659479313949081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9e56ec426aced741ae5782bd81aa0b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashSpeed: 1
+  dashTime: 0.5
+  dashCoolDown: 1
+  jumpForce: 5
+  jumpCount: 2
+  dashSound: {fileID: 0}
+  jumpSound: {fileID: 0}
+  bulletSpeed: 100
+  bulletPrefab: {fileID: 0}
+  bulletSpawn: {fileID: 0}
+  targetCamera: {fileID: 0}
 --- !u!1 &7700982079095751362
 GameObject:
   m_ObjectHideFlags: 0

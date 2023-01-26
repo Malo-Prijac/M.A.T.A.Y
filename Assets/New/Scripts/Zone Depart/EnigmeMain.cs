@@ -18,8 +18,8 @@ public class EnigmeMain : MonoBehaviour
             PlayerCharacterController playerCharacterController = other.gameObject.GetComponent<PlayerCharacterController>();
             if (playerCharacterController.bague)
             {
-                dialogue2.SetActive(true);
                 enemy.SetActive(true);
+                dialogue2.SetActive(true);
             }
             else
             {

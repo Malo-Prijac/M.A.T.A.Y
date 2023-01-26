@@ -6,17 +6,12 @@ using UnityEngine.UI;
 
 public class PlayerHealthSystem : MonoBehaviour
 {
-    public float maxHealth = 100f;
-
-    public float currentHealth;
-    
-    public Image HealthBar;
-
+    [SerializeField] private float maxHealth = 100f;
+    private float currentHealth;
+    [SerializeField] private Image healthBar;
     private bool alive = true;
-
-    public string reason = "";
-
-    public GameObject gameOver;
+    private string reason = "";
+    [SerializeField] private GameObject gameOver;
     
     void Start()
     {
@@ -25,7 +20,7 @@ public class PlayerHealthSystem : MonoBehaviour
     
     void Update()
     {
-        HealthBar.fillAmount = currentHealth/maxHealth;
+        healthBar.fillAmount = currentHealth/maxHealth;
         if (Input.GetKeyDown(KeyCode.H))
         {
             //Heal();
@@ -64,19 +59,21 @@ public class PlayerHealthSystem : MonoBehaviour
     
     public void PlayerDeath()
     {
-        this.GetComponent<PlayerCharacterController>().enabled = false;
+        //this.GetComponent<PlayerCharacterController>().enabled = false;
         gameOver.SetActive(true);
         gameOver.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = reason;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
-        transform.position = new Vector3(0, 0, 0);
+        transform.position = new Vector3(36.8699989f,5.44000006f,-8.89000034f);
+        Debug.Log("Yo");
     }
     
     public void Respawn()
     {
+        Debug.Log("COUCOU");
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        this.GetComponent<PlayerCharacterController>().enabled = true;
+        //this.GetComponent<PlayerCharacterController>().enabled = true;
         gameOver.SetActive(false);
         currentHealth = 100;
         alive = true;
