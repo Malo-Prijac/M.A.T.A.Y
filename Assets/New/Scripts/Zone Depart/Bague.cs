@@ -5,16 +5,18 @@ using UnityEngine;
 public class Bague : MonoBehaviour
 {
     [SerializeField] private GameObject pressO;
-    [SerializeField] private GameObject dialogue;
+    [SerializeField] private GameObject bagueTrouve;
+
+    private PlayerCharacterController playerCharacterController;
     // Start is called before the first frame update
     private void OnTriggerStay(Collider other)
     {
         if (Input.GetKey(KeyCode.O) && (other.CompareTag("Player")))
         {
-            PlayerCharacterController playerCharacterController = other.gameObject.GetComponent<PlayerCharacterController>();
+            playerCharacterController = other.gameObject.GetComponent<PlayerCharacterController>();
             playerCharacterController.bague = true;
             pressO.SetActive(false);
-            dialogue.SetActive(true);
+            bagueTrouve.SetActive(true);
         }
     }
 
@@ -26,6 +28,6 @@ public class Bague : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         pressO.SetActive(false);
-        dialogue.SetActive(false);
+        bagueTrouve.SetActive(false);
     }
 }
