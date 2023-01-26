@@ -47579,7 +47579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c89aa85162d35db4c9d6fe84b6fc6a54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pressO: {fileID: 0}
+  pressO: {fileID: 2160060259561409978}
   dialogue: {fileID: 605757216}
   dialogue2: {fileID: 1145106303}
   enemy: {fileID: 4455130685588894633}
@@ -53532,7 +53532,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54bf82baa999b7847925f5f7b54fda61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 0}
+  text: {fileID: 262842045}
 --- !u!1 &5856850134731967784 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3180266977403650937, guid: 155478ec15b9f5644b5409e830c2277a, type: 3}
@@ -55114,7 +55114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54bf82baa999b7847925f5f7b54fda61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 0}
+  text: {fileID: 2089362925}
 --- !u!65 &5856850136203113369
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -55319,8 +55319,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 740dfb9778696644a9944cd664cbfe8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pressO: {fileID: 0}
-  dialogue: {fileID: 0}
+  pressO: {fileID: 2160060259561409978}
+  dialogue: {fileID: 2122104768}
 --- !u!64 &8701526843521706673
 MeshCollider:
   m_ObjectHideFlags: 0
