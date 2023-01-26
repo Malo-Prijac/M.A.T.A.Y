@@ -9,9 +9,9 @@ using UnityEngine.UI;
 public class Weapon : MonoBehaviour
 {
     [Header("Player Tag")]
-    [ReadOnly] [SerializeField] private string playerTag ="Player";
+    [ReadOnly] [SerializeField] protected string playerTag ="Player";
     [Header("Weapon Stats")]
-    [SerializeField]private float damageMulti;
+    [SerializeField]protected float damageMulti;
 
     [SerializeField] private bool IsFiringProjectiles;
     [ConditionalField("IsFiringProjectiles")][SerializeField] 
@@ -24,10 +24,10 @@ public class Weapon : MonoBehaviour
     
     [Header("Owner")]
 
-    private GameObject _player;
-    private float _playerheight;
+    protected GameObject _player;
+    protected float _playerheight;
 
-    [SerializeField][ReadOnly]private GameObject owner;
+    [SerializeField][ReadOnly]protected GameObject owner;
 
 
     // Start is called before the first frame update
