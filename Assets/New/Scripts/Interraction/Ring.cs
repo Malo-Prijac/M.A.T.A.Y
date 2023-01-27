@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bague : MonoBehaviour
+public class Ring : MonoBehaviour
 {
-    [SerializeField] private Canvas pressO;
-    [SerializeField] private Canvas bagueTrouve;
+    [SerializeField] private Canvas interraction;
+    [SerializeField] private Canvas ringFound;
 
     private PlayerCharacterController playerCharacterController;
     // Start is called before the first frame update
@@ -15,8 +15,8 @@ public class Bague : MonoBehaviour
         {
             playerCharacterController = other.gameObject.GetComponent<PlayerCharacterController>();
             playerCharacterController.bague = true;
-            pressO.enabled=false;
-            bagueTrouve.enabled=true;
+            interraction.enabled=false;
+            ringFound.enabled=true;
         }
     }
 
@@ -24,7 +24,7 @@ public class Bague : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            pressO.enabled = true;
+            interraction.enabled = true;
         }
     }
 
@@ -32,8 +32,8 @@ public class Bague : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            pressO.enabled = false;
-            bagueTrouve.enabled = false;
+            interraction.enabled = false;
+            ringFound.enabled = false;
         }
     }
 }

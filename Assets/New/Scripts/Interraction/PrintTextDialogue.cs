@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class PrintTextDialogue : MonoBehaviour
 {
-    [SerializeField] private Canvas pressO;
+    [SerializeField] private Canvas speakStatue;
     [SerializeField] private Canvas dialogue;
     // Start is called before the first frame update
     private void OnTriggerStay(Collider other)
     {
         if (Input.GetKey(KeyCode.O) && (other.CompareTag("Player")))
         {
-            pressO.enabled=false;
+            speakStatue.enabled=false;
             dialogue.enabled=true;
         }
     }
@@ -20,7 +20,7 @@ public class PrintTextDialogue : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            pressO.enabled = true;
+            speakStatue.enabled = true;
         }
     }
 
@@ -28,7 +28,7 @@ public class PrintTextDialogue : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            pressO.enabled = false;
+            speakStatue.enabled = false;
             dialogue.enabled = false;
         }
     }
