@@ -11,7 +11,7 @@ public class PlayerHealthSystem : MonoBehaviour
     [SerializeField] private Image healthBar;
     private bool alive = true;
     private string reason = "";
-    [SerializeField] private GameObject gameOver;
+    [SerializeField] private Canvas gameOver;
     [SerializeField] private Vector3 spawn;
     
     void Start()
@@ -62,7 +62,7 @@ public class PlayerHealthSystem : MonoBehaviour
     
     public void PlayerDeath()
     {
-        gameOver.SetActive(true);
+        gameOver.enabled=true;
         transform.position = spawn;
         gameOver.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = reason;
         Cursor.visible = true;
@@ -73,7 +73,7 @@ public class PlayerHealthSystem : MonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        gameOver.SetActive(false);
+        gameOver.enabled=false;
         currentHealth = maxHealth;
         alive = true;
     }

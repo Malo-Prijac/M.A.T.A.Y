@@ -18,12 +18,18 @@ public class PrintTextDialogue : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        pressO.enabled=true;
+        if (other.CompareTag("Player"))
+        {
+            pressO.enabled = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        pressO.enabled=false;
-        dialogue.enabled=false;
+        if (other.CompareTag("Player"))
+        {
+            pressO.enabled = false;
+            dialogue.enabled = false;
+        }
     }
 }

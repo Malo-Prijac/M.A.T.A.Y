@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Bague : MonoBehaviour
 {
-    [SerializeField] private GameObject pressO;
-    [SerializeField] private GameObject bagueTrouve;
+    [SerializeField] private Canvas pressO;
+    [SerializeField] private Canvas bagueTrouve;
 
     private PlayerCharacterController playerCharacterController;
     // Start is called before the first frame update
@@ -15,19 +15,25 @@ public class Bague : MonoBehaviour
         {
             playerCharacterController = other.gameObject.GetComponent<PlayerCharacterController>();
             playerCharacterController.bague = true;
-            pressO.SetActive(false);
-            bagueTrouve.SetActive(true);
+            pressO.enabled=false;
+            bagueTrouve.enabled=true;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        pressO.SetActive(true);
+        if (other.CompareTag("Player"))
+        {
+            pressO.enabled = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        pressO.SetActive(false);
-        bagueTrouve.SetActive(false);
+        if (other.CompareTag("Player"))
+        {
+            pressO.enabled = false;
+            bagueTrouve.enabled = false;
+        }
     }
 }

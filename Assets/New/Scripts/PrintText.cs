@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class PrintText : MonoBehaviour
 {
-    [SerializeField] private GameObject text;
+    [SerializeField] private Canvas text;
     // Start is called before the first frame update
     
     private void OnTriggerEnter(Collider other)
     {
-        text.SetActive(true);
+        if (other.CompareTag("Player"))
+        {
+            text.enabled = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        text.SetActive(false);
+        if (other.CompareTag("Player"))
+        {
+            text.enabled = false;
+        }
     }
 }

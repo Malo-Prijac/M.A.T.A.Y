@@ -5,25 +5,25 @@ using UnityEngine;
 
 public class EnigmeMain : MonoBehaviour
 {
-    [SerializeField] private GameObject pressO;
-    [SerializeField] private GameObject dialogue;
-    [SerializeField] private GameObject dialogue2;
+    [SerializeField] private Canvas pressO;
+    [SerializeField] private Canvas dialogue;
+    [SerializeField] private Canvas dialogue2;
     [SerializeField] private GameObject enemy;
     // Start is called before the first frame update
     private void OnTriggerStay(Collider other)
     {
         if (Input.GetKey(KeyCode.O) && (other.CompareTag("Player")))
         {
-            pressO.SetActive(false);
+            pressO.enabled=false;
             PlayerCharacterController playerCharacterController = other.gameObject.GetComponent<PlayerCharacterController>();
             if (playerCharacterController.bague)
             {
                 enemy.SetActive(true);
-                dialogue2.SetActive(true);
+                dialogue2.enabled=true;
             }
             else
             {
-                dialogue.SetActive(true);
+                dialogue.enabled=true;
             }
             
         }
@@ -31,13 +31,19 @@ public class EnigmeMain : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        pressO.SetActive(true);
+        if (other.CompareTag("Player"))
+        {
+            pressO.enabled=true; 
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        pressO.SetActive(false);
-        dialogue.SetActive(false);
-        dialogue2.SetActive(false);
+        if (other.CompareTag("Player"))
+        {
+            pressO.enabled = false;
+            dialogue.enabled = false;
+            dialogue2.enabled = false;
+        }
     }
 }
