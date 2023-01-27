@@ -10,43 +10,24 @@ public class Weapon : MonoBehaviour
 {
     [Header("Player Tag")]
     [ReadOnly] [SerializeField] protected string playerTag ="Player";
-    [Header("Weapon Stats")]
-    [SerializeField]protected float damageMulti;
 
-    [SerializeField] private bool IsFiringProjectiles;
-    [ConditionalField("IsFiringProjectiles")][SerializeField] 
-    private float launchVelocity;
-    [ConditionalField("IsFiringProjectiles")][SerializeField] 
-    private float airDragY;
-    [ConditionalField("IsFiringProjectiles")][SerializeField] 
-    private float delayThrowProjectile = 0.2f;
-    [ConditionalField("IsFiringProjectiles")][SerializeField] private GameObject projectile;
-    
     [Header("Owner")]
+    [SerializeField][ReadOnly]protected GameObject owner;
 
     protected GameObject _player;
     protected float _playerheight;
 
-    [SerializeField][ReadOnly]protected GameObject owner;
-
-
+    
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         _player = GameObject.FindWithTag(playerTag);
         _playerheight = _player.GetComponent<CapsuleCollider>().height;
     }
 
-    public float DamageMulti
-    {
-        get => damageMulti;
-        set => damageMulti = value;
-    }
-
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     public GameObject Owner
@@ -54,40 +35,9 @@ public class Weapon : MonoBehaviour
         get => owner;
         set => owner = value;
     }
-    public void Attack()
+    public virtual void Attack()
     {
-        if (IsFiringProjectiles)
-        {
-            StartCoroutine(ThrowProjectile());
-        }
     }
-
-    IEnumerator ThrowProjectile()
-    {
-        yield return new WaitForSeconds(delayThrowProjectile);
-        GameObject projectileGameObject = Instantiate(projectile, transform.position,  
-            transform.rotation);
-        projectileGameObject.GetComponent<Projectile>().Damage *= DamageMulti;
-        Quaternion aim = Quaternion.LookRotation(_player.transform.position + new Vector3(0,_playerheight/2,0) - transform.position).normalized;
-        
-        //projectileGameObject.transform.rotation = 
-        Rigidbody rb = projectileGameObject.GetComponent<Rigidbody>();
-        rb.AddForce(aim*Vector3.forward*launchVelocity,ForceMode.VelocityChange);
-        Vector3 _rigidbodyDrag = Vector3.up*airDragY;
-        rb.AddForce(_rigidbodyDrag, ForceMode.Acceleration);
-        
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-
-            PlayerHealthSystem playerHealthSystem = other.gameObject.GetComponent<PlayerHealthSystem>();
-            if (!playerHealthSystem)
-                return;
-            playerHealthSystem.TakeDamage(damageMulti);
-            
-        }
-    }
+    
 }
 

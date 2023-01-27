@@ -210,6 +210,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6530356524779038724, guid: 1ae057e726145694eadb87bba12f5dba, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6530356524779038724, guid: 1ae057e726145694eadb87bba12f5dba, type: 3}
+      propertyPath: weaponType
+      value: 
+      objectReference: {fileID: 4390578078104511541, guid: 5098cd4abcdef9145b9f9c0ef1b8ab5e, type: 3}
     - target: {fileID: 6713395715494023148, guid: 1ae057e726145694eadb87bba12f5dba, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -2961,7 +2969,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2345371090655143737, guid: ac160fe941899284898e0abf7f36defd, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3154699212768689539, guid: ac160fe941899284898e0abf7f36defd, type: 3}
       propertyPath: m_RootOrder
@@ -3568,6 +3576,10 @@ PrefabInstance:
     - target: {fileID: 3705908304576482402, guid: 2c269183a850db640ad7eb7032ad84ba, type: 3}
       propertyPath: m_Name
       value: skeleton_base
+      objectReference: {fileID: 0}
+    - target: {fileID: 3705908304576482402, guid: 2c269183a850db640ad7eb7032ad84ba, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4045876628163909336, guid: 2c269183a850db640ad7eb7032ad84ba, type: 3}
       propertyPath: m_RootOrder
@@ -5995,6 +6007,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1467389831, guid: d1f25de2d3482d64fa7dcbebc6aa659d, type: 3}
+      propertyPath: weaponType
+      value: 
+      objectReference: {fileID: 4390578078104511541, guid: 5098cd4abcdef9145b9f9c0ef1b8ab5e, type: 3}
+    - target: {fileID: 1467389831, guid: d1f25de2d3482d64fa7dcbebc6aa659d, type: 3}
       propertyPath: enemyAnimator
       value: 
       objectReference: {fileID: 1479729756}
@@ -6004,7 +6020,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2685536504596631714, guid: d1f25de2d3482d64fa7dcbebc6aa659d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3318908371836586520, guid: d1f25de2d3482d64fa7dcbebc6aa659d, type: 3}
       propertyPath: m_RootOrder
@@ -6520,6 +6536,10 @@ PrefabInstance:
     - target: {fileID: 7973020015391405556, guid: 02a4d4759c92cd04c8d8b5604ee18336, type: 3}
       propertyPath: m_Name
       value: skeleton_boss_demon@T-Pose
+      objectReference: {fileID: 0}
+    - target: {fileID: 7973020015391405556, guid: 02a4d4759c92cd04c8d8b5604ee18336, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02a4d4759c92cd04c8d8b5604ee18336, type: 3}

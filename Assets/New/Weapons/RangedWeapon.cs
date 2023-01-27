@@ -3,21 +3,30 @@ using System.Collections.Generic;
 using MyBox;
 using UnityEngine;
 
-public class ShootingWeapon : MonoBehaviour
+public class RangedWeapon : Weapon
 {
-    [ConditionalField("IsFiringProjectiles")][SerializeField] 
+    [Header("Weapon Stats")]
+    [SerializeField]protected float damageMulti = 1f;
+    
+    [Header("Projectile")]
+    [SerializeField] 
     private float velocityProjectile;
-    [ConditionalField("IsFiringProjectiles")][SerializeField] 
+    [SerializeField] 
     private float airDragY;
-    [ConditionalField("IsFiringProjectiles")][SerializeField] 
+    [SerializeField] 
     private float delayThrowProjectile = 0.2f;
-
-    [ConditionalField("IsFiringProjectiles")] [SerializeField]
+    [SerializeField]
     private GameObject projectile;
+    
+    public float DamageMulti
+    {
+        get => damageMulti;
+        set => damageMulti = value;
+    }
     // Start is called before the first frame update
     void Start()
     {
-        
+        base.Start();
     }
 
     // Update is called once per frame
@@ -26,8 +35,9 @@ public class ShootingWeapon : MonoBehaviour
         
     }
     
-    public new void Attack()
+    public override void Attack()
     {
+        base.Attack();
         StartCoroutine(ThrowProjectile());
     }
     

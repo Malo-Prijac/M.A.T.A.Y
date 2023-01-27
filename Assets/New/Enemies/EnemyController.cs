@@ -15,15 +15,14 @@ public class EnemyController : MonoBehaviour
     private static readonly int IsAttacking = Animator.StringToHash("IsAttacking");
     private static readonly int IsAiming = Animator.StringToHash("IsAiming");
 
-    [Header("Enemy Weapon Slots")] 
-    [SerializeField] private bool HasDifferentSlotForWeapon;
-    [ConditionalField("HasDifferentSlotForWeapon")][SerializeField] 
+    [Header("Enemy Weapon Slots")]
+    [SerializeField] 
     private Transform weaponSlotMovement;
-    [ConditionalField("HasDifferentSlotForWeapon")][SerializeField] 
+    [SerializeField] 
     private Transform weaponSlotAttack;
-    [ConditionalField("HasDifferentSlotForWeapon")][SerializeField] 
+    [SerializeField] 
     private float rotationSlotSpeed = 10;
-    [ConditionalField("HasDifferentSlotForWeapon")][SerializeField] 
+    [SerializeField] 
     private float positionSlotSpeed = 10;
 
     [Header("Player Tag")]
@@ -222,8 +221,6 @@ public class EnemyController : MonoBehaviour
     }
     private void ChangeSlot()
     {
-        if (!HasDifferentSlotForWeapon)
-            return;
         if (_isAttacking)
         {
             AttachWeaponToSlot(weaponSlotAttack);
