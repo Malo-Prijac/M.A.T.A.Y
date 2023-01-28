@@ -35,6 +35,9 @@ public class EnemyController : MonoBehaviour
     [ReadOnly] [SerializeField] private bool isPlayerInSight;
     [ReadOnly] [SerializeField] private bool isPlayerInRange;
 
+    [Header("Enemy sounds")]
+    [SerializeField] private Sound destroySound;
+
     
     [Header("Enemy Movement")]
     
