@@ -17,7 +17,7 @@ public class MeleeWeapon : Weapon
     // Start is called before the first frame update
     void Start()
     {
-        
+        base.Start();
     }
     
     // Update is called once per frame
@@ -28,8 +28,7 @@ public class MeleeWeapon : Weapon
     
     public override void Attack(Vector3 targetPosition)
     {
-
-        
+        base.Attack(targetPosition);
     }
     
     private void OnTriggerEnter(Collider other)
@@ -37,10 +36,12 @@ public class MeleeWeapon : Weapon
         if (!_applyDamage)
             return;
         
+        //if(attackSound)
+        
         if (other.gameObject.CompareTag("Player"))
         {
 
-            PlayerHealthSystem playerHealthSystem = other.gameObject.GetComponent<PlayerHealthSystem>();
+            HealthSystem playerHealthSystem = other.gameObject.GetComponent<HealthSystem>();
             if (!playerHealthSystem)
                 return;
             playerHealthSystem.TakeDamage(Damage, "skeleton");

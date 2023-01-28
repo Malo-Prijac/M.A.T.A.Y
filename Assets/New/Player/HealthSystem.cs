@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using MyBox;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHealthSystem : MonoBehaviour
+public class HealthSystem : MonoBehaviour
 {
     [SerializeField] private float maxHealth = 100f;
     private float currentHealth;
@@ -13,14 +14,16 @@ public class PlayerHealthSystem : MonoBehaviour
     private string reason = "";
     [SerializeField] private Canvas gameOver;
     [SerializeField] private Vector3 spawn;
-    [SerializeField] private Sound damageSound;
-    private AudioManager audioManager;
 
+    [Header("Sound Damaged")] 
+    [SerializeField] private bool OverrideSoundDamaged;
+    [ConditionalField("OverrideSoundDamaged")] [SerializeField] private Sound soundDamaged;
+    
+    private AudioManager _audioManager;
     void Start()
     {
         currentHealth = maxHealth;
-        damageSound.Owner = gameObject;
-        audioManager = AudioManager.instance;
+        _audioManager = AudioManager.instance;
         //audioManager.AddNewSound(damageSound);
     }
     
@@ -49,24 +52,32 @@ public class PlayerHealthSystem : MonoBehaviour
         }
     }
     
-    public void TakeDamage(float damage, string reasonD)
+    public void TakeDamage(float damage, string reasonD, Sound sound = null)
     {
-        if (damageSound != null)
+        if (!OverrideSoundDamaged && sound != null)
         {
-            audioManager.AddNewSound(damageSound);
-            audioManager.PlayAndDeleteAfter(damageSound);
+            soundDamaged = sound;
+        }
+        
+        if (soundDamaged.clip)
+        {
+            _audioManager.AddNewSound(soundDamaged, gameObject);
+            _audioManager.PlayAndDeleteAfter(soundDamaged);
         }
         print("PLAYER TAKE " + damage);
         currentHealth-=damage;
-        if (currentHealth <= 0)
+        if (gameObject.CompareTag("Player"))
         {
-            if (alive)
+            if (currentHealth <= 0)
             {
-                alive = false;
-                reason = "Mort par "+reasonD;
-                PlayerDeath();
-            }
+                if (alive)
+                {
+                    alive = false;
+                    reason = "Mort par "+reasonD;
+                    PlayerDeath();
+                }
            
+            }
         }
     }
     

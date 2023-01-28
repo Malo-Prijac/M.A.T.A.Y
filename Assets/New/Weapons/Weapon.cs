@@ -11,10 +11,9 @@ public class Weapon : MonoBehaviour
     [Header("Owner")]
     [SerializeField][ReadOnly]protected GameObject owner;
     
-
-    
+    protected AudioManager audioManager;
     // Start is called before the first frame update
-    public void Start()
+    protected void Start()
     {
     }
 

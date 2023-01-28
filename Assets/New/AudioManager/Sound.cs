@@ -22,8 +22,14 @@ public class Sound
 
     public SoundType type;
 
-    [HideInInspector]
-    public AudioSource source;
+    //[HideInInspector]
+    [ReadOnly] [SerializeField] private AudioSource source;
+
+    public AudioSource Source
+    {
+        get => source;
+        set => source = value;
+    }
 
     public bool loop;
 

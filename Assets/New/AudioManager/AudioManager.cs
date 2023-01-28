@@ -39,7 +39,7 @@ public class AudioManager : MonoBehaviour
 
         foreach (Sound sound in sounds)
         {
-            SetUpSound(sound);
+            SetUpSound(sound, sound.Owner);
         }
 
     }
@@ -71,21 +71,22 @@ public class AudioManager : MonoBehaviour
     }
     
     
-    private void SetUpSound(Sound sound)
+    private void SetUpSound(Sound sound, GameObject owner)
     {
-        sound.source = sound.Owner.AddComponent<AudioSource>();
-        sound.source.clip = sound.clip;
+        sound.Owner = owner;
+        sound.Source = owner.AddComponent<AudioSource>();
+        sound.Source.clip = sound.clip;
 
         //UpdateSoundVolume();
-        sound.source.volume = sound.volume;
+        sound.Source.volume = sound.volume;
         //UpdateSoundVolume();
-        sound.source.pitch = sound.pitch;
-        sound.source.loop = sound.loop;
+        sound.Source.pitch = sound.pitch;
+        sound.Source.loop = sound.loop;
     }
 
-    public void AddNewSound(Sound sound)
+    public void AddNewSound(Sound sound, GameObject owner)
     {
-        SetUpSound(sound);
+        SetUpSound(sound,owner);
         sounds.Add(sound);
     }
     
@@ -93,7 +94,7 @@ public class AudioManager : MonoBehaviour
     {
         //AudioSource[] audioSources = sound.Owner.GetComponents<AudioSource>();
         //AudioSource audioSource = Array.Find(audioSources, audioSources => audioSources == sound.source);
-        Destroy(sound.source,time);
+        Destroy(sound.Source,time);
         StartCoroutine(Remove(sound, time));
         print("removed");
         //Destroy(audioSource);
@@ -114,16 +115,28 @@ public class AudioManager : MonoBehaviour
             return;
         }
         
-        sound.source.Play();
+        sound.Source.Play();
     }
     public void Play(Sound sound)
     {
-        if (sound == null || !sound.source)
+        if (sound == null || !sound.Source)
         {
             //Debug.LogWarning("Sound \""+sound.name+"\" not found !");
             return;
         }
-        sound.source.Play();
+        UpdateSoundVolume();
+        sound.Source.Play();
+    }
+    
+    public void Play(Sound sound, float delay)
+    {
+        StartCoroutine(Wait(sound, delay));
+    }
+
+    private IEnumerator Wait(Sound sound, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Play(sound);
     }
 
     public void PlayAndDeleteAfter(Sound sound)
@@ -137,17 +150,17 @@ public class AudioManager : MonoBehaviour
     {
         foreach (Sound sound in sounds)
         {
-            if (sound.source)
+            if (sound.Source)
             {
                 switch(sound.type)
                 {
                     case SoundType.Effects :
-                        sound.source.volume = sound.volume * volumeEffects * volumeGeneral;
+                        sound.Source.volume = sound.volume * volumeEffects * volumeGeneral;
                         break;
             
             
                     case SoundType.BackgroundMusic :
-                        sound.source.volume =sound.volume*volumeMusic*volumeGeneral;
+                        sound.Source.volume =sound.volume*volumeMusic*volumeGeneral;
                             break;
                 
                 }
@@ -162,7 +175,7 @@ public class AudioManager : MonoBehaviour
 
         foreach (Sound sound in sounds)
         {
-            sound.source.Stop();
+            sound.Source.Stop();
         }
         sounds.Clear();
         foreach (AudioSource audioSource in audioSources)
@@ -174,7 +187,7 @@ public class AudioManager : MonoBehaviour
     {
         foreach (Sound sound in sounds)
         {
-            sound.source.Stop();
+            sound.Source.Stop();
         }
     }
 

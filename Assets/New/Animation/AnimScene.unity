@@ -575,7 +575,7 @@ PrefabInstance:
     - target: {fileID: 5868336982018673990, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
       propertyPath: damageSound.clip
       value: 
-      objectReference: {fileID: 8300000, guid: b1808801517c72b47a00fa5530729916, type: 3}
+      objectReference: {fileID: 8300000, guid: ee1916229a2deb34a90bcdf3efbd9c00, type: 3}
     - target: {fileID: 5868336982018673990, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
       propertyPath: damageSound.name
       value: test
@@ -585,7 +585,15 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5868336982018673990, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
+      propertyPath: soundDamaged.clip
+      value: 
+      objectReference: {fileID: 8300000, guid: ee1916229a2deb34a90bcdf3efbd9c00, type: 3}
+    - target: {fileID: 5868336982018673990, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
       propertyPath: damageSound.volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5868336982018673990, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
+      propertyPath: OverrideSoundDamaged
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7084403590897826595, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
@@ -2509,6 +2517,44 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb64dd3639fe7964c9b525eb8c6b03fe, type: 3}
+--- !u!1 &720847344 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2345371090655143737, guid: ac160fe941899284898e0abf7f36defd, type: 3}
+  m_PrefabInstance: {fileID: 884675347}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &720847351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 720847344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a74fd581ad18b940a2d786dc37eac6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  healthBar: {fileID: 0}
+  gameOver: {fileID: 0}
+  spawn: {x: 0, y: 0, z: 0}
+  OverrideSoundDamaged: 1
+  soundDamaged:
+    name: 
+    clip: {fileID: 8300000, guid: b1808801517c72b47a00fa5530729916, type: 3}
+    volume: 1
+    maxVolume: 1
+    pitch: 1
+    type: 0
+    source: {fileID: 0}
+    loop: 0
+    fadingTime: 0
+    FadingCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
 --- !u!1001 &741821254
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2987,13 +3033,21 @@ PrefabInstance:
       propertyPath: rangeAttack
       value: 1.4
       objectReference: {fileID: 0}
+    - target: {fileID: 420231880, guid: ac160fe941899284898e0abf7f36defd, type: 3}
+      propertyPath: attackSound.clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 6813bb29619e86e419170017a6c5175c, type: 3}
+    - target: {fileID: 420231880, guid: ac160fe941899284898e0abf7f36defd, type: 3}
+      propertyPath: delaySoundAttack
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 2345371090655143737, guid: ac160fe941899284898e0abf7f36defd, type: 3}
       propertyPath: m_Name
       value: egyptian_cac
       objectReference: {fileID: 0}
     - target: {fileID: 2345371090655143737, guid: ac160fe941899284898e0abf7f36defd, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3154699212768689539, guid: ac160fe941899284898e0abf7f36defd, type: 3}
       propertyPath: m_RootOrder
@@ -5468,6 +5522,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1372328459}
   m_Mesh: {fileID: 4300000, guid: 52352f841eb14f54abe9f1d740d88090, type: 3}
+--- !u!1 &1373973996 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2685536504596631714, guid: d1f25de2d3482d64fa7dcbebc6aa659d, type: 3}
+  m_PrefabInstance: {fileID: 1479729755}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1375082693
 GameObject:
   m_ObjectHideFlags: 0
@@ -6109,6 +6168,39 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 8714198376609878114, guid: d1f25de2d3482d64fa7dcbebc6aa659d, type: 3}
   m_PrefabInstance: {fileID: 1479729755}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1479729761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1373973996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a74fd581ad18b940a2d786dc37eac6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  healthBar: {fileID: 0}
+  gameOver: {fileID: 0}
+  spawn: {x: 0, y: 0, z: 0}
+  OverrideSoundDamaged: 1
+  soundDamaged:
+    name: 
+    clip: {fileID: 8300000, guid: b1808801517c72b47a00fa5530729916, type: 3}
+    volume: 1
+    maxVolume: 1
+    pitch: 1
+    type: 0
+    source: {fileID: 0}
+    loop: 0
+    fadingTime: 0
+    FadingCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
 --- !u!1001 &1490624097
 PrefabInstance:
   m_ObjectHideFlags: 0
