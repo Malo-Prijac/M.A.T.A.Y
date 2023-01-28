@@ -44,7 +44,7 @@ public class Projectile : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
 
-            PlayerHealthSystem playerHealthSystem = other.gameObject.GetComponent<PlayerHealthSystem>();
+            HealthSystem playerHealthSystem = other.gameObject.GetComponent<HealthSystem>();
             if (!playerHealthSystem)
                 return;
             playerHealthSystem.TakeDamage(damage,"le projectile d\'un ennemi");

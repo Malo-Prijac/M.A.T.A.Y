@@ -27,14 +27,14 @@ public class DallePiege : MonoBehaviour
         Debug.Log("TO");
         if (other.gameObject.CompareTag("Player"))
         {
-            PlayerHealthSystem playerHealthSystem = other.gameObject.GetComponent<PlayerHealthSystem>();
+            HealthSystem playerHealthSystem = other.gameObject.GetComponent<HealthSystem>();
             //gameObject.SetActive(false);
             //gameObject.SetActive(true);
             StartCoroutine(Fall(playerHealthSystem));
         }
     }
     
-    IEnumerator Fall(PlayerHealthSystem playerHealthSystem)
+    IEnumerator Fall(HealthSystem playerHealthSystem)
     {
         Debug.Log("TO2");
         yield return new WaitForSeconds(2f);

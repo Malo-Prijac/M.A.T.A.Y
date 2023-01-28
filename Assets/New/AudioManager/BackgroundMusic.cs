@@ -15,7 +15,7 @@ public class BackgroundMusic : MonoBehaviour
         audioManager = AudioManager.instance;
         if (backgroundSound!=null)
         {
-            audioManager.AddNewSound(backgroundSound);
+            audioManager.AddNewSound(backgroundSound,gameObject);
             audioManager.Play(backgroundSound);
             audioManager.FadeInAllSound();
         }

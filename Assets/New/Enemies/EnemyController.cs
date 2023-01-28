@@ -84,6 +84,10 @@ public class EnemyController : MonoBehaviour
 
     [SerializeField] private GameObject weaponType;
     
+    [Header("Sound Attack")]
+    [SerializeField] protected Sound attackSound;
+    [SerializeField] protected float delaySoundAttack;
+
     private GameObject _weaponGameObject;
     private Weapon _weapon;
     private Transform _currentSlot;
@@ -96,6 +100,8 @@ public class EnemyController : MonoBehaviour
     private GameObject _player;
     private Vector3 _targetPosition;
     private Vector3 _offSetPlayer;
+
+    private AudioManager _audioManager;
 
     void Start()
     {
@@ -113,7 +119,12 @@ public class EnemyController : MonoBehaviour
             Debug.LogWarning(name+" has no weapon type. ");
         }
 
-
+        _audioManager = AudioManager.instance;
+        
+        if (attackSound.clip)
+        {
+            _audioManager.AddNewSound(attackSound, gameObject);
+        }
         _rb = GetComponent<Rigidbody>();
 
     }
@@ -324,6 +335,7 @@ public class EnemyController : MonoBehaviour
         {
             _targetPosition = _player.transform.position + _offSetPlayer;
             _weapon.Attack(_targetPosition);
+            _audioManager.Play(attackSound,delaySoundAttack);
             //transform.rotation = Quaternion.Euler(transform.eulerAngles - offsetRotation);
         }
         else
