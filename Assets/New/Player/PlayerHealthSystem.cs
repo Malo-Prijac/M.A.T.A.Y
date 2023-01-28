@@ -13,10 +13,15 @@ public class PlayerHealthSystem : MonoBehaviour
     private string reason = "";
     [SerializeField] private Canvas gameOver;
     [SerializeField] private Vector3 spawn;
-    
+    [SerializeField] private Sound damageSound;
+    private AudioManager audioManager;
+
     void Start()
     {
         currentHealth = maxHealth;
+        damageSound.Owner = gameObject;
+        audioManager = AudioManager.instance;
+        //audioManager.AddNewSound(damageSound);
     }
     
     void Update()
@@ -46,6 +51,11 @@ public class PlayerHealthSystem : MonoBehaviour
     
     public void TakeDamage(float damage, string reasonD)
     {
+        if (damageSound != null)
+        {
+            audioManager.AddNewSound(damageSound);
+            audioManager.PlayAndDeleteAfter(damageSound);
+        }
         print("PLAYER TAKE " + damage);
         currentHealth-=damage;
         if (currentHealth <= 0)
@@ -62,6 +72,8 @@ public class PlayerHealthSystem : MonoBehaviour
     
     public void PlayerDeath()
     {
+        if (!gameOver)
+            return;
         gameOver.enabled=true;
         transform.position = spawn;
         gameOver.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = reason;

@@ -35,19 +35,20 @@ public class RangedWeapon : Weapon
         
     }
     
-    public override void Attack()
+    public override void Attack(Vector3 targetPosition)
     {
-        base.Attack();
-        StartCoroutine(ThrowProjectile());
+        base.Attack(targetPosition);
+        StartCoroutine(ThrowProjectile(targetPosition));
     }
     
-    IEnumerator ThrowProjectile()
+    IEnumerator ThrowProjectile(Vector3 targetPosition)
     {
         yield return new WaitForSeconds(delayThrowProjectile);
         GameObject projectileGameObject = Instantiate(projectile, transform.position,  
             transform.rotation);
+        projectileGameObject.transform.LookAt(targetPosition);
         projectileGameObject.GetComponent<Projectile>().Damage *= DamageMulti;
-        Quaternion aim = Quaternion.LookRotation(_player.transform.position + new Vector3(0,_playerheight/2,0) - transform.position).normalized;
+        Quaternion aim = Quaternion.LookRotation( targetPosition - transform.position).normalized;
         
         //projectileGameObject.transform.rotation = 
         Rigidbody rb = projectileGameObject.GetComponent<Rigidbody>();

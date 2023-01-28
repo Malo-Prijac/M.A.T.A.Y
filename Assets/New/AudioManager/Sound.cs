@@ -12,13 +12,13 @@ public class Sound
     public AudioClip clip;
 
     [Range(0,1)]
-    public float volume;
+    public float volume = 1f;
     
     [Range(0,1)]
-    public float maxVolume = 1;
+    public float maxVolume = 1f;
     
     [Range(0.1f,5)]
-    public float pitch;
+    public float pitch = 1f;
 
     public SoundType type;
 
@@ -32,4 +32,11 @@ public class Sound
     
     public AnimationCurve FadingCurve;
 
+    private GameObject owner;
+    
+    public GameObject Owner
+    {
+        get => owner;
+        set => owner = value;
+    }
 }

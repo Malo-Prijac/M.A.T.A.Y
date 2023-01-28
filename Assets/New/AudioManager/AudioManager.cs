@@ -73,11 +73,12 @@ public class AudioManager : MonoBehaviour
     
     private void SetUpSound(Sound sound)
     {
-        sound.source = gameObject.AddComponent<AudioSource>();
+        sound.source = sound.Owner.AddComponent<AudioSource>();
         sound.source.clip = sound.clip;
 
+        //UpdateSoundVolume();
         sound.source.volume = sound.volume;
-        UpdateSoundVolume();
+        //UpdateSoundVolume();
         sound.source.pitch = sound.pitch;
         sound.source.loop = sound.loop;
     }
@@ -88,12 +89,20 @@ public class AudioManager : MonoBehaviour
         sounds.Add(sound);
     }
     
-    public void DeleteSound(Sound sound)
+    public void DeleteSound(Sound sound, float time = 0)
     {
-        AudioSource[] audioSources = GetComponents<AudioSource>();
-        AudioSource audioSource = Array.Find(audioSources, audioSources => audioSources == sound.source);
+        //AudioSource[] audioSources = sound.Owner.GetComponents<AudioSource>();
+        //AudioSource audioSource = Array.Find(audioSources, audioSources => audioSources == sound.source);
+        Destroy(sound.source,time);
+        StartCoroutine(Remove(sound, time));
+        print("removed");
+        //Destroy(audioSource);
+    }
+
+    private IEnumerator Remove(Sound sound, float time)
+    {
+        yield return new WaitForSeconds(time);
         sounds.Remove(sound);
-        Destroy(audioSource);
     }
 
     public void Play(string soundName)
@@ -114,22 +123,14 @@ public class AudioManager : MonoBehaviour
             //Debug.LogWarning("Sound \""+sound.name+"\" not found !");
             return;
         }
-        
         sound.source.Play();
     }
 
-    public void DeleteAfterPlay(Sound sound)
+    public void PlayAndDeleteAfter(Sound sound)
     {
-        if (sound != null && sound.clip)
-        {
-            StartCoroutine(DeleteWithDelay(sound,sound.clip.length));
-        }
-    }
-
-    IEnumerator DeleteWithDelay(Sound sound, float time)
-    {
-        yield return new WaitForSeconds(time);
-        DeleteSound(sound);
+        UpdateSoundVolume();
+        Play(sound);
+        DeleteSound(sound,sound.clip.length);
     }
 
     private void UpdateSoundVolume()
@@ -185,7 +186,7 @@ public class AudioManager : MonoBehaviour
         {
             
             StartCoroutine(FadeOutSound(sound));
-            StartCoroutine(DeleteWithDelay(sound,sound.fadingTime));
+            DeleteSound(sound,sound.fadingTime);
         }
     }
     

@@ -93,12 +93,14 @@ public class EnemyController : MonoBehaviour
     private Vector3 _rigidbodyDrag;
     private bool _inMotion;
 
-
     private GameObject _player;
+    private Vector3 _targetPosition;
+    private Vector3 _offSetPlayer;
 
     void Start()
     {
-        _player = GameObject.FindWithTag(playerTag);
+        _player = GameObject.FindWithTag(playerTag); 
+        _offSetPlayer = new Vector3(0,_player.GetComponent<CapsuleCollider>().height/2,0);
         if (weaponType)
         {
             _weaponGameObject = Instantiate(weaponType,new Vector3(),new Quaternion());
@@ -320,7 +322,8 @@ public class EnemyController : MonoBehaviour
 
         if (_weapon)
         {
-            _weapon.Attack();
+            _targetPosition = _player.transform.position + _offSetPlayer;
+            _weapon.Attack(_targetPosition);
             //transform.rotation = Quaternion.Euler(transform.eulerAngles - offsetRotation);
         }
         else

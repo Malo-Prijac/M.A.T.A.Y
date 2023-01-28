@@ -26,7 +26,7 @@ public class MeleeWeapon : Weapon
         
     }
     
-    public override void Attack()
+    public override void Attack(Vector3 targetPosition)
     {
 
         
@@ -43,7 +43,7 @@ public class MeleeWeapon : Weapon
             PlayerHealthSystem playerHealthSystem = other.gameObject.GetComponent<PlayerHealthSystem>();
             if (!playerHealthSystem)
                 return;
-            playerHealthSystem.TakeDamage(Damage);
+            playerHealthSystem.TakeDamage(Damage, "skeleton");
             
         }
         _applyDamage = false;

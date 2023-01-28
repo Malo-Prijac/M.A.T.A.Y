@@ -572,6 +572,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: ToFollow
       objectReference: {fileID: 0}
+    - target: {fileID: 5868336982018673990, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
+      propertyPath: damageSound.clip
+      value: 
+      objectReference: {fileID: 8300000, guid: b1808801517c72b47a00fa5530729916, type: 3}
+    - target: {fileID: 5868336982018673990, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
+      propertyPath: damageSound.name
+      value: test
+      objectReference: {fileID: 0}
+    - target: {fileID: 5868336982018673990, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
+      propertyPath: damageSound.pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5868336982018673990, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
+      propertyPath: damageSound.volume
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7084403590897826595, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -2977,7 +2993,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2345371090655143737, guid: ac160fe941899284898e0abf7f36defd, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3154699212768689539, guid: ac160fe941899284898e0abf7f36defd, type: 3}
       propertyPath: m_RootOrder
@@ -4221,6 +4237,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3796806423833911641, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5868336982018673990, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
+      propertyPath: damageSound.clip
+      value: 
+      objectReference: {fileID: 8300000, guid: b1808801517c72b47a00fa5530729916, type: 3}
+    - target: {fileID: 5868336982018673990, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
+      propertyPath: damageSound.type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5868336982018673990, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
+      propertyPath: damageSound.volume
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7084403590897826595, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
@@ -8333,6 +8361,10 @@ PrefabInstance:
     - target: {fileID: 1934773628486422225, guid: 4e96dd2edc33dc140b42b1732558fb26, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2373350444941303139, guid: 4e96dd2edc33dc140b42b1732558fb26, type: 3}
+      propertyPath: volumeGeneral
+      value: 0.125
       objectReference: {fileID: 0}
     - target: {fileID: 5112059305148689323, guid: 4e96dd2edc33dc140b42b1732558fb26, type: 3}
       propertyPath: m_Name
