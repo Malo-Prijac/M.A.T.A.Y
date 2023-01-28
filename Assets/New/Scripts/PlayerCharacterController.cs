@@ -1,4 +1,5 @@
 using System;
+using System;
 using UnityEngine;
 
 public class PlayerCharacterController : MonoBehaviour
@@ -7,7 +8,8 @@ public class PlayerCharacterController : MonoBehaviour
     private static readonly int IsRunning = Animator.StringToHash("IsRunning");
     private static readonly int IsJumping = Animator.StringToHash("IsJumping");
     private static readonly int VelocityHash = Animator.StringToHash("Velocity");
-
+    private static readonly int IsDashing = Animator.StringToHash("IsDashing");
+    
     [Header("Movement")]
     [SerializeField] private Transform toFollow;
     [SerializeField] private float walkSpeed = 4;
@@ -61,6 +63,8 @@ public class PlayerCharacterController : MonoBehaviour
     [SerializeField] private float startFrame;
     [SerializeField] private float transitionFrame;
     [SerializeField] private float endFrame;
+
+    public bool bague = false;
 
     private Vector3 _rigidbodyDrag;
     void Start()
@@ -322,5 +326,7 @@ public class PlayerCharacterController : MonoBehaviour
         }
 
     }
+    
+    
 }
 

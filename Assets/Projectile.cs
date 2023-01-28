@@ -47,7 +47,7 @@ public class Projectile : MonoBehaviour
             PlayerHealthSystem playerHealthSystem = other.gameObject.GetComponent<PlayerHealthSystem>();
             if (!playerHealthSystem)
                 return;
-            playerHealthSystem.TakeDamage(damage);
+            playerHealthSystem.TakeDamage(damage,"le projectile d\'un ennemi");
             
         }
         Destroy(gameObject);

@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 2740745115364122450}
   - component: {fileID: 1071358035915990552}
   - component: {fileID: 4610419741820666508}
-  m_Layer: 0
+  - component: {fileID: 815466705661842748}
+  m_Layer: 3
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,6 +84,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &815466705661842748
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6394894141913058409}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2432090755550338912, guid: 6b206f49991082e4c8ee3d0920c5fc8a, type: 3}
 --- !u!1 &9092394855627949255
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,9 +107,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6680116354252708704}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RouteDesert
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
