@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 829948636862043310}
-  - component: {fileID: 970921381083794857}
+  - component: {fileID: 6639387420722840215}
   m_Layer: 0
   m_Name: Bow
   m_TagString: Untagged
@@ -33,7 +33,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &970921381083794857
+--- !u!114 &6639387420722840215
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,17 +42,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 4390578078104511541}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 175e964e6654280499557f2572752391, type: 3}
+  m_Script: {fileID: 11500000, guid: 688467156017591468265ab5546760e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerTag: Player
   damageMulti: 1
-  IsFiringProjectiles: 1
-  launchVelocity: 20
+  owner: {fileID: 0}
+  velocityProjectile: 20
   airDragY: 150
   delayThrowProjectile: 0.2
   projectile: {fileID: 1584816582823105528, guid: ea57981f1dc4f324ca80f2d3692d2fab, type: 3}
-  owner: {fileID: 0}
 --- !u!1001 &4150152589321638220
 PrefabInstance:
   m_ObjectHideFlags: 0

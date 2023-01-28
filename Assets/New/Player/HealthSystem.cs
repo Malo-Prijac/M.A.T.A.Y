@@ -1,22 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using MyBox;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHealthSystem : MonoBehaviour
+public class HealthSystem : MonoBehaviour
 {
     [SerializeField] private float maxHealth = 100f;
     private float currentHealth;
     [SerializeField] private Image healthBar;
     private bool alive = true;
     private string reason = "";
-    [SerializeField] private GameObject gameOver;
+    [SerializeField] private Canvas gameOver;
     [SerializeField] private Vector3 spawn;
+
+    [Header("Sound Damaged")] 
+    [SerializeField] private bool OverrideSoundDamaged;
+    [ConditionalField("OverrideSoundDamaged")] [SerializeField] private Sound soundDamaged;
     
+    private AudioManager _audioManager;
     void Start()
     {
         currentHealth = maxHealth;
+        _audioManager = AudioManager.instance;
+        //audioManager.AddNewSound(damageSound);
     }
     
     void Update()
@@ -44,25 +52,40 @@ public class PlayerHealthSystem : MonoBehaviour
         }
     }
     
-    public void TakeDamage(float damage, string reasonD)
+    public void TakeDamage(float damage, string reasonD, Sound sound = null)
     {
+        if (!OverrideSoundDamaged && sound != null)
+        {
+            soundDamaged = sound;
+        }
+        
+        if (soundDamaged.clip)
+        {
+            _audioManager.AddNewSound(soundDamaged, gameObject);
+            _audioManager.PlayAndDeleteAfter(soundDamaged);
+        }
         print("PLAYER TAKE " + damage);
         currentHealth-=damage;
-        if (currentHealth <= 0)
+        if (gameObject.CompareTag("Player"))
         {
-            if (alive)
+            if (currentHealth <= 0)
             {
-                alive = false;
-                reason = "Mort par "+reasonD;
-                PlayerDeath();
-            }
+                if (alive)
+                {
+                    alive = false;
+                    reason = "Mort par "+reasonD;
+                    PlayerDeath();
+                }
            
+            }
         }
     }
     
     public void PlayerDeath()
     {
-        gameOver.SetActive(true);
+        if (!gameOver)
+            return;
+        gameOver.enabled=true;
         transform.position = spawn;
         gameOver.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = reason;
         Cursor.visible = true;
@@ -73,7 +96,7 @@ public class PlayerHealthSystem : MonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        gameOver.SetActive(false);
+        gameOver.enabled=false;
         currentHealth = maxHealth;
         alive = true;
     }

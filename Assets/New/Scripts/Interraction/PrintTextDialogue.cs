@@ -4,26 +4,32 @@ using UnityEngine;
 
 public class PrintTextDialogue : MonoBehaviour
 {
-    [SerializeField] private GameObject pressO;
-    [SerializeField] private GameObject dialogue;
+    [SerializeField] private Canvas speakStatue;
+    [SerializeField] private Canvas dialogue;
     // Start is called before the first frame update
     private void OnTriggerStay(Collider other)
     {
         if (Input.GetKey(KeyCode.O) && (other.CompareTag("Player")))
         {
-            pressO.SetActive(false);
-            dialogue.SetActive(true);
+            speakStatue.enabled=false;
+            dialogue.enabled=true;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        pressO.SetActive(true);
+        if (other.CompareTag("Player"))
+        {
+            speakStatue.enabled = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        pressO.SetActive(false);
-        dialogue.SetActive(false);
+        if (other.CompareTag("Player"))
+        {
+            speakStatue.enabled = false;
+            dialogue.enabled = false;
+        }
     }
 }
