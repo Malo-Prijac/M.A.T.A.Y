@@ -15,15 +15,14 @@ public class EnemyController : MonoBehaviour
     private static readonly int IsAttacking = Animator.StringToHash("IsAttacking");
     private static readonly int IsAiming = Animator.StringToHash("IsAiming");
 
-    [Header("Enemy Weapon Slots")] 
-    [SerializeField] private bool HasDifferentSlotForWeapon;
-    [ConditionalField("HasDifferentSlotForWeapon")][SerializeField] 
+    [Header("Enemy Weapon Slots")]
+    [SerializeField] 
     private Transform weaponSlotMovement;
-    [ConditionalField("HasDifferentSlotForWeapon")][SerializeField] 
+    [SerializeField] 
     private Transform weaponSlotAttack;
-    [ConditionalField("HasDifferentSlotForWeapon")][SerializeField] 
+    [SerializeField] 
     private float rotationSlotSpeed = 10;
-    [ConditionalField("HasDifferentSlotForWeapon")][SerializeField] 
+    [SerializeField] 
     private float positionSlotSpeed = 10;
 
     [Header("Player Tag")]
@@ -35,6 +34,9 @@ public class EnemyController : MonoBehaviour
     
     [ReadOnly] [SerializeField] private bool isPlayerInSight;
     [ReadOnly] [SerializeField] private bool isPlayerInRange;
+
+    [Header("Enemy sounds")]
+    [SerializeField] private Sound destroySound;
 
     
     [Header("Enemy Movement")]
@@ -91,12 +93,14 @@ public class EnemyController : MonoBehaviour
     private Vector3 _rigidbodyDrag;
     private bool _inMotion;
 
-
     private GameObject _player;
+    private Vector3 _targetPosition;
+    private Vector3 _offSetPlayer;
 
     void Start()
     {
-        _player = GameObject.FindWithTag(playerTag);
+        _player = GameObject.FindWithTag(playerTag); 
+        _offSetPlayer = new Vector3(0,_player.GetComponent<CapsuleCollider>().height/2,0);
         if (weaponType)
         {
             _weaponGameObject = Instantiate(weaponType,new Vector3(),new Quaternion());
@@ -222,8 +226,6 @@ public class EnemyController : MonoBehaviour
     }
     private void ChangeSlot()
     {
-        if (!HasDifferentSlotForWeapon)
-            return;
         if (_isAttacking)
         {
             AttachWeaponToSlot(weaponSlotAttack);
@@ -320,7 +322,8 @@ public class EnemyController : MonoBehaviour
 
         if (_weapon)
         {
-            _weapon.Attack();
+            _targetPosition = _player.transform.position + _offSetPlayer;
+            _weapon.Attack(_targetPosition);
             //transform.rotation = Quaternion.Euler(transform.eulerAngles - offsetRotation);
         }
         else
