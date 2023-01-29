@@ -57,6 +57,14 @@ public class PlayerCharacterController : MonoBehaviour
     [ReadOnly] [SerializeField] private float originCenterCollider;
     private bool _jumpStarted = false;
     
+    [Header("Step Climb")]
+    [SerializeField] private GameObject stepRayUpper;
+    [SerializeField] private GameObject stepRayLower;
+    [SerializeField] private float stepHeight = 0.3f;
+    [SerializeField] private float stepSmooth = 0.1f;
+    [SerializeField] private float distanceFirstStep = 0.3f;
+    [SerializeField] private float distanceSecondStep = 0.45f;
+
     [Header("Jump frames")]
     [ReadOnly] [SerializeField] private float _frameJump = 0;
     
@@ -75,6 +83,7 @@ public class PlayerCharacterController : MonoBehaviour
         playerHeight = _capsuleCollider.height;
         originCenterCollider = _capsuleCollider.center.y;
         ResetJump();
+        stepRayUpper.transform.position = new Vector3(stepRayUpper.transform.position.x, stepHeight, stepRayUpper.transform.position.z);
     }
 
     // Update is called once per frame
@@ -92,7 +101,7 @@ public class PlayerCharacterController : MonoBehaviour
         
         Vector3 position = transform.position;
         //print(position);
-        grounded = Physics.CheckSphere(position, groundDistanceMax, groundLayer); 
+        grounded = Physics.CheckSphere(position, groundDistanceMax); 
         Gizmos.color = Color.red;
         
         //Vector3 position = transform.position + (playerHeight / 2) * Vector3.up;
@@ -130,6 +139,7 @@ public class PlayerCharacterController : MonoBehaviour
         UpdateVelocity();
         MovePlayer();
         RotatePlayer();
+        StepClimb();
     }
 
     private void UpdateVelocity()
@@ -247,7 +257,7 @@ public class PlayerCharacterController : MonoBehaviour
         
         characterAnimator.SetFloat(VelocityHash,velocity);
         
-        characterAnimator.SetBool(IsJumping, _isJumping);
+        //characterAnimator.SetBool(IsJumping, _isJumping);
     }
 
     private void MoveUpCapsuleCollision()
@@ -325,6 +335,58 @@ public class PlayerCharacterController : MonoBehaviour
             }
         }
 
+    }
+
+    private void StepClimb()
+    {
+        if (!_inMotion)
+            return;
+        
+        RaycastHit hitLower;
+        
+        Debug.DrawRay(stepRayLower.transform.position, transform.TransformDirection(Vector3.forward).normalized*distanceFirstStep, Color.green);
+        if (Physics.Raycast(stepRayLower.transform.position, transform.TransformDirection(Vector3.forward), out hitLower, distanceFirstStep))
+        {
+            Debug.DrawRay(stepRayUpper.transform.position, transform.TransformDirection(Vector3.forward).normalized*distanceSecondStep, Color.red);
+            RaycastHit hitUpper;
+            if (!Physics.Raycast(stepRayUpper.transform.position, transform.TransformDirection(Vector3.forward), out hitUpper, distanceSecondStep))
+            {
+                //_rb.position -= new Vector3(0f, -stepSmooth * Time.deltaTime, 0f);
+                _rb.position = Vector3.Lerp(_rb.position,_rb.position-new Vector3(0f, -stepSmooth * Time.deltaTime, 0f), Time.deltaTime);
+               //_rb.AddForce(new Vector3(0f, stepSmooth, 0f),ForceMode.Acceleration);
+               return;
+            }
+        }
+
+        Debug.DrawRay(stepRayLower.transform.position, transform.TransformDirection(1.5f,0,1).normalized*distanceFirstStep, Color.blue);
+        RaycastHit hitLower45;
+        if (Physics.Raycast(stepRayLower.transform.position, transform.TransformDirection(1.5f,0,1), out hitLower45, distanceFirstStep))
+        {
+            Debug.DrawRay(stepRayLower.transform.position, transform.TransformDirection(1.5f,0,1).normalized*distanceSecondStep, Color.magenta);
+            RaycastHit hitUpper45;
+            if (!Physics.Raycast(stepRayUpper.transform.position, transform.TransformDirection(1.5f,0,1), out hitUpper45, distanceSecondStep))
+            {
+                _rb.position = Vector3.Lerp(_rb.position,_rb.position-new Vector3(0f, -stepSmooth * Time.deltaTime, 0f), Time.deltaTime);
+                //_rb.position -= new Vector3(0f, -stepSmooth * Time.deltaTime, 0f);
+                //_rb.AddForce(new Vector3(0f, stepSmooth, 0f),ForceMode.Acceleration);
+                return;
+            }
+        }
+
+        Debug.DrawRay(stepRayLower.transform.position, transform.TransformDirection(1.5f,0,1).normalized*distanceFirstStep, Color.blue);
+        RaycastHit hitLowerMinus45;
+        if (Physics.Raycast(stepRayLower.transform.position, transform.TransformDirection(-1.5f,0,1), out hitLowerMinus45, distanceFirstStep))
+        {
+            RaycastHit hitUpperMinus45;
+            Debug.DrawRay(stepRayLower.transform.position, transform.TransformDirection(1.5f,0,1).normalized*distanceSecondStep, Color.magenta);
+            if (!Physics.Raycast(stepRayUpper.transform.position, transform.TransformDirection(-1.5f,0,1), out hitUpperMinus45, distanceSecondStep))
+            {
+                _rb.position = Vector3.Lerp(_rb.position,_rb.position-new Vector3(0f, -stepSmooth * Time.deltaTime, 0f), Time.deltaTime);
+                //_rb.position -= new Vector3(0f, -stepSmooth * Time.deltaTime, 0f);
+                //_rb.AddForce(new Vector3(0f, stepSmooth, 0f),ForceMode.Acceleration);
+                return;
+            }
+        }
     }
     
     
