@@ -7,9 +7,11 @@ public class PlayerCharacterController : MonoBehaviour
     [Header("Animation")]
     [ReadOnly][SerializeField] private Animator characterAnimator;
     private static readonly int IsRunning = Animator.StringToHash("IsRunning");
-    private static readonly int IsJumping = Animator.StringToHash("IsJumping");
     private static readonly int VelocityHash = Animator.StringToHash("Velocity");
-    
+    private static readonly int IsGrounded = Animator.StringToHash("IsGrounded");
+    private static readonly int IsFalling = Animator.StringToHash("IsFalling");
+    private static readonly int IsJumping = Animator.StringToHash("IsJumping");
+
     [Header("Movement")]
     [SerializeField] private Transform toFollow;
     [SerializeField] private float walkSpeed = 4;
@@ -55,8 +57,9 @@ public class PlayerCharacterController : MonoBehaviour
     [SerializeField] private float updateColliderSpeedDown;
     [SerializeField] private float centerJumpCollider;
     [ReadOnly] [SerializeField] private float originCenterCollider;
-    private bool _jumpStarted = false;
-    
+    [SerializeField] private float jumpStartTime = 0.3f;
+    [ReadOnly][SerializeField] private float jumpStartCounter = 0f;
+
     [Header("Step Climb")]
     [SerializeField] private GameObject stepRayUpper;
     [SerializeField] private GameObject stepRayLower;
@@ -111,15 +114,23 @@ public class PlayerCharacterController : MonoBehaviour
         //print(position);
         grounded = Physics.Raycast(position, Vector3.down, groundDistanceMax);
         //grounded = Physics.CheckSphere(position, groundDistanceMax);
-        print(grounded);
+        //print(grounded);
         Gizmos.color = Color.red;
+        
         
         //Vector3 position = transform.position + (playerHeight / 2) * Vector3.up;
         //float groundDistanceMax = playerHeight * 0.5f + offsetGround;
         //grounded = Physics.Raycast(position, Vector3.down, groundDistanceMax, groundLayer);
 
-        //_isJumping = !grounded && _isJumping;
-        _isJumping = !grounded;
+        if (jumpStartTime < jumpStartCounter)
+        {
+            _isJumping = false;
+        }
+        else if(jumpStartTime > jumpStartCounter)
+        {
+            jumpStartCounter += Time.deltaTime;
+        }
+        //_isJumping = !grounded;
 
 
     }
@@ -202,8 +213,8 @@ public class PlayerCharacterController : MonoBehaviour
     public void Jump()
     {
         //_rb.velocity = new Vector3(_rb.velocity.x, 0f,_rb.velocity.z);
-        _jumpStarted = true;
         _isJumping = true;
+        jumpStartCounter = 0;
         _rb.velocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);
         _rb.AddForce(transform.up*jumpForce, ForceMode.VelocityChange);
 
@@ -271,6 +282,15 @@ public class PlayerCharacterController : MonoBehaviour
         
         characterAnimator.SetFloat(VelocityHash,velocity);
         
+        characterAnimator.SetBool(IsGrounded, grounded);
+        
+        characterAnimator.SetBool(IsJumping, _isJumping);
+
+        characterAnimator.SetBool(IsFalling, !grounded);
+
+
+        //characterAnimator.SetBool(IsJumping, _isJumping);
+
         //characterAnimator.SetBool(IsJumping, _isJumping);
         
     }
@@ -323,7 +343,7 @@ public class PlayerCharacterController : MonoBehaviour
         }
 
     }
-    
+    /*
     private void UpdateSizeCapsuleCollision()
     {
 
@@ -350,7 +370,7 @@ public class PlayerCharacterController : MonoBehaviour
             }
         }
 
-    }
+    }*/
 
     private void StepClimb()
     {

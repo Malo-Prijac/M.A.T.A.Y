@@ -59,7 +59,7 @@ public class Abilities : MonoBehaviour
             countAdditionalJump = additionalJump;
         }
         //Dash
-        if (Input.GetButtonDown("Dash") && canDash)
+        if (Input.GetButtonDown("Dash") && canDash && grounded)
         {
             Debug.Log("Dashing");
             Dash();
@@ -74,7 +74,7 @@ public class Abilities : MonoBehaviour
         //Double Jump
         if (Input.GetButtonDown("Jump") && countAdditionalJump > 0)
         {
-            DoubleJump();
+            MultipleJump();
         }
         
         //Shoot
@@ -84,24 +84,10 @@ public class Abilities : MonoBehaviour
         }
     }
 
-    void DoubleJump()
+    private void MultipleJump()
     {
         countAdditionalJump--;
-        //Debug.Log(currentJumpCount);
-        //Debug.Log("Jumping");
-        if (jumpSound)
-        {
-            jumpSound.Play();
-        }
-        else
-        {
-            Debug.LogWarning("no sound for jump");
-        }
-        
-        print("ok");
         _characterController.Jump();
-
-        print(countAdditionalJump);
     }
 
     void Shoot()
@@ -154,7 +140,7 @@ public class Abilities : MonoBehaviour
             currentDashTime -= Time.deltaTime;
             yield return null;
         }
-        print((start - transform.position).magnitude);
+        //print((start - transform.position).magnitude);
 
         _isDashing = false;
         currentDashCooldown = dashCoolDown;
@@ -171,8 +157,6 @@ public class Abilities : MonoBehaviour
         //characterAnimator.SetBool(IsRunning, Mathf.Approximately(_actualSpeed,runSpeed) && (_verticalInput != 0 || _horizontalInput != 0));
         
         //characterAnimator.SetFloat(VelocityHash,velocity);
-        
-        //characterAnimator.SetBool(IsJumping, _isJumping);
         
         characterAnimator.SetBool(IsDashing, _isDashing);
     }

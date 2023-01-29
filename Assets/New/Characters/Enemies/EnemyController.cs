@@ -55,23 +55,9 @@ public class EnemyController : MonoBehaviour
     [ConditionalField("needToAim")][ReadOnly][SerializeField] 
     private bool _isAiming;
 
-    [Header("Aiming Animation")]
-    [ConditionalField("needToAim")][SerializeField] 
-    private float offsetAiming;
-    [ConditionalField("needToAim")][SerializeField] 
-    private float rotationSpeedAiming;
-
-    [ConditionalField("needToAim")][ReadOnly] [SerializeField] 
-    private float _offsetRotationYCounterAiming;
-    [Header("Attack Animation")] 
+    [Header("Enemy Attack")] 
     
     [SerializeField] private bool hasStaticAttack;
-    [SerializeField] private float offsetRotationY;
-    [SerializeField] private float rotationSpeedAttack;
-    [ReadOnly] [SerializeField] private float _offsetRotationYCounterAttack;
-    
-    [Header("Enemy Attack")] 
-
     [SerializeField] private string attackTag = "Attack";
     [SerializeField] private float delayAttack = 1f;
     [SerializeField] private float animationSpeedAttack = 1f;
@@ -207,6 +193,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    /*
     IEnumerator CorrectAttackingPosition()
     {
         while (_isAttacking)
@@ -235,6 +222,8 @@ public class EnemyController : MonoBehaviour
 
         _offsetRotationYCounterAiming = 0;
     }
+    */
+    
     private void ChangeSlot()
     {
         if (_isAttacking)
@@ -343,7 +332,7 @@ public class EnemyController : MonoBehaviour
             Debug.LogWarning(name+" Weapon has no weapon script");
         }
         
-        StartCoroutine(CorrectAttackingPosition());
+        //StartCoroutine(CorrectAttackingPosition());
         StartCoroutine(StopAttack());
     }
 
