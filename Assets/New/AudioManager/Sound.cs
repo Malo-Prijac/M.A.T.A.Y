@@ -6,20 +6,21 @@ using UnityEngine;
 [Serializable]
 public class Sound
 {
-
+    [Header("Spatial Sound Settings")]
+    [Range(0,1)]public float spatialBlend = 1f;
+    public float maxDistance = 1f;
+    public float minDistance = 15f;
+    
+    [Header("Options Sound Settings")]
     public string name;
-    
     public AudioClip clip;
-
-    [Range(0,1)]
-    public float volume = 1f;
+    public bool playOnAwake;
     
-    [Range(0,1)]
-    public float maxVolume = 1f;
-    
+    [Header("Volume")]
+    [Range(0,1)]public float volume = 1f;
+    [Range(0,1)] public float maxVolume = 1f;
     [Range(0.1f,5)]
     public float pitch = 1f;
-
     public SoundType type;
 
     //[HideInInspector]

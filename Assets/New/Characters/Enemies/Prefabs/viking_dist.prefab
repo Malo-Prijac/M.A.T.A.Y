@@ -598,9 +598,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6713395715494023148}
   - component: {fileID: 849747670483031446}
-  - component: {fileID: 6530356524779038724}
   - component: {fileID: 516515885}
   - component: {fileID: 1939662486}
+  - component: {fileID: 6530356524779038724}
   m_Layer: 0
   m_Name: viking_dist
   m_TagString: Untagged
@@ -645,55 +645,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &6530356524779038724
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6224279769707894102}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9d50b5eef0029d48ae3196f25fd8cda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyAnimator: {fileID: 849747670483031446}
-  HasDifferentSlotForWeapon: 1
-  weaponSlotMovement: {fileID: 6670893278465506685}
-  weaponSlotAttack: {fileID: 6670893278465506685}
-  rotationSlotSpeed: 10
-  positionSlotSpeed: 10
-  playerTag: Player
-  rangePlayer: 15
-  rotationSpeed: 40
-  isPlayerInSight: 0
-  isPlayerInRange: 0
-  walkSpeed: 1.5
-  runSpeed: 3
-  acceleration: 0.8
-  deceleration: 2
-  ratioRootMotion: 2
-  groundDrag: 48
-  velocity: 0
-  _isRunning: 0
-  needToAim: 1
-  _isAiming: 0
-  offsetAiming: 0
-  rotationSpeedAiming: 0
-  _offsetRotationYCounterAiming: 0
-  hasStaticAttack: 1
-  offsetRotationY: 0
-  rotationSpeedAttack: 0
-  _offsetRotationYCounterAttack: 0
-  attackTag: Attack
-  delayAttack: 1
-  animationSpeedAttack: 1
-  rangeAttack: 10
-  _lastAttack: 0
-  _isAttacking: 0
-  _isPlayerInRangeToAttack: 0
-  canAttack: 0
-  weaponType: {fileID: 4390578078104511541, guid: 5098cd4abcdef9145b9f9c0ef1b8ab5e, type: 3}
 --- !u!136 &516515885
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -704,8 +655,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.25
-  m_Height: 1.7
+  m_Radius: 0.2
+  m_Height: 1.6
   m_Direction: 1
   m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!54 &1939662486
@@ -724,6 +675,109 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!114 &6530356524779038724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6224279769707894102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9d50b5eef0029d48ae3196f25fd8cda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyAnimator: {fileID: 849747670483031446}
+  weaponSlotMovement: {fileID: 6670893278465506685}
+  weaponSlotAttack: {fileID: 6670893278465506685}
+  rotationSlotSpeed: 10
+  positionSlotSpeed: 10
+  playerTag: Player
+  rangePlayer: 15
+  rotationSpeed: 40
+  isPlayerInSight: 0
+  isPlayerInRange: 0
+  destroySound:
+    spatialBlend: 1
+    maxDistance: 1
+    minDistance: 10
+    name: 
+    clip: {fileID: 0}
+    playOnAwake: 0
+    volume: 1
+    maxVolume: 1
+    pitch: 1
+    type: 0
+    source: {fileID: 0}
+    loop: 0
+    fadingTime: 0
+    FadingCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  walkSpeed: 1.5
+  runSpeed: 3
+  acceleration: 0.8
+  deceleration: 2
+  ratioRootMotion: 2
+  groundDrag: 48
+  velocity: 0
+  _isRunning: 0
+  needToAim: 1
+  _isAiming: 0
+  hasStaticAttack: 1
+  attackTag: Attack
+  delayAttack: 1
+  animationSpeedAttack: 1
+  rangeAttack: 10
+  _lastAttack: 0
+  _isAttacking: 0
+  _isPlayerInRangeToAttack: 0
+  canAttack: 0
+  weaponType: {fileID: 4390578078104511541, guid: 5098cd4abcdef9145b9f9c0ef1b8ab5e, type: 3}
+  delaySoundAttack: 0
+  attackSound:
+    spatialBlend: 1
+    maxDistance: 1
+    minDistance: 15
+    name: 
+    clip: {fileID: 0}
+    playOnAwake: 0
+    volume: 0.5
+    maxVolume: 0.5
+    pitch: 1
+    type: 1
+    source: {fileID: 0}
+    loop: 0
+    fadingTime: 0
+    FadingCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  movingSound:
+    spatialBlend: 1
+    maxDistance: 1
+    minDistance: 15
+    name: 
+    clip: {fileID: 8300000, guid: fe68e5b1b352b9d4f9ec2d68c996aa12, type: 3}
+    playOnAwake: 0
+    volume: 1
+    maxVolume: 1
+    pitch: 1
+    type: 0
+    source: {fileID: 0}
+    loop: 0
+    fadingTime: 0
+    FadingCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
 --- !u!1 &6394934257638353473
 GameObject:
   m_ObjectHideFlags: 0

@@ -329,7 +329,6 @@ GameObject:
   - component: {fileID: 420231879}
   - component: {fileID: 420231878}
   - component: {fileID: 420231880}
-  - component: {fileID: 140744562}
   - component: {fileID: 720847351}
   m_Layer: 0
   m_Name: egyptian_cac
@@ -401,8 +400,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.25
-  m_Height: 1.7
+  m_Radius: 0.2
+  m_Height: 1.6
   m_Direction: 1
   m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!114 &420231880
@@ -423,13 +422,17 @@ MonoBehaviour:
   rotationSlotSpeed: 5
   positionSlotSpeed: 5
   playerTag: Player
-  rangePlayer: 5
+  rangePlayer: 15
   rotationSpeed: 10
   isPlayerInSight: 0
   isPlayerInRange: 0
   destroySound:
+    spatialBlend: 1
+    maxDistance: 1
+    minDistance: 10
     name: 
     clip: {fileID: 0}
+    playOnAwake: 0
     volume: 1
     maxVolume: 1
     pitch: 1
@@ -453,13 +456,7 @@ MonoBehaviour:
   _isRunning: 0
   needToAim: 0
   _isAiming: 0
-  offsetAiming: 0
-  rotationSpeedAiming: 0
-  _offsetRotationYCounterAiming: 0
   hasStaticAttack: 1
-  offsetRotationY: 0
-  rotationSpeedAttack: 2.5
-  _offsetRotationYCounterAttack: 0
   attackTag: Attack
   delayAttack: 1
   animationSpeedAttack: 1.4
@@ -469,15 +466,20 @@ MonoBehaviour:
   _isPlayerInRangeToAttack: 0
   canAttack: 0
   weaponType: {fileID: 3745342784214530544, guid: 4db16d2b20bc88c40bc8ce1d1783cef2, type: 3}
-  attackSound:
+  delaySoundAttack: 0.2
+  movingSound:
+    spatialBlend: 1
+    maxDistance: 1
+    minDistance: 15
     name: 
-    clip: {fileID: 8300000, guid: 6813bb29619e86e419170017a6c5175c, type: 3}
+    clip: {fileID: 8300000, guid: fe68e5b1b352b9d4f9ec2d68c996aa12, type: 3}
+    playOnAwake: 0
     volume: 1
     maxVolume: 1
     pitch: 1
     type: 0
     source: {fileID: 0}
-    loop: 0
+    loop: 1
     fadingTime: 0
     FadingCurve:
       serializedVersion: 2
@@ -485,21 +487,6 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  delaySoundAttack: 0.25
---- !u!136 &140744562
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2345371090655143737}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.25
-  m_Height: 1.7
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!114 &720847351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -518,8 +505,12 @@ MonoBehaviour:
   spawn: {x: 0, y: 0, z: 0}
   OverrideSoundDamaged: 1
   soundDamaged:
+    spatialBlend: 1
+    maxDistance: 1
+    minDistance: 10
     name: 
     clip: {fileID: 8300000, guid: b1808801517c72b47a00fa5530729916, type: 3}
+    playOnAwake: 0
     volume: 1
     maxVolume: 1
     pitch: 1

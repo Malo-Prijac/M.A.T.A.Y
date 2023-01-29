@@ -70,9 +70,11 @@ public class EnemyController : MonoBehaviour
 
     [SerializeField] private GameObject weaponType;
     
-    [Header("Sound Attack")]
-    [SerializeField] protected Sound attackSound;
+    [Header("Sounds")]
     [SerializeField] protected float delaySoundAttack;
+
+    [SerializeField] protected Sound movingSound;
+
 
     private GameObject _weaponGameObject;
     private Weapon _weapon;
@@ -106,10 +108,10 @@ public class EnemyController : MonoBehaviour
         }
 
         _audioManager = AudioManager.instance;
-        
-        if (attackSound.clip)
+
+        if (movingSound.clip)
         {
-            _audioManager.AddNewSound(attackSound, gameObject);
+            _audioManager.AddNewSound(movingSound, gameObject);
         }
         _rb = GetComponent<Rigidbody>();
 
@@ -130,6 +132,7 @@ public class EnemyController : MonoBehaviour
 
         AnimationBehavior();
         ChangeSlot();
+        UpdateSound();
 
         if (PlayerInRangeToAttack())
         {
@@ -162,10 +165,26 @@ public class EnemyController : MonoBehaviour
             }
         }
 
-        
         canAttack = _lastAttack - delayAttack > 0;
     }
-    
+
+    private void UpdateSound()
+    {
+        if (movingSound.clip)
+        {
+            if (_inMotion && !movingSound.Source.isPlaying)
+            {
+                _audioManager.Play(movingSound);
+            }
+            if (!_inMotion)
+            {
+                movingSound.Source.Stop();
+            }
+        }
+
+
+    }
+
     private void FixedUpdate()
     {
         UpdateVelocity();
@@ -323,8 +342,7 @@ public class EnemyController : MonoBehaviour
         if (_weapon)
         {
             _targetPosition = _player.transform.position + _offSetPlayer;
-            _weapon.Attack(_targetPosition);
-            _audioManager.Play(attackSound,delaySoundAttack);
+            _weapon.Attack(_targetPosition,delaySoundAttack);
             //transform.rotation = Quaternion.Euler(transform.eulerAngles - offsetRotation);
         }
         else
@@ -343,7 +361,7 @@ public class EnemyController : MonoBehaviour
         {
             yield return null;
         }
-        while (IsAnimationCurrentAnimation(attackTag))
+        while (AnimatorIsPlaying(attackTag) )
         {
             yield return null;
         }
@@ -356,14 +374,14 @@ public class EnemyController : MonoBehaviour
        // print(enemyAnimator.GetCurrentAnimatorStateInfo(0).IsTag(tagAnim));
         return enemyAnimator.GetCurrentAnimatorStateInfo(0).IsTag(tagAnim);
     }
-    
+
     bool AnimatorIsPlaying(string tagAnim){
-        return AnimatorIsPlaying() && enemyAnimator.GetCurrentAnimatorStateInfo(0).IsTag(tagAnim);
+        return AnimatorIsPlaying() && IsAnimationCurrentAnimation(tagAnim);
     }
     
     bool AnimatorIsPlaying(){
         //print(enemyAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1 < 0.99f);
-        return enemyAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1 < 0.99f;
+        return enemyAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1 < 0.95f;
     }
 
     private void AnimationBehavior()

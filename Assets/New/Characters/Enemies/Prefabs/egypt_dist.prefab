@@ -306,7 +306,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3318908371836586520
 Transform:
   m_ObjectHideFlags: 0
@@ -370,8 +370,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.25
-  m_Height: 1.7
+  m_Radius: 0.2
+  m_Height: 16
   m_Direction: 1
   m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!114 &1467389831
@@ -397,8 +397,12 @@ MonoBehaviour:
   isPlayerInSight: 0
   isPlayerInRange: 0
   destroySound:
+    spatialBlend: 1
+    maxDistance: 1
+    minDistance: 10
     name: 
     clip: {fileID: 0}
+    playOnAwake: 0
     volume: 1
     maxVolume: 1
     pitch: 1
@@ -422,13 +426,7 @@ MonoBehaviour:
   _isRunning: 0
   needToAim: 1
   _isAiming: 0
-  offsetAiming: 0
-  rotationSpeedAiming: 0
-  _offsetRotationYCounterAiming: 0
   hasStaticAttack: 1
-  offsetRotationY: 0
-  rotationSpeedAttack: 0
-  _offsetRotationYCounterAttack: 0
   attackTag: Attack
   delayAttack: 1
   animationSpeedAttack: 1
@@ -438,9 +436,14 @@ MonoBehaviour:
   _isPlayerInRangeToAttack: 0
   canAttack: 0
   weaponType: {fileID: 4390578078104511541, guid: 5098cd4abcdef9145b9f9c0ef1b8ab5e, type: 3}
+  delaySoundAttack: 0
   attackSound:
+    spatialBlend: 1
+    maxDistance: 1
+    minDistance: 15
     name: 
     clip: {fileID: 0}
+    playOnAwake: 0
     volume: 1
     maxVolume: 1
     pitch: 1
@@ -454,7 +457,26 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  delaySoundAttack: 0
+  movingSound:
+    spatialBlend: 1
+    maxDistance: 1
+    minDistance: 15
+    name: 
+    clip: {fileID: 8300000, guid: fe68e5b1b352b9d4f9ec2d68c996aa12, type: 3}
+    playOnAwake: 0
+    volume: 1
+    maxVolume: 1
+    pitch: 1
+    type: 0
+    source: {fileID: 0}
+    loop: 0
+    fadingTime: 0
+    FadingCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
 --- !u!114 &1479729761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -473,8 +495,12 @@ MonoBehaviour:
   spawn: {x: 0, y: 0, z: 0}
   OverrideSoundDamaged: 1
   soundDamaged:
+    spatialBlend: 1
+    maxDistance: 1
+    minDistance: 10
     name: 
     clip: {fileID: 8300000, guid: b1808801517c72b47a00fa5530729916, type: 3}
+    playOnAwake: 0
     volume: 1
     maxVolume: 1
     pitch: 1
