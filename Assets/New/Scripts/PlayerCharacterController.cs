@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class PlayerCharacterController : MonoBehaviour
 {
-    [SerializeField] private Animator characterAnimator;
+    [Header("Animation")]
+    [ReadOnly][SerializeField] private Animator characterAnimator;
     private static readonly int IsRunning = Animator.StringToHash("IsRunning");
     private static readonly int IsJumping = Animator.StringToHash("IsJumping");
     private static readonly int VelocityHash = Animator.StringToHash("Velocity");
-    private static readonly int IsDashing = Animator.StringToHash("IsDashing");
     
     [Header("Movement")]
     [SerializeField] private Transform toFollow;
@@ -74,9 +74,17 @@ public class PlayerCharacterController : MonoBehaviour
 
     public bool bague = false;
 
+
+    public bool Grounded
+    {
+        get => grounded;
+        set => grounded = value;
+    }
+
     private Vector3 _rigidbodyDrag;
     void Start()
     {
+        characterAnimator = GetComponent<Animator>();
         _rb = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
         _capsuleCollider = GetComponent<CapsuleCollider>();
@@ -101,13 +109,16 @@ public class PlayerCharacterController : MonoBehaviour
         
         Vector3 position = transform.position;
         //print(position);
-        grounded = Physics.CheckSphere(position, groundDistanceMax); 
+        grounded = Physics.Raycast(position, Vector3.down, groundDistanceMax);
+        //grounded = Physics.CheckSphere(position, groundDistanceMax);
+        print(grounded);
         Gizmos.color = Color.red;
         
         //Vector3 position = transform.position + (playerHeight / 2) * Vector3.up;
         //float groundDistanceMax = playerHeight * 0.5f + offsetGround;
         //grounded = Physics.Raycast(position, Vector3.down, groundDistanceMax, groundLayer);
 
+        //_isJumping = !grounded && _isJumping;
         _isJumping = !grounded;
 
 
@@ -178,19 +189,22 @@ public class PlayerCharacterController : MonoBehaviour
         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.fixedDeltaTime * speedX;
         _yRotation -= mouseY;
 
-        if (Input.GetButton("Jump") && readyToJump)// && grounded)
+        /*
+        if (Input.GetButton("Jump") && readyToJump && grounded)
         {
             readyToJump = false;
             Jump();
             Invoke(nameof(ResetJump),jumpCooldown);
         }
+        */
     }
 
-    void Jump()
+    public void Jump()
     {
         //_rb.velocity = new Vector3(_rb.velocity.x, 0f,_rb.velocity.z);
         _jumpStarted = true;
         _isJumping = true;
+        _rb.velocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);
         _rb.AddForce(transform.up*jumpForce, ForceMode.VelocityChange);
 
         /*
@@ -247,7 +261,7 @@ public class PlayerCharacterController : MonoBehaviour
 
     private void AnimationBehavior()
     {
-        if (characterAnimator == null)
+        if (!characterAnimator)
         {
             Debug.LogWarning("No Animator Character on "+name);
             return;  
@@ -258,6 +272,7 @@ public class PlayerCharacterController : MonoBehaviour
         characterAnimator.SetFloat(VelocityHash,velocity);
         
         //characterAnimator.SetBool(IsJumping, _isJumping);
+        
     }
 
     private void MoveUpCapsuleCollision()

@@ -1170,13 +1170,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9e56ec426aced741ae5782bd81aa0b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashSpeed: 1
+  dashSpeed: 1000
   dashTime: 0.5
   dashCoolDown: 1
   jumpForce: 5
   jumpCount: 2
+  currentJumpCount: 0
+  canDash: 1
   dashSound: {fileID: 0}
   jumpSound: {fileID: 0}
+  currentDashTime: 0
+  currentDashCooldown: 0
+  isDashing: 0
   bulletSpeed: 100
   bulletPrefab: {fileID: 0}
   bulletSpawn: {fileID: 0}

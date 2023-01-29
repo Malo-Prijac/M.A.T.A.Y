@@ -9,40 +9,61 @@ public class Abilities : MonoBehaviour
     [SerializeField] private Animator charaterAnimator;
     private static readonly int IsDashing = Animator.StringToHash("IsDashing");
     */
-    
-    public float dashSpeed = 1f;
-    public float dashTime = 0.5f;
-    public float dashCoolDown = 1f;
-    public float jumpForce = 5f;
-    public int jumpCount = 2;
-    private int currentJumpCount;
+    [Header("Animation")]
+    [ReadOnly][SerializeField] private Animator characterAnimator;
+    private static readonly int IsDashing = Animator.StringToHash("IsDashing");
+
+    [Header("Dash")]
+    [SerializeField] private float dashSpeed = 1f;
+    [SerializeField]private float dashTime = 0.5f;
+    [SerializeField]private float dashCoolDown = 1f;
     public AudioSource dashSound;
+
+    [Header("Jump")]
+    //[SerializeField]private float jumpForce = 5f;
+    [SerializeField]private int additionalJump = 2;
+    [ReadOnly][SerializeField]private int countAdditionalJump;
+    [ReadOnly][SerializeField]private bool canDash = true;
     public AudioSource jumpSound;
-    private float currentDashTime;
-    private float currentDashCooldown;
-    private bool isDashing;
+    
+    [ReadOnly][SerializeField]private float currentDashTime;
+    [ReadOnly][SerializeField]private float currentDashCooldown;
+    [ReadOnly][SerializeField]private bool _isDashing;
     public float bulletSpeed = 100f;
 
-    private Rigidbody rb;
+    private Rigidbody _rb;
     public GameObject bulletPrefab;
     public Transform bulletSpawn;
     public Transform targetCamera;
-    
+
+    private PlayerCharacterController _characterController;
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        currentJumpCount = jumpCount;
+        characterAnimator = GetComponent<Animator>();
+        canDash = true;
+        _rb = GetComponent<Rigidbody>();
+        countAdditionalJump = additionalJump;
+        _characterController = GetComponent<PlayerCharacterController>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        AnimationBehavior();
+        bool grounded = _characterController.Grounded;
+
+        if (grounded)
+        {
+            countAdditionalJump = additionalJump;
+        }
         //Dash
-        if (Input.GetKeyDown(KeyCode.C) == true && !isDashing && currentDashCooldown <= 0)
+        if (Input.GetButtonDown("Dash") && canDash)
         {
             Debug.Log("Dashing");
-            StartCoroutine(DashRoutine());
+            Dash();
+            //StartCoroutine(DashRoutine());
         }
 
         if (currentDashCooldown > 0)
@@ -51,8 +72,8 @@ public class Abilities : MonoBehaviour
         }
         
         //Double Jump
-        if (Input.GetKeyDown(KeyCode.F) && currentJumpCount > 0)
-        { 
+        if (Input.GetButtonDown("Jump") && countAdditionalJump > 0)
+        {
             DoubleJump();
         }
         
@@ -65,8 +86,9 @@ public class Abilities : MonoBehaviour
 
     void DoubleJump()
     {
-        Debug.Log(currentJumpCount);
-        Debug.Log("Jumping");
+        countAdditionalJump--;
+        //Debug.Log(currentJumpCount);
+        //Debug.Log("Jumping");
         if (jumpSound)
         {
             jumpSound.Play();
@@ -75,13 +97,11 @@ public class Abilities : MonoBehaviour
         {
             Debug.LogWarning("no sound for jump");
         }
-        if (currentJumpCount == 1)
-        {
-            jumpForce = 6;
-        }
-        //rb.velocity = Vector2.up * jumpForce;
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
-        currentJumpCount--;
+        
+        print("ok");
+        _characterController.Jump();
+
+        print(countAdditionalJump);
     }
 
     void Shoot()
@@ -92,29 +112,68 @@ public class Abilities : MonoBehaviour
         rb.AddForce(bullet.transform.forward * bulletSpeed, ForceMode.VelocityChange);
         Destroy(bullet,1);
     }
+
+    private void Dash()
+    {
+        canDash = false;
+        //rb.AddForce(transform.forward*dashSpeed,ForceMode.Acceleration);
+        //print(rb.velocity);
+        StartCoroutine(DashRoutine());
+        StartCoroutine(ResetDash());
+    }
+
+    IEnumerator ResetDash()
+    {
+        yield return new WaitForSeconds(dashCoolDown);
+
+        canDash = true;
+    }
+    /*
+    IEnumerator ResetDash()
+    {
+        yield return dashCoolDown;
+
+        isDashing = false;
+    }*/
+
     
     IEnumerator DashRoutine()
     {
-        isDashing = true;
+        _isDashing = true;
         currentDashTime = dashTime;
         //dashSound.Play();
+        Vector3 start = transform.position;
         while (currentDashTime > 0)
         {
             //rb.velocity = transform.forward * dashSpeed;
-            rb.AddForce(transform.forward*dashSpeed,ForceMode.VelocityChange);
+            //rb.velocity = transform.forward * dashSpeed;
+            //rb.AddForce(transform.forward*dashSpeed,ForceMode.VelocityChange);
+            _rb.drag = 0;
+            _rb.velocity = new Vector3();
+            _rb.AddForce(dashSpeed*Time.deltaTime*transform.forward,ForceMode.VelocityChange);
             currentDashTime -= Time.deltaTime;
             yield return null;
         }
+        print((start - transform.position).magnitude);
 
-        isDashing = false;
+        _isDashing = false;
         currentDashCooldown = dashCoolDown;
     }
-
-    void OnCollisionEnter(Collision collision)
+    
+    private void AnimationBehavior()
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (!characterAnimator)
         {
-            currentJumpCount = jumpCount;
+            Debug.LogWarning("No Animator Character on "+name);
+            return;  
         }
+        
+        //characterAnimator.SetBool(IsRunning, Mathf.Approximately(_actualSpeed,runSpeed) && (_verticalInput != 0 || _horizontalInput != 0));
+        
+        //characterAnimator.SetFloat(VelocityHash,velocity);
+        
+        //characterAnimator.SetBool(IsJumping, _isJumping);
+        
+        characterAnimator.SetBool(IsDashing, _isDashing);
     }
 }

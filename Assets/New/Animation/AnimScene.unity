@@ -568,6 +568,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 238689356507018292, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
+      propertyPath: dashTime
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 238689356507018292, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
+      propertyPath: dashSpeed
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 238689356507018292, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
+      propertyPath: additionalJump
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4150254963932878274, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
       propertyPath: m_Name
       value: ToFollow
@@ -667,6 +679,10 @@ PrefabInstance:
     - target: {fileID: 7573659479313949081, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
       propertyPath: m_Name
       value: PlayerCharacter
+      objectReference: {fileID: 0}
+    - target: {fileID: 7573659479313949081, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
@@ -3047,7 +3063,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2345371090655143737, guid: ac160fe941899284898e0abf7f36defd, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3154699212768689539, guid: ac160fe941899284898e0abf7f36defd, type: 3}
       propertyPath: m_RootOrder
@@ -4289,9 +4305,17 @@ PrefabInstance:
       propertyPath: updateColliderSpeedDown
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2654370400458189492, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3796806423833911641, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5222522519074147030, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5868336982018673990, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
       propertyPath: damageSound.clip
@@ -6115,7 +6139,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2685536504596631714, guid: d1f25de2d3482d64fa7dcbebc6aa659d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3318908371836586520, guid: d1f25de2d3482d64fa7dcbebc6aa659d, type: 3}
       propertyPath: m_RootOrder
