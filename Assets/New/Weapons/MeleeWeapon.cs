@@ -26,9 +26,9 @@ public class MeleeWeapon : Weapon
         
     }
     
-    public override void Attack(Vector3 targetPosition)
+    public override void Attack(Vector3 targetPosition, float delaySoundAttack)
     {
-        base.Attack(targetPosition);
+        base.Attack(targetPosition,delaySoundAttack);
     }
     
     private void OnTriggerEnter(Collider other)

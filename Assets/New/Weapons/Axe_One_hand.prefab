@@ -59,8 +59,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fdf0717488bb024aa0c909654c2b91b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTag: Player
   owner: {fileID: 0}
+  attackSound:
+    spatialBlend: 1
+    maxDistance: 1
+    minDistance: 15
+    name: 
+    clip: {fileID: 8300000, guid: dd9bf15063dccc446afacae7eae8b1e7, type: 3}
+    playOnAwake: 0
+    volume: 1
+    maxVolume: 1
+    pitch: 1
+    type: 0
+    source: {fileID: 0}
+    loop: 0
+    fadingTime: 0
+    FadingCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   damage: 20
   delayDamage: 1.2
 --- !u!1001 &9113038024510838102

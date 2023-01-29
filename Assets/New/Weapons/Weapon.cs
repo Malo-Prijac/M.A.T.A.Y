@@ -11,10 +11,16 @@ public class Weapon : MonoBehaviour
     [Header("Owner")]
     [SerializeField][ReadOnly]protected GameObject owner;
     
-    protected AudioManager audioManager;
+    [SerializeField] protected Sound attackSound;
+    protected AudioManager _audioManager;
     // Start is called before the first frame update
     protected void Start()
     {
+        _audioManager = AudioManager.instance;
+        if (attackSound.clip)
+        {
+            _audioManager.AddNewSound(attackSound, gameObject);
+        }
     }
 
     // Update is called once per frame
@@ -27,8 +33,12 @@ public class Weapon : MonoBehaviour
         get => owner;
         set => owner = value;
     }
-    public virtual void Attack(Vector3 targetPosition)
+    public virtual void Attack(Vector3 targetPosition, float delaySoundAttack)
     {
+        if (attackSound.clip)
+        {
+            _audioManager.Play(attackSound,delaySoundAttack);
+        }
     }
     
 }

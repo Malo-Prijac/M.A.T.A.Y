@@ -76,12 +76,16 @@ public class AudioManager : MonoBehaviour
         sound.Owner = owner;
         sound.Source = owner.AddComponent<AudioSource>();
         sound.Source.clip = sound.clip;
-
-        //UpdateSoundVolume();
+        
         sound.Source.volume = sound.volume;
-        //UpdateSoundVolume();
         sound.Source.pitch = sound.pitch;
         sound.Source.loop = sound.loop;
+        sound.Source.playOnAwake = sound.playOnAwake;
+        sound.Source.spatialBlend = sound.spatialBlend;
+        sound.Source.maxDistance = sound.maxDistance;
+        sound.Source.minDistance = sound.minDistance;
+        
+        UpdateSoundVolume();
     }
 
     public void AddNewSound(Sound sound, GameObject owner)

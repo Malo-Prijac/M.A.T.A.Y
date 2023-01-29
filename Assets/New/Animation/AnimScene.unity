@@ -206,18 +206,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: viking_dist
       objectReference: {fileID: 0}
-    - target: {fileID: 6224279769707894102, guid: 1ae057e726145694eadb87bba12f5dba, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6530356524779038724, guid: 1ae057e726145694eadb87bba12f5dba, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6530356524779038724, guid: 1ae057e726145694eadb87bba12f5dba, type: 3}
-      propertyPath: weaponType
-      value: 
-      objectReference: {fileID: 4390578078104511541, guid: 5098cd4abcdef9145b9f9c0ef1b8ab5e, type: 3}
     - target: {fileID: 6713395715494023148, guid: 1ae057e726145694eadb87bba12f5dba, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -568,17 +556,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 238689356507018292, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
-      propertyPath: dashTime
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 238689356507018292, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
-      propertyPath: dashSpeed
-      value: 600
-      objectReference: {fileID: 0}
-    - target: {fileID: 238689356507018292, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
-      propertyPath: additionalJump
-      value: 1
+    - target: {fileID: 2382302055627123646, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
+      propertyPath: groundDistanceMax
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 4150254963932878274, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
       propertyPath: m_Name
@@ -597,15 +577,7 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5868336982018673990, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
-      propertyPath: soundDamaged.clip
-      value: 
-      objectReference: {fileID: 8300000, guid: ee1916229a2deb34a90bcdf3efbd9c00, type: 3}
-    - target: {fileID: 5868336982018673990, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
       propertyPath: damageSound.volume
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5868336982018673990, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
-      propertyPath: OverrideSoundDamaged
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7084403590897826595, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
@@ -3015,10 +2987,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: egyptian_cac
       objectReference: {fileID: 0}
-    - target: {fileID: 2345371090655143737, guid: ac160fe941899284898e0abf7f36defd, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3154699212768689539, guid: ac160fe941899284898e0abf7f36defd, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -3609,25 +3577,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -1956492403920393252, guid: 2c269183a850db640ad7eb7032ad84ba, type: 3}
-      propertyPath: needToAim
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -1956492403920393252, guid: 2c269183a850db640ad7eb7032ad84ba, type: 3}
-      propertyPath: animationSpeedAttack
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -1956492403920393252, guid: 2c269183a850db640ad7eb7032ad84ba, type: 3}
-      propertyPath: HasDifferentSlotForWeapon
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3705908304576482402, guid: 2c269183a850db640ad7eb7032ad84ba, type: 3}
       propertyPath: m_Name
       value: skeleton_base
-      objectReference: {fileID: 0}
-    - target: {fileID: 3705908304576482402, guid: 2c269183a850db640ad7eb7032ad84ba, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4045876628163909336, guid: 2c269183a850db640ad7eb7032ad84ba, type: 3}
       propertyPath: m_RootOrder
@@ -5622,18 +5574,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6622621028636360546, guid: eae19ab792eaa884fa96a8719556c956, type: 3}
-      propertyPath: m_Height
-      value: 1.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 6622621028636360546, guid: eae19ab792eaa884fa96a8719556c956, type: 3}
-      propertyPath: m_Radius
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6622621028636360546, guid: eae19ab792eaa884fa96a8719556c956, type: 3}
-      propertyPath: m_Center.y
-      value: 0.75
-      objectReference: {fileID: 0}
     - target: {fileID: 8374056577664561834, guid: eae19ab792eaa884fa96a8719556c956, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -5681,10 +5621,6 @@ PrefabInstance:
     - target: {fileID: 9186622760716625936, guid: eae19ab792eaa884fa96a8719556c956, type: 3}
       propertyPath: m_Name
       value: viking_cac
-      objectReference: {fileID: 0}
-    - target: {fileID: 9186622760716625936, guid: eae19ab792eaa884fa96a8719556c956, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eae19ab792eaa884fa96a8719556c956, type: 3}

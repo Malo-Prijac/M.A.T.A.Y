@@ -35,9 +35,9 @@ public class RangedWeapon : Weapon
         
     }
     
-    public override void Attack(Vector3 targetPosition)
+    public override void Attack(Vector3 targetPosition, float delaySoundAttack)
     {
-        base.Attack(targetPosition);
+        base.Attack(targetPosition, delaySoundAttack);
         StartCoroutine(ThrowProjectile(targetPosition));
     }
     

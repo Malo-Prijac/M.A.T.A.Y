@@ -1114,6 +1114,8 @@ MonoBehaviour:
   updateColliderSpeedDown: 2
   centerJumpCollider: 1.2
   originCenterCollider: 0
+  jumpStartTime: 0.3
+  jumpStartCounter: 0
   stepRayUpper: {fileID: 6527626286641291537}
   stepRayLower: {fileID: 7433392590890566378}
   stepHeight: 0.4
@@ -1141,10 +1143,10 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   gameOver: {fileID: 0}
   spawn: {x: 0, y: 0, z: 0}
-  OverrideSoundDamaged: 0
+  OverrideSoundDamaged: 1
   soundDamaged:
     name: 
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: ee1916229a2deb34a90bcdf3efbd9c00, type: 3}
     volume: 1
     maxVolume: 1
     pitch: 1
@@ -1170,18 +1172,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9e56ec426aced741ae5782bd81aa0b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashSpeed: 1000
-  dashTime: 0.5
+  characterAnimator: {fileID: 0}
+  dashSpeed: 600
+  dashTime: 0.6
   dashCoolDown: 1
-  jumpForce: 5
-  jumpCount: 2
-  currentJumpCount: 0
-  canDash: 1
   dashSound: {fileID: 0}
+  additionalJump: 1
+  countAdditionalJump: 0
+  canDash: 1
   jumpSound: {fileID: 0}
   currentDashTime: 0
   currentDashCooldown: 0
-  isDashing: 0
+  _isDashing: 0
   bulletSpeed: 100
   bulletPrefab: {fileID: 0}
   bulletSpawn: {fileID: 0}
