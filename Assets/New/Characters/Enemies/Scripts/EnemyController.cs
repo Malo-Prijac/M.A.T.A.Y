@@ -245,11 +245,11 @@ public class EnemyController : MonoBehaviour
     
     private void ChangeSlot()
     {
-        if (_isAttacking)
+        if (_isAttacking && weaponSlotAttack)
         {
             AttachWeaponToSlot(weaponSlotAttack);
         }
-        else if(!_isAttacking)
+        else if(!_isAttacking && weaponSlotMovement)
         {
             AttachWeaponToSlot(weaponSlotMovement);
         }

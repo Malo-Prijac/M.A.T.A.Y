@@ -111,10 +111,11 @@ public class PlayerCharacterController : MonoBehaviour
     {
         
         Vector3 position = transform.position;
-        //print(position);
-        grounded = Physics.Raycast(position, Vector3.down, groundDistanceMax);
+        //grounded = Physics.Raycast(position, Vector3.down, groundDistanceMax);
         //grounded = Physics.CheckSphere(position, groundDistanceMax);
-        //print(grounded);
+        Collider[] hitColliders = Physics.OverlapSphere(position, groundDistanceMax);
+        grounded = hitColliders.Length > 1 ;
+        //grounded = Physics.CheckSphere(position, groundDistanceMax);
         Gizmos.color = Color.red;
         
         
