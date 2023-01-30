@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FinishParcours : MonoBehaviour
+public class FinishPath : MonoBehaviour
 {
 
-    public PlayerController playerController;
+    [SerializeField] private PlayerController playerController;
     [SerializeField] private List<GameObject> _linkedDoors;
+    [SerializeField] private GameObject Ball;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,16 +21,15 @@ public class FinishParcours : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (GameObject.Find("Ball").GetComponent<Timer>().time > 0)
+            if (Ball.GetComponent<Timer>().time > 0)
             {
                 playerController.Change();
                 foreach (GameObject go in _linkedDoors)
                 {
                     go.GetComponent<Animator>().enabled = true;
                 }
-                GameObject.Find("Ball").GetComponent<Timer>().afficheTimer.SetActive(false);
-                Destroy(GameObject.Find("MiniJeuBoule"));
-                Destroy(GameObject.Find("Ball"));
+                Ball.GetComponent<Timer>().printTimer.SetActive(false);
+
             } 
         }
     }
