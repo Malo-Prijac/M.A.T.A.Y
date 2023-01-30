@@ -1136,7 +1136,7 @@ MonoBehaviour:
     volume: 1
     maxVolume: 1
     pitch: 1
-    type: 0
+    type: 1
     source: {fileID: 0}
     loop: 0
     fadingTime: 0
