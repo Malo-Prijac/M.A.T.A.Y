@@ -1,11 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using MyBox;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class EnemyController : MonoBehaviour
+public class EnemyControllerBase : MonoBehaviour
 {
     [SerializeField] public Animator enemyAnimator;
     private static readonly int IsRunning = Animator.StringToHash("IsRunning");
@@ -13,7 +11,6 @@ public class EnemyController : MonoBehaviour
     private static readonly int VelocityHash = Animator.StringToHash("Velocity");
     private static readonly int AnimationSpeedAttack = Animator.StringToHash("AnimationSpeedAttack");
     private static readonly int IsAttacking = Animator.StringToHash("IsAttacking");
-    private static readonly int IsAiming = Animator.StringToHash("IsAiming");
 
     [Header("Enemy Weapon Slots")]
     [SerializeField] 
@@ -45,30 +42,25 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float runSpeed = 3f;
     [SerializeField] private float acceleration = 0.8f;
     [SerializeField] private float deceleration = 2f;
-    [SerializeField] private float ratioRootMotion = 2f;
     [SerializeField] private float groundDrag = 48;
     [ReadOnly][SerializeField]private float velocity;
     [ReadOnly][SerializeField]private bool _isRunning;
-
-    [Header("Aiming")]
-    [SerializeField] private bool needToAim;
-    [ConditionalField("needToAim")][ReadOnly][SerializeField] 
-    private bool _isAiming;
+    [ReadOnly][SerializeField]protected bool _inMotion;
 
     [Header("Enemy Attack")] 
     
-    [SerializeField] private bool hasStaticAttack;
-    [SerializeField] private string attackTag = "Attack";
-    [SerializeField] private float delayAttack = 1f;
-    [SerializeField] private float animationSpeedAttack = 1f;
-    [SerializeField] private float rangeAttack = 1.35f;
+    [SerializeField] protected bool hasStaticAttack;
+    [SerializeField] protected string attackTag = "Attack";
+    [SerializeField] protected float delayAttack = 1f;
+    [SerializeField] protected float animationSpeedAttack = 1f;
+    [SerializeField] protected float rangeAttack = 1.35f;
 
-    [ReadOnly] [SerializeField] private float _lastAttack;
-    [ReadOnly] [SerializeField] private bool _isAttacking;
-    [ReadOnly] [SerializeField] private bool _isPlayerInRangeToAttack;
-    [ReadOnly] [SerializeField] private bool canAttack;
+    [ReadOnly] [SerializeField] protected float _lastAttack;
+    [ReadOnly] [SerializeField] protected bool _isAttacking;
+    [ReadOnly] [SerializeField] protected bool _isPlayerInRangeToAttack;
+    [ReadOnly] [SerializeField] protected bool canAttack;
 
-    [SerializeField] private GameObject weaponType;
+    [SerializeField] protected GameObject weaponType;
     
     [Header("Sounds")]
     [SerializeField] protected float delaySoundAttack;
@@ -76,22 +68,21 @@ public class EnemyController : MonoBehaviour
     [SerializeField] protected Sound movingSound;
 
 
-    private GameObject _weaponGameObject;
-    private Weapon _weapon;
-    private Transform _currentSlot;
+    protected GameObject _weaponGameObject;
+    protected Weapon _weapon;
+    protected Transform _currentSlot;
 
-    private float _actualSpeed;
-    private Rigidbody _rb;
-    private Vector3 _rigidbodyDrag;
-    private bool _inMotion;
+    protected float _actualSpeed;
+    protected Rigidbody _rb;
+    protected Vector3 _rigidbodyDrag;
 
-    private GameObject _player;
-    private Vector3 _targetPosition;
-    private Vector3 _offSetPlayer;
+    protected GameObject _player;
+    protected Vector3 _targetPosition;
+    protected Vector3 _offSetPlayer;
 
     private AudioManager _audioManager;
-
-    void Start()
+    // Start is called before the first frame update
+    protected void Start()
     {
         _player = GameObject.FindWithTag(playerTag); 
         _offSetPlayer = new Vector3(0,_player.GetComponent<CapsuleCollider>().height/2,0);
@@ -116,9 +107,8 @@ public class EnemyController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
 
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    protected virtual void Update()
     {
         if (_player == null)
         {
@@ -126,48 +116,23 @@ public class EnemyController : MonoBehaviour
             return;
         }
         
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         Assert.IsFalse(rangePlayer < rangeAttack);
-        #endif
+#endif
 
         AnimationBehavior();
         ChangeSlot();
         UpdateSound();
 
-        if (PlayerInRangeToAttack())
-        {
-            if (needToAim)
-            {
-                Aim();
-            }
-            if(canAttack)
-            {
-                Attack();
-            }
-        }
-        else
-        {
-            _isAiming = false;
-        }
-
-        if (needToAim)
-        {
-            if (!_isAttacking && _isAiming)
-            {
-                _lastAttack+= Time.deltaTime;
-            }
-        }
-        else
-        {
-            if (!_isAttacking && !canAttack)
-            {
-                _lastAttack+= Time.deltaTime;
-            }
-        }
-
-        canAttack = _lastAttack - delayAttack > 0;
     }
+    
+    protected bool CanAttack(bool condition)
+    {
+        if (!_isAttacking && condition)
+            _lastAttack+= Time.deltaTime;
 
+        return _lastAttack - delayAttack > 0;
+    }
     private void UpdateSound()
     {
         if (movingSound.clip)
@@ -183,64 +148,18 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    protected void FixedUpdate()
     {
         UpdateVelocity();
         FollowPlayer(_player.transform.position-transform.position);
 
         if (IsPlayerDetected())
-        {
             LookAtPlayer();
-            if (PlayerInRangeToAttack() || _isAttacking)
-            {
-                _inMotion = false;
-                _isRunning = false;
-            }
-            else
-            {
-                _inMotion = true;
-                _isRunning = true;
-            }
-            
-        }
-        else
-        {
-            _inMotion = false;
-            _isRunning = false;
-        }
+
+        _inMotion = !(PlayerInRangeToAttack() || _isAttacking);
+        _isRunning = _inMotion;
     }
 
-    /*
-    IEnumerator CorrectAttackingPosition()
-    {
-        while (_isAttacking)
-        {
-            Vector3 interpolation = new Vector3(0,_offsetRotationYCounterAttack,0);
-            _offsetRotationYCounterAttack = Mathf.Lerp(_offsetRotationYCounterAttack, offsetRotationY, Time.deltaTime * rotationSpeedAttack);
-            interpolation = new Vector3(0, _offsetRotationYCounterAttack, 0) - interpolation;
-            transform.rotation = Quaternion.Euler(transform.eulerAngles + interpolation );
-            //transform.rotation = Quaternion.Euler(transform.eulerAngles + new Vector3(0,Time.deltaTime * rotationSlotSpeed,0));
-            yield return null;
-        }
-
-        _offsetRotationYCounterAttack = 0;
-    }
-
-    IEnumerator CorrectAimingPosition()
-    {
-        while (_isAiming){
-            Vector3 interpolation = new Vector3(0,_offsetRotationYCounterAiming,0);
-            _offsetRotationYCounterAiming = Mathf.Lerp(_offsetRotationYCounterAiming, offsetAiming, Time.deltaTime * rotationSpeedAiming);
-            interpolation = new Vector3(0, _offsetRotationYCounterAiming, 0) - interpolation;
-            transform.rotation = Quaternion.Euler(transform.eulerAngles + interpolation );
-            //transform.rotation = Quaternion.Euler(transform.eulerAngles + new Vector3(0,Time.deltaTime * rotationSlotSpeed,0));
-            yield return null;
-        }
-
-        _offsetRotationYCounterAiming = 0;
-    }
-    */
-    
     private void ChangeSlot()
     {
         if (_isAttacking && weaponSlotAttack)
@@ -253,7 +172,7 @@ public class EnemyController : MonoBehaviour
         }
     }
     
-    void AttachWeaponToSlot(Transform slot)
+    private void AttachWeaponToSlot(Transform slot)
     {
         _currentSlot = slot;
         _weaponGameObject.transform.parent = _currentSlot;
@@ -271,25 +190,17 @@ public class EnemyController : MonoBehaviour
         return isPlayerInRange || isPlayerInSight;
     }
     
-    private bool PlayerInRangeToAttack()
+    protected bool PlayerInRangeToAttack()
     {
         _isPlayerInRangeToAttack = (Mathf.Abs((_player.transform.position - transform.position).magnitude) < rangeAttack);
         return _isPlayerInRangeToAttack;
     }
 
-    void FollowPlayer(Vector3 moveDirection)
+    private void FollowPlayer(Vector3 moveDirection)
     {
         _rb.AddForce(_actualSpeed * moveDirection.normalized,ForceMode.VelocityChange);
         _rigidbodyDrag = new Vector3(-_rb.velocity.x, 0, -_rb.velocity.z)*groundDrag;
 
-        /*
-        if (!grounded)
-        {
-            rigidbodyDrag = -_rb.velocity*airDrag;
-            _rb.AddForce(rigidbodyDrag*groundDrag, ForceMode.Acceleration);
-
-        }*/
-        
         _rb.AddForce(_rigidbodyDrag, ForceMode.Acceleration);
 
     }
@@ -307,10 +218,10 @@ public class EnemyController : MonoBehaviour
             velocity = Mathf.Max(velocity, 0);
         }
 
-        _actualSpeed = velocity*runSpeed*ratioRootMotion;
+        _actualSpeed = velocity*runSpeed;
     }
     
-    void LookAtPlayer()
+    protected void LookAtPlayer()
     {
         if (hasStaticAttack && _isAttacking)
             return;
@@ -320,20 +231,11 @@ public class EnemyController : MonoBehaviour
         transform.rotation = Quaternion.Slerp (transform.rotation, rotation, Time.deltaTime * rotationSpeed);
     }
 
-    void Aim()
-    {
-        //StartCoroutine(CorrectAimingPosition());
-        _isAiming = true;
-    }
-
-    void Attack()
+    virtual protected void Attack()
     {
         if(_isAttacking)
             return;
 
-        if (needToAim && !_isAiming)
-            return;
-        
         _isAttacking = true;
         _lastAttack = 0;
 
@@ -354,7 +256,6 @@ public class EnemyController : MonoBehaviour
 
     IEnumerator StopAttack()
     {
-        //print(attackDuration/animationSpeedAttack);
         while (!IsAnimationCurrentAnimation(attackTag))
         {
             yield return null;
@@ -367,22 +268,20 @@ public class EnemyController : MonoBehaviour
         _isAttacking = false;
     }
 
-    bool IsAnimationCurrentAnimation(string tagAnim)
+    protected bool IsAnimationCurrentAnimation(string tagAnim)
     {
-       // print(enemyAnimator.GetCurrentAnimatorStateInfo(0).IsTag(tagAnim));
         return enemyAnimator.GetCurrentAnimatorStateInfo(0).IsTag(tagAnim);
     }
 
-    bool AnimatorIsPlaying(string tagAnim){
+    protected bool AnimatorIsPlaying(string tagAnim){
         return AnimatorIsPlaying() && IsAnimationCurrentAnimation(tagAnim);
     }
     
-    bool AnimatorIsPlaying(){
-        //print(enemyAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1 < 0.99f);
+    protected bool AnimatorIsPlaying(){
         return enemyAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1 < 0.95f;
     }
 
-    private void AnimationBehavior()
+    protected virtual void AnimationBehavior()
     {
         
         if (enemyAnimator == null)
@@ -395,11 +294,8 @@ public class EnemyController : MonoBehaviour
         enemyAnimator.SetFloat(VelocityHash,velocity);
         enemyAnimator.SetFloat(AnimationSpeedAttack, animationSpeedAttack);
 
-        // enemyAnimator.SetBool(IsJumping, _isJumping);
-        if(needToAim) 
-            enemyAnimator.SetBool(IsAiming,_isAiming);
-
         enemyAnimator.SetBool(IsAttacking,_isAttacking);
     }
 }
+
 
