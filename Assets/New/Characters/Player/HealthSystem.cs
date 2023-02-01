@@ -58,12 +58,16 @@ public class HealthSystem : MonoBehaviour
         {
             soundDamaged = sound;
         }
-        
-        if (soundDamaged.clip)
+
+        if (sound != null)
         {
-            _audioManager.AddNewSound(soundDamaged, gameObject);
-            _audioManager.PlayAndDeleteAfter(soundDamaged);
+            if (soundDamaged.clip)
+            {
+                _audioManager.AddNewSound(soundDamaged, gameObject);
+                _audioManager.PlayAndDeleteAfter(soundDamaged);
+            }
         }
+        
         print("PLAYER TAKE " + damage);
         currentHealth-=damage;
         if (gameObject.CompareTag("Player"))
