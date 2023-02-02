@@ -328,8 +328,8 @@ GameObject:
   - component: {fileID: 9018338324283516921}
   - component: {fileID: 420231879}
   - component: {fileID: 420231878}
-  - component: {fileID: 420231880}
   - component: {fileID: 720847351}
+  - component: {fileID: 4733516491458353238}
   m_Layer: 0
   m_Name: egyptian_cac
   m_TagString: Untagged
@@ -365,9 +365,9 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: f2df1788c3707254a8bc996ef782d1c0, type: 3}
   m_Controller: {fileID: 9100000, guid: 03889c8b281e9344ea9a1bcad42ec62a, type: 2}
-  m_CullingMode: 1
+  m_CullingMode: 0
   m_UpdateMode: 1
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -403,90 +403,7 @@ CapsuleCollider:
   m_Radius: 0.2
   m_Height: 1.6
   m_Direction: 1
-  m_Center: {x: 0, y: 0.8, z: 0}
---- !u!114 &420231880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2345371090655143737}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9d50b5eef0029d48ae3196f25fd8cda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyAnimator: {fileID: 9018338324283516921}
-  weaponSlotMovement: {fileID: 8183106292536511611}
-  weaponSlotAttack: {fileID: 2556641925307949706}
-  rotationSlotSpeed: 5
-  positionSlotSpeed: 5
-  playerTag: Player
-  rangePlayer: 15
-  rotationSpeed: 10
-  isPlayerInSight: 0
-  isPlayerInRange: 0
-  destroySound:
-    spatialBlend: 1
-    maxDistance: 1
-    minDistance: 10
-    name: 
-    clip: {fileID: 0}
-    playOnAwake: 0
-    volume: 1
-    maxVolume: 1
-    pitch: 1
-    type: 0
-    source: {fileID: 0}
-    loop: 0
-    fadingTime: 0
-    FadingCurve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-  walkSpeed: 2
-  runSpeed: 4
-  acceleration: 0.8
-  deceleration: 2
-  ratioRootMotion: 2
-  groundDrag: 48
-  velocity: 0
-  _isRunning: 0
-  needToAim: 0
-  _isAiming: 0
-  hasStaticAttack: 1
-  attackTag: Attack
-  delayAttack: 1
-  animationSpeedAttack: 1.4
-  rangeAttack: 1.4
-  _lastAttack: 0
-  _isAttacking: 0
-  _isPlayerInRangeToAttack: 0
-  canAttack: 0
-  weaponType: {fileID: 3745342784214530544, guid: 4db16d2b20bc88c40bc8ce1d1783cef2, type: 3}
-  delaySoundAttack: 0.2
-  movingSound:
-    spatialBlend: 1
-    maxDistance: 1
-    minDistance: 15
-    name: 
-    clip: {fileID: 8300000, guid: fe68e5b1b352b9d4f9ec2d68c996aa12, type: 3}
-    playOnAwake: 0
-    volume: 1
-    maxVolume: 1
-    pitch: 1
-    type: 0
-    source: {fileID: 0}
-    loop: 1
-    fadingTime: 0
-    FadingCurve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
+  m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!114 &720847351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,6 +432,87 @@ MonoBehaviour:
     maxVolume: 1
     pitch: 1
     type: 0
+    source: {fileID: 0}
+    loop: 0
+    fadingTime: 0
+    FadingCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+--- !u!114 &4733516491458353238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2345371090655143737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 566561033210f824ab2468dbaad931de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyAnimator: {fileID: 9018338324283516921}
+  weaponSlotMovement: {fileID: 8183106292536511611}
+  weaponSlotAttack: {fileID: 2556641925307949706}
+  rotationSlotSpeed: 10
+  positionSlotSpeed: 10
+  playerTag: Player
+  rangePlayer: 15
+  rotationSpeed: 10
+  isPlayerInSight: 0
+  isPlayerInRange: 0
+  destroySound:
+    spatialBlend: 1
+    maxDistance: 1
+    minDistance: 15
+    name: 
+    clip: {fileID: 0}
+    playOnAwake: 0
+    volume: 1
+    maxVolume: 1
+    pitch: 1
+    type: 0
+    source: {fileID: 0}
+    loop: 0
+    fadingTime: 0
+    FadingCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  walkSpeed: 2
+  runSpeed: 4
+  acceleration: 0.8
+  deceleration: 2
+  groundDrag: 48
+  velocity: 0
+  _isRunning: 0
+  _inMotion: 0
+  hasStaticAttack: 1
+  attackTag: Attack
+  delayAttack: 1
+  animationSpeedAttack: 1.4
+  rangeAttack: 1.4
+  _lastAttack: 0
+  _isAttacking: 0
+  _isPlayerInRangeToAttack: 0
+  canAttack: 0
+  weaponType: {fileID: 3745342784214530544, guid: 4db16d2b20bc88c40bc8ce1d1783cef2, type: 3}
+  delaySoundAttack: 0.2
+  movingSound:
+    spatialBlend: 1
+    maxDistance: 1
+    minDistance: 15
+    name: 
+    clip: {fileID: 8300000, guid: fe68e5b1b352b9d4f9ec2d68c996aa12, type: 3}
+    playOnAwake: 0
+    volume: 1
+    maxVolume: 1
+    pitch: 1
+    type: 1
     source: {fileID: 0}
     loop: 0
     fadingTime: 0

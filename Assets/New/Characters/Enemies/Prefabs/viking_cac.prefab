@@ -982,7 +982,7 @@ GameObject:
   - component: {fileID: 2510348609267296464}
   - component: {fileID: 6622621028636360546}
   - component: {fileID: 156690675}
-  - component: {fileID: 5261922375905232922}
+  - component: {fileID: 4154343493366876962}
   m_Layer: 0
   m_Name: viking_cac
   m_TagString: Untagged
@@ -1020,7 +1020,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 62df17a7f61b2274b8b2f9e791a7af76, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 1
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
@@ -1063,7 +1063,7 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!114 &5261922375905232922
+--- !u!114 &4154343493366876962
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1072,7 +1072,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9186622760716625936}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9d50b5eef0029d48ae3196f25fd8cda, type: 3}
+  m_Script: {fileID: 11500000, guid: 566561033210f824ab2468dbaad931de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemyAnimator: {fileID: 2510348609267296464}
@@ -1088,7 +1088,7 @@ MonoBehaviour:
   destroySound:
     spatialBlend: 1
     maxDistance: 1
-    minDistance: 10
+    minDistance: 15
     name: 
     clip: {fileID: 0}
     playOnAwake: 0
@@ -1109,12 +1109,10 @@ MonoBehaviour:
   runSpeed: 4
   acceleration: 0.8
   deceleration: 2
-  ratioRootMotion: 2
   groundDrag: 48
   velocity: 0
   _isRunning: 0
-  needToAim: 0
-  _isAiming: 0
+  _inMotion: 0
   hasStaticAttack: 1
   attackTag: Attack
   delayAttack: 1
@@ -1136,7 +1134,7 @@ MonoBehaviour:
     volume: 1
     maxVolume: 1
     pitch: 1
-    type: 0
+    type: 1
     source: {fileID: 0}
     loop: 0
     fadingTime: 0

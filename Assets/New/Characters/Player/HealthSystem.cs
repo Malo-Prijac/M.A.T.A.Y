@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class HealthSystem : MonoBehaviour
 {
     [SerializeField] private float maxHealth = 100f;
-    private float currentHealth;
+    [ReadOnly][SerializeField] private float currentHealth;
     [SerializeField] private Image healthBar;
     private bool alive = true;
     private string reason = "";
@@ -20,10 +20,14 @@ public class HealthSystem : MonoBehaviour
     [ConditionalField("OverrideSoundDamaged")] [SerializeField] private Sound soundDamaged;
     
     private AudioManager _audioManager;
+    private GameManager _gameManager;
     void Start()
     {
+        _gameManager = GameManager.Instance;
         currentHealth = maxHealth;
         _audioManager = AudioManager.instance;
+        _audioManager.AddNewSound(soundDamaged, gameObject);
+
         //audioManager.AddNewSound(damageSound);
     }
     
@@ -58,18 +62,14 @@ public class HealthSystem : MonoBehaviour
         {
             soundDamaged = sound;
         }
-
-        if (sound != null)
-        {
-            if (soundDamaged.clip)
-            {
-                _audioManager.AddNewSound(soundDamaged, gameObject);
-                _audioManager.PlayAndDeleteAfter(soundDamaged);
-            }
-        }
         
-        print("PLAYER TAKE " + damage);
+        if (soundDamaged.clip)
+        {
+            _audioManager.Play(soundDamaged);
+        }
+        //print("PLAYER TAKE " + damage);
         currentHealth-=damage;
+        
         if (gameObject.CompareTag("Player"))
         {
             if (currentHealth <= 0)
