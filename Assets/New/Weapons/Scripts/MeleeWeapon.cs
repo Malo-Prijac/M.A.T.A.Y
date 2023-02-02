@@ -26,7 +26,7 @@ public class MeleeWeapon : Weapon
         
     }
     
-    public override void Attack(Vector3 targetPosition, float delaySoundAttack)
+    public override void Attack(Vector3 targetPosition, float delaySoundAttack, Vector3 startPosition = default(Vector3))
     {
         base.Attack(targetPosition,delaySoundAttack);
     }

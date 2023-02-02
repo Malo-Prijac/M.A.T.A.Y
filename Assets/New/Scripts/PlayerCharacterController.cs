@@ -26,6 +26,7 @@ public class PlayerCharacterController : MonoBehaviour
     [Header("Camera Rotation")]
     [SerializeField] private float dampingCamera = 10f;
     [SerializeField] private float speedX = 80f;
+    [SerializeField] private float lockCamY = 35f;
     private Vector2 _cameraRotate;
     
     [Header("Debug movement")]
@@ -199,7 +200,10 @@ public class PlayerCharacterController : MonoBehaviour
         _xRotation += mouseX;
         
         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.fixedDeltaTime * speedX;
-        _yRotation -= mouseY;
+        _yRotation = MathF.Abs(_yRotation) < lockCamY ? _yRotation - mouseY : _yRotation;
+        _yRotation = _yRotation > lockCamY && mouseY > 0? _yRotation - mouseY : _yRotation; 
+        _yRotation = _yRotation < - lockCamY && mouseY < 0? _yRotation - mouseY : _yRotation;
+        //_yRotation = MathF.Abs(_yRotation - mouseY) < lockCamY ? _yRotation - mouseY : _yRotation;
 
         /*
         if (Input.GetButton("Jump") && readyToJump && grounded)
@@ -233,8 +237,30 @@ public class PlayerCharacterController : MonoBehaviour
     {
         readyToJump = true;
     }
-    
-    
+    /*
+    void MovePlayer()
+    {
+        _rigidbodyDrag = new Vector3(-_rb.velocity.x, 0, -_rb.velocity.z)*groundDrag;
+
+        if (_inMotion)
+        {
+            _moveDirection = toFollow.forward * _verticalInput + toFollow.right * _horizontalInput;
+            _moveDirection.y = 0;
+        }
+
+        RaycastHit hit;
+        // Check if the body's current velocity will result in a collision
+        if (_rb.SweepTest(_moveDirection, out hit, 0.1f))
+        {
+            // Nuke horizontal velocity
+            _rb.velocity = new Vector3(0, _rb.velocity.y, 0);
+            return;
+        }
+
+        _rb.AddForce(_actualSpeed * _moveDirection.normalized,ForceMode.VelocityChange);
+        _rb.AddForce(_rigidbodyDrag, ForceMode.Acceleration);
+    }
+    */
     void MovePlayer()
     {
         if (_inMotion)
@@ -243,20 +269,15 @@ public class PlayerCharacterController : MonoBehaviour
             _moveDirection.y = 0;
         }
         
-        if (grounded)
-        {
-            _rb.AddForce(_actualSpeed * _moveDirection.normalized,ForceMode.VelocityChange);
-            
-            _rigidbodyDrag = new Vector3(-_rb.velocity.x, 0, -_rb.velocity.z)*groundDrag;
-        }
+        _rigidbodyDrag = new Vector3(-_rb.velocity.x, 0, -_rb.velocity.z)*groundDrag;
 
         if (!grounded)
         {
-            _rigidbodyDrag = -_rb.velocity*airDrag;
-            _rb.AddForce(_rigidbodyDrag*groundDrag, ForceMode.Acceleration);
+            _rigidbodyDrag += -_rb.velocity*airDrag;
+            //_rb.AddForce(_rigidbodyDrag*groundDrag, ForceMode.Acceleration);
 
         }
-        
+        _rb.AddForce(_actualSpeed * _moveDirection.normalized,ForceMode.VelocityChange);
         _rb.AddForce(_rigidbodyDrag, ForceMode.Acceleration);
 
     }
