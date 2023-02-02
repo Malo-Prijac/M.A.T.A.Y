@@ -76,6 +76,7 @@ public class PlayerCharacterController : MonoBehaviour
     [SerializeField] private float endFrame;
 
     public bool bague = false;
+    public int orb = 0;
 
 
     public bool Grounded

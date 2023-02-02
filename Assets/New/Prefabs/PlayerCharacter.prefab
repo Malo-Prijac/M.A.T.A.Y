@@ -1102,7 +1102,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   groundDrag: 48
-  groundDistanceMax: 0.15
+  groundDistanceMax: 0.3
   playerHeight: 0
   grounded: 0
   foot: {fileID: 1367967337}
@@ -1127,6 +1127,7 @@ MonoBehaviour:
   transitionFrame: 15
   endFrame: 28
   bague: 0
+  orb: 0
 --- !u!114 &5868336982018673990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1140,13 +1141,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  currentHealth: 0
   healthBar: {fileID: 0}
   gameOver: {fileID: 0}
   spawn: {x: 0, y: 0, z: 0}
   OverrideSoundDamaged: 1
   soundDamaged:
+    spatialBlend: 1
+    maxDistance: 1
+    minDistance: 15
     name: 
     clip: {fileID: 8300000, guid: ee1916229a2deb34a90bcdf3efbd9c00, type: 3}
+    playOnAwake: 0
     volume: 1
     maxVolume: 1
     pitch: 1
