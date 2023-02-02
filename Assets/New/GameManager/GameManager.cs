@@ -9,6 +9,17 @@ public class GameManager : MonoBehaviour
     public Transform forward;
     public TrapArrow ta;
 
+    public bool hasUnlockedAttack;
+    public bool dash;
+    public bool shot;
+    public bool doubleJump;
+    
+    public bool ring = false;
+    public int orb = 0;
+    private Vector3 currentSpawn;
+    public Vector3 spawnWorld1;
+    public Vector3 spawnWorld2;
+
     // Start is called before the first frame update
 
     // Static singleton instance
@@ -32,7 +43,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-
+        currentSpawn = spawnWorld1;
     }
 
     // Update is called once per frame
@@ -42,7 +53,7 @@ public class GameManager : MonoBehaviour
         if (test >= 2f)
         {
             test = 0;
-            StartCoroutine(ta.ActivateTrap(0));
+            //StartCoroutine(ta.ActivateTrap(0));
         }
     }
 }

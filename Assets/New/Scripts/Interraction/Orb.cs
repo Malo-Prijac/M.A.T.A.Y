@@ -16,6 +16,7 @@ public class Orb : MonoBehaviour
         {
             playerCharacterController = other.gameObject.GetComponent<PlayerCharacterController>();
             playerCharacterController.orb = 1;
+            
             //portal.GetComponent<Teleportation>().enabled = true;
             portal.transform.GetChild(3).gameObject.SetActive(true);
             portal.transform.GetChild(4).gameObject.SetActive(true);

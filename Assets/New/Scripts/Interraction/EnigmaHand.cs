@@ -9,14 +9,17 @@ public class EnigmaHand : MonoBehaviour
     [SerializeField] private Canvas dialogue;
     [SerializeField] private Canvas dialogue2;
     [SerializeField] private GameObject enemy;
+    
+    private GameManager _gameManager;
     // Start is called before the first frame update
     private void OnTriggerStay(Collider other)
     {
         if (Input.GetKey(KeyCode.O) && (other.CompareTag("Player")))
         {
             speakStatue.enabled=false;
+            _gameManager = GameManager.Instance;
             PlayerCharacterController playerCharacterController = other.gameObject.GetComponent<PlayerCharacterController>();
-            if (playerCharacterController.bague)
+            if (_gameManager.ring==true)
             {
                 enemy.SetActive(true);
                 dialogue2.enabled=true;

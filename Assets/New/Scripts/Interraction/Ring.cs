@@ -7,14 +7,15 @@ public class Ring : MonoBehaviour
     [SerializeField] private Canvas interraction;
     [SerializeField] private Canvas ringFound;
 
-    private PlayerCharacterController playerCharacterController;
+    private GameManager _gameManager;
+    //private PlayerCharacterController playerCharacterController;
     // Start is called before the first frame update
     private void OnTriggerStay(Collider other)
     {
         if (Input.GetKey(KeyCode.O) && (other.CompareTag("Player")))
         {
-            playerCharacterController = other.gameObject.GetComponent<PlayerCharacterController>();
-            playerCharacterController.bague = true;
+            _gameManager = GameManager.Instance;
+            _gameManager.ring = true;
             interraction.enabled=false;
             ringFound.enabled=true;
         }
