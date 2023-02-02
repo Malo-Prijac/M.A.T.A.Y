@@ -261,6 +261,7 @@ public class PlayerCharacterController : MonoBehaviour
         _rb.AddForce(_rigidbodyDrag, ForceMode.Acceleration);
     }
     */
+    /*
     void MovePlayer()
     {
         if (_inMotion)
@@ -278,6 +279,32 @@ public class PlayerCharacterController : MonoBehaviour
 
         }
         _rb.AddForce(_actualSpeed * _moveDirection.normalized,ForceMode.VelocityChange);
+        _rb.AddForce(_rigidbodyDrag, ForceMode.Acceleration);
+
+    }*/
+    
+    void MovePlayer()
+    {
+        if (_inMotion)
+        {
+            _moveDirection = toFollow.forward * _verticalInput + toFollow.right * _horizontalInput;
+            _moveDirection.y = 0;
+        }
+        
+        if (grounded)
+        {
+            _rb.AddForce(_actualSpeed * _moveDirection.normalized,ForceMode.VelocityChange);
+            
+            _rigidbodyDrag = new Vector3(-_rb.velocity.x, 0, -_rb.velocity.z)*groundDrag;
+        }
+
+        if (!grounded)
+        {
+            _rigidbodyDrag = -_rb.velocity*airDrag;
+            _rb.AddForce(_rigidbodyDrag*groundDrag, ForceMode.Acceleration);
+
+        }
+        
         _rb.AddForce(_rigidbodyDrag, ForceMode.Acceleration);
 
     }
