@@ -5,14 +5,13 @@ using UnityEngine;
 public class MeleeEnemyController : EnemyControllerBase
 {
     // Start is called before the first frame update
-    private new void Start()
+    protected override void Start()
     {
         base.Start();
-
     }
 
     // Update is called once per frame
-    private new void Update()
+    protected override void Update()
     {
         base.Update();
         AnimationBehavior();
@@ -23,7 +22,7 @@ public class MeleeEnemyController : EnemyControllerBase
         }
     }
     
-    private new void FixedUpdate()
+    protected override void FixedUpdate()
     {
         base.FixedUpdate();
     }

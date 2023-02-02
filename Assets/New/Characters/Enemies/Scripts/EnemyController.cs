@@ -183,7 +183,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         UpdateVelocity();
         FollowPlayer(_player.transform.position-transform.position);

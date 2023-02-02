@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using MyBox;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -13,9 +14,13 @@ public class EnemyControllerBase : MonoBehaviour
     private static readonly int IsAttacking = Animator.StringToHash("IsAttacking");
 
     [Header("Enemy Weapon Slots")]
+    
     [SerializeField] 
+    private bool NeedWeaponSlot = true;
+    
+    [ConditionalField("NeedWeaponSlot")][SerializeField] 
     private Transform weaponSlotMovement;
-    [SerializeField] 
+    [ConditionalField("NeedWeaponSlot")][SerializeField] 
     private Transform weaponSlotAttack;
     [SerializeField] 
     private float rotationSlotSpeed = 10;
@@ -44,7 +49,7 @@ public class EnemyControllerBase : MonoBehaviour
     [SerializeField] private float deceleration = 2f;
     [SerializeField] private float groundDrag = 48;
     [ReadOnly][SerializeField]private float velocity;
-    [ReadOnly][SerializeField]private bool _isRunning;
+    [ReadOnly][SerializeField]protected bool _isRunning;
     [ReadOnly][SerializeField]protected bool _inMotion;
 
     [Header("Enemy Attack")] 
@@ -82,7 +87,7 @@ public class EnemyControllerBase : MonoBehaviour
 
     private AudioManager _audioManager;
     // Start is called before the first frame update
-    protected void Start()
+    protected virtual void Start()
     {
         _player = GameObject.FindWithTag(playerTag); 
         _offSetPlayer = new Vector3(0,_player.GetComponent<CapsuleCollider>().height/2,0);
@@ -148,7 +153,7 @@ public class EnemyControllerBase : MonoBehaviour
         }
     }
 
-    protected void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         UpdateVelocity();
         FollowPlayer(_player.transform.position-transform.position);
@@ -156,7 +161,7 @@ public class EnemyControllerBase : MonoBehaviour
         if (IsPlayerDetected())
             LookAtPlayer();
 
-        _inMotion = !(PlayerInRangeToAttack() || _isAttacking);
+        _inMotion = IsPlayerDetected() && !(PlayerInRangeToAttack() && hasStaticAttack || _isAttacking);
         _isRunning = _inMotion;
     }
 
@@ -184,7 +189,7 @@ public class EnemyControllerBase : MonoBehaviour
         _weaponGameObject.transform.rotation = interpolatedAngle;
     }
 
-    private bool IsPlayerDetected()
+    protected bool IsPlayerDetected()
     {
         isPlayerInRange = (Mathf.Abs((_player.transform.position - transform.position).magnitude) < rangePlayer);
         return isPlayerInRange || isPlayerInSight;
@@ -196,7 +201,7 @@ public class EnemyControllerBase : MonoBehaviour
         return _isPlayerInRangeToAttack;
     }
 
-    private void FollowPlayer(Vector3 moveDirection)
+    protected void FollowPlayer(Vector3 moveDirection)
     {
         _rb.AddForce(_actualSpeed * moveDirection.normalized,ForceMode.VelocityChange);
         _rigidbodyDrag = new Vector3(-_rb.velocity.x, 0, -_rb.velocity.z)*groundDrag;
@@ -205,7 +210,7 @@ public class EnemyControllerBase : MonoBehaviour
 
     }
     
-    private void UpdateVelocity()
+    protected void UpdateVelocity()
     {
         if ((_inMotion && velocity < walkSpeed / runSpeed)|| (_isRunning && velocity < 1.0f))
         {

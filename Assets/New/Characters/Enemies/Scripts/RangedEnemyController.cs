@@ -9,14 +9,14 @@ public class RangedEnemyController : EnemyControllerBase
     private static readonly int IsAiming = Animator.StringToHash("IsAiming");
 
     // Start is called before the first frame update
-    private new void Start()
+    protected override void Start()
     {
         base.Start();
     }
 
     
     // Update is called once per frame
-    protected new void Update ()
+    protected override void Update ()
     {
         base.Update();
         AnimationBehavior();
@@ -28,7 +28,7 @@ public class RangedEnemyController : EnemyControllerBase
         }
     }
 
-    private new void FixedUpdate()
+    protected override void FixedUpdate()
     {
         base.FixedUpdate();
     }
