@@ -21,10 +21,10 @@ public class RangedEnemyController : EnemyControllerBase
         base.Update();
         AnimationBehavior();
         
-        _isAiming = PlayerInRangeToAttack();
-        if (CanAttack(_isAiming) && PlayerInRangeToAttack())
+        _isAiming = PlayerInRangeToAttack(rangeAttack);
+        if (CanAttack(_isAiming) && _isAiming)
         {
-            Attack();
+            Attack(attackTag);
         }
     }
 
@@ -32,15 +32,10 @@ public class RangedEnemyController : EnemyControllerBase
     {
         base.FixedUpdate();
     }
-    
-    protected override void Attack()
-    {
-        base.Attack();
-    }
-    
-    
-    
-    
+
+
+
+
     protected override void AnimationBehavior()
     {
         base.AnimationBehavior();

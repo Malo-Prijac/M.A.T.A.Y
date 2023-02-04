@@ -69,13 +69,8 @@ public class PlayerCharacterController : MonoBehaviour
     [SerializeField] private float distanceFirstStep = 0.3f;
     [SerializeField] private float distanceSecondStep = 0.45f;
 
-    [Header("Jump frames")]
-    [ReadOnly] [SerializeField] private float _frameJump = 0;
-    
-    [SerializeField] private float startFrame;
-    [SerializeField] private float transitionFrame;
-    [SerializeField] private float endFrame;
-
+    [Header("Collisions")] [ReadOnly] [SerializeField]
+    private int collisions;
     public bool bague = false;
 
 
@@ -95,7 +90,7 @@ public class PlayerCharacterController : MonoBehaviour
         playerHeight = _capsuleCollider.height;
         originCenterCollider = _capsuleCollider.center.y;
         ResetJump();
-        stepRayUpper.transform.position = new Vector3(stepRayUpper.transform.position.x, stepHeight, stepRayUpper.transform.position.z);
+        stepRayUpper.transform.position = new Vector3(stepRayUpper.transform.position.x, stepRayUpper.transform.position.y+stepHeight, stepRayUpper.transform.position.z);
     }
 
     // Update is called once per frame
@@ -114,7 +109,8 @@ public class PlayerCharacterController : MonoBehaviour
         Vector3 position = transform.position;
         //grounded = Physics.Raycast(position, Vector3.down, groundDistanceMax);
         //grounded = Physics.CheckSphere(position, groundDistanceMax);
-        Collider[] hitColliders = Physics.OverlapSphere(position, groundDistanceMax);
+        Collider[] hitColliders = Physics.OverlapBox(position, new Vector3(groundDistanceMax,groundDistanceMax,groundDistanceMax));
+        //Collider[] hitColliders = Physics.OverlapSphere(position, groundDistanceMax);
         grounded = hitColliders.Length > 1 ;
         //grounded = Physics.CheckSphere(position, groundDistanceMax);
         Gizmos.color = Color.red;
@@ -142,7 +138,8 @@ public class PlayerCharacterController : MonoBehaviour
         Vector3 position = transform.position;
         // Draw a yellow sphere at the transform's position
         Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(position,groundDistanceMax);
+        //Gizmos.DrawSphere(position,groundDistanceMax);
+        Gizmos.DrawCube(position,new Vector3(groundDistanceMax,groundDistanceMax,groundDistanceMax));
     }
     /*
     
@@ -261,7 +258,7 @@ public class PlayerCharacterController : MonoBehaviour
         _rb.AddForce(_rigidbodyDrag, ForceMode.Acceleration);
     }
     */
-    /*
+    
     void MovePlayer()
     {
         if (_inMotion)
@@ -278,11 +275,23 @@ public class PlayerCharacterController : MonoBehaviour
             //_rb.AddForce(_rigidbodyDrag*groundDrag, ForceMode.Acceleration);
 
         }
-        _rb.AddForce(_actualSpeed * _moveDirection.normalized,ForceMode.VelocityChange);
+        if(collisions == 0 || grounded)
+            _rb.AddForce(_actualSpeed * _moveDirection.normalized,ForceMode.VelocityChange);
+        
         _rb.AddForce(_rigidbodyDrag, ForceMode.Acceleration);
 
-    }*/
-    
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        collisions++;
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        collisions--;
+    }
+    /*
     void MovePlayer()
     {
         if (_inMotion)
@@ -307,7 +316,7 @@ public class PlayerCharacterController : MonoBehaviour
         
         _rb.AddForce(_rigidbodyDrag, ForceMode.Acceleration);
 
-    }
+    }*/
 
     void RotatePlayer()
     {
@@ -423,7 +432,7 @@ public class PlayerCharacterController : MonoBehaviour
 
     private void StepClimb()
     {
-        if (!_inMotion)
+        if (!grounded || !_inMotion)
             return;
         
         RaycastHit hitLower;
