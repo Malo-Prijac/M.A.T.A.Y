@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MeleeWeapon : Weapon
 {    
+    [SerializeField] private string targetTag = "Player";
     [Header("Weapon Stats")]
     [SerializeField]protected float damage = 10f;
     [SerializeField] protected float delayDamage = 1.2f;
@@ -26,9 +27,9 @@ public class MeleeWeapon : Weapon
         
     }
     
-    public override void Attack(Vector3 targetPosition, float delaySoundAttack)
+    public override void Attack(Vector3 targetPosition, float delaySoundAttack, Vector3 startPosition = default(Vector3))
     {
-        base.Attack(targetPosition,delaySoundAttack);
+        base.Attack(targetPosition,delaySoundAttack,startPosition);
     }
     
     private void OnTriggerEnter(Collider other)
@@ -37,15 +38,15 @@ public class MeleeWeapon : Weapon
             return;
         
         //if(attackSound)
-        
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag(targetTag))
         {
 
             HealthSystem playerHealthSystem = other.gameObject.GetComponent<HealthSystem>();
             if (!playerHealthSystem)
                 return;
             playerHealthSystem.TakeDamage(Damage, "skeleton");
-            
+            print(gameObject.name);
+
         }
         _applyDamage = false;
         StartCoroutine(AttackDelaying());

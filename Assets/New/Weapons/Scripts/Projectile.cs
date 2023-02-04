@@ -10,6 +10,13 @@ public class Projectile : MonoBehaviour
     private Rigidbody _rb;
     private BoxCollider _collider;
     private GameManager _gameManager;
+    private GameObject _owner;
+
+    public GameObject Owner
+    {
+        get => _owner;
+        set => _owner = value;
+    }
     public float Damage
     {
         get => damage;
