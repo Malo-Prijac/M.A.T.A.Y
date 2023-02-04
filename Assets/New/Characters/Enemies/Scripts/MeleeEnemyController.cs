@@ -16,20 +16,15 @@ public class MeleeEnemyController : EnemyControllerBase
         base.Update();
         AnimationBehavior();
         
-        if (CanAttack(true) && PlayerInRangeToAttack())
+        if (CanAttack(true) && PlayerInRangeToAttack(rangeAttack))
         {
-            Attack();
+            Attack(attackTag);
         }
     }
-    
+
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
     }
     
-    
-    protected override void Attack()
-    {
-        base.Attack();
-    }
 }

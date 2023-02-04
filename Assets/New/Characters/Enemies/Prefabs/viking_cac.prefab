@@ -1061,7 +1061,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 116
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &4154343493366876962
 MonoBehaviour:
@@ -1076,6 +1076,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyAnimator: {fileID: 2510348609267296464}
+  NeedWeaponSlot: 1
   weaponSlotMovement: {fileID: 4864281106421139099}
   weaponSlotAttack: {fileID: 7357289382989994806}
   rotationSlotSpeed: 10
@@ -1113,6 +1114,7 @@ MonoBehaviour:
   velocity: 0
   _isRunning: 0
   _inMotion: 0
+  rangeMinToFollowPlayer: 0.8
   hasStaticAttack: 1
   attackTag: Attack
   delayAttack: 1

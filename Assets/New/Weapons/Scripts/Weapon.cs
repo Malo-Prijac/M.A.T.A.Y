@@ -33,7 +33,7 @@ public class Weapon : MonoBehaviour
         get => owner;
         set => owner = value;
     }
-    public virtual void Attack(Vector3 targetPosition, float delaySoundAttack)
+    public virtual void Attack(Vector3 targetPosition, float delaySoundAttack, Vector3 startPosition = default(Vector3))
     {
         if (attackSound.clip)
         {

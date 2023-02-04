@@ -1069,9 +1069,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.25
-  m_Height: 1.7
+  m_Height: 1.63
   m_Direction: 1
-  m_Center: {x: 0, y: 0.8, z: 0}
+  m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!114 &2382302055627123646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1087,13 +1087,14 @@ MonoBehaviour:
   characterAnimator: {fileID: 3796806423833911641}
   toFollow: {fileID: 7339287370936714867}
   walkSpeed: 2.5
-  runSpeed: 4.5
+  runSpeed: 5
   acceleration: 0.8
   deceleration: 1.8
   dampingRotation: 7
   velocity: 0
   dampingCamera: 15
   speedX: 85
+  lockCamY: 35
   _isRunning: 0
   _isJumping: 0
   _verticalInput: 0
@@ -1102,7 +1103,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   groundDrag: 48
-  groundDistanceMax: 0.3
+  groundDistanceMax: 0.2
   playerHeight: 0
   grounded: 0
   foot: {fileID: 1367967337}
@@ -1121,13 +1122,9 @@ MonoBehaviour:
   stepHeight: 0.4
   stepSmooth: 120
   distanceFirstStep: 0.4
-  distanceSecondStep: 0.5
-  _frameJump: 0
-  startFrame: 5
-  transitionFrame: 15
-  endFrame: 28
+  distanceSecondStep: 0.4
+  collisions: 0
   bague: 0
-  orb: 0
 --- !u!114 &5868336982018673990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1144,19 +1141,19 @@ MonoBehaviour:
   currentHealth: 0
   healthBar: {fileID: 0}
   gameOver: {fileID: 0}
-  spawn: {x: 0, y: 0, z: 0}
+  spawn: {x: -13.40283, y: 0.5, z: -0.01}
   OverrideSoundDamaged: 1
   soundDamaged:
     spatialBlend: 1
     maxDistance: 1
     minDistance: 15
     name: 
-    clip: {fileID: 8300000, guid: ee1916229a2deb34a90bcdf3efbd9c00, type: 3}
+    clip: {fileID: 8300000, guid: ccfb2b506407d9347b1037aaf53b9bb4, type: 3}
     playOnAwake: 0
-    volume: 1
-    maxVolume: 1
+    volume: 0.2
+    maxVolume: 0.2
     pitch: 1
-    type: 0
+    type: 1
     source: {fileID: 0}
     loop: 0
     fadingTime: 0

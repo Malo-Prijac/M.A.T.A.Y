@@ -7,7 +7,6 @@ using UnityEngine.Assertions;
 public class EnemyControllerBase : MonoBehaviour
 {
     [SerializeField] public Animator enemyAnimator;
-    private static readonly int IsRunning = Animator.StringToHash("IsRunning");
     //private static readonly int IsJumping = Animator.StringToHash("IsJumping");
     private static readonly int VelocityHash = Animator.StringToHash("Velocity");
     private static readonly int AnimationSpeedAttack = Animator.StringToHash("AnimationSpeedAttack");
@@ -43,14 +42,15 @@ public class EnemyControllerBase : MonoBehaviour
     
     [Header("Enemy Movement")]
     
-    [SerializeField] private float walkSpeed = 1.5f;
-    [SerializeField] private float runSpeed = 3f;
-    [SerializeField] private float acceleration = 0.8f;
-    [SerializeField] private float deceleration = 2f;
-    [SerializeField] private float groundDrag = 48;
-    [ReadOnly][SerializeField]private float velocity;
+    [SerializeField] protected float walkSpeed = 1.5f;
+    [SerializeField] protected float runSpeed = 3f;
+    [SerializeField] protected float acceleration = 0.8f;
+    [SerializeField] protected float deceleration = 2f;
+    [SerializeField] protected float groundDrag = 48;
+    [ReadOnly][SerializeField]protected float velocity;
     [ReadOnly][SerializeField]protected bool _isRunning;
     [ReadOnly][SerializeField]protected bool _inMotion;
+    [SerializeField] protected float rangeMinToFollowPlayer = 0.8f;
 
     [Header("Enemy Attack")] 
     
@@ -97,10 +97,6 @@ public class EnemyControllerBase : MonoBehaviour
             _weapon = _weaponGameObject.GetComponent<Weapon>();
             _weapon.Owner = gameObject;
             AttachWeaponToSlot(weaponSlotMovement);
-        }
-        else
-        {
-            Debug.LogWarning(name+" has no weapon type. ");
         }
 
         _audioManager = AudioManager.instance;
@@ -155,14 +151,25 @@ public class EnemyControllerBase : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
-        UpdateVelocity();
-        FollowPlayer(_player.transform.position-transform.position);
-
         if (IsPlayerDetected())
             LookAtPlayer();
 
-        _inMotion = IsPlayerDetected() && !(PlayerInRangeToAttack() && hasStaticAttack || _isAttacking);
+        _inMotion = isInMotion();
         _isRunning = _inMotion;
+        
+        UpdateVelocity();
+        if (_inMotion)
+        {
+            Vector3 positionToFollow =_player.transform.position - transform.position;
+            positionToFollow.y = 0;
+            FollowPlayer(positionToFollow);
+
+        }
+    }
+
+    protected virtual bool isInMotion()
+    {
+        return IsPlayerDetected() && !(PlayerInRangeToAttack(rangeAttack) && hasStaticAttack || _isAttacking) &&  (PlayerInRangeToFollow());
     }
 
     private void ChangeSlot()
@@ -195,11 +202,18 @@ public class EnemyControllerBase : MonoBehaviour
         return isPlayerInRange || isPlayerInSight;
     }
     
-    protected bool PlayerInRangeToAttack()
+    protected bool PlayerInRangeToAttack(float range)
     {
-        _isPlayerInRangeToAttack = (Mathf.Abs((_player.transform.position - transform.position).magnitude) < rangeAttack);
+        _isPlayerInRangeToAttack = (Mathf.Abs((_player.transform.position - transform.position).magnitude) < range);
         return _isPlayerInRangeToAttack;
     }
+    
+    protected bool PlayerInRangeToFollow()
+    {
+        _isPlayerInRangeToAttack = (Mathf.Abs((_player.transform.position - transform.position).magnitude) > rangeMinToFollowPlayer);
+        return _isPlayerInRangeToAttack;
+    }
+
 
     protected void FollowPlayer(Vector3 moveDirection)
     {
@@ -236,7 +250,7 @@ public class EnemyControllerBase : MonoBehaviour
         transform.rotation = Quaternion.Slerp (transform.rotation, rotation, Time.deltaTime * rotationSpeed);
     }
 
-    virtual protected void Attack()
+    virtual protected void Attack(string animationAttack)
     {
         if(_isAttacking)
             return;
@@ -250,22 +264,18 @@ public class EnemyControllerBase : MonoBehaviour
             _weapon.Attack(_targetPosition,delaySoundAttack);
             //transform.rotation = Quaternion.Euler(transform.eulerAngles - offsetRotation);
         }
-        else
-        {
-            Debug.LogWarning(name+" Weapon has no weapon script");
-        }
-        
+
         //StartCoroutine(CorrectAttackingPosition());
-        StartCoroutine(StopAttack());
+        StartCoroutine(StopAttack(animationAttack));
     }
 
-    IEnumerator StopAttack()
+    private IEnumerator StopAttack(string tagAnim)
     {
-        while (!IsAnimationCurrentAnimation(attackTag))
+        while (!IsAnimationCurrentAnimation(tagAnim))
         {
             yield return null;
         }
-        while (AnimatorIsPlaying(attackTag) )
+        while (AnimatorIsPlaying(tagAnim) )
         {
             yield return null;
         }

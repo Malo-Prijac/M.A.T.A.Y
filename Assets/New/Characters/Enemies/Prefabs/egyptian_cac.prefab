@@ -388,7 +388,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 116
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &420231878
 CapsuleCollider:
@@ -417,6 +417,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  currentHealth: 0
   healthBar: {fileID: 0}
   gameOver: {fileID: 0}
   spawn: {x: 0, y: 0, z: 0}
@@ -454,6 +455,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyAnimator: {fileID: 9018338324283516921}
+  NeedWeaponSlot: 1
   weaponSlotMovement: {fileID: 8183106292536511611}
   weaponSlotAttack: {fileID: 2556641925307949706}
   rotationSlotSpeed: 10
@@ -491,6 +493,7 @@ MonoBehaviour:
   velocity: 0
   _isRunning: 0
   _inMotion: 0
+  rangeMinToFollowPlayer: 0.8
   hasStaticAttack: 1
   attackTag: Attack
   delayAttack: 1

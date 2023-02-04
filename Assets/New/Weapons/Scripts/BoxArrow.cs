@@ -5,7 +5,8 @@ using UnityEngine;
 public class BoxArrow : MonoBehaviour
 {
     private RangedWeapon _weapon;
-    [SerializeField] private Transform forward;
+    [SerializeField] private Transform start;
+
     [SerializeField] private float delaySound;
     // Start is called before the first frame update
     void Start()
@@ -21,6 +22,6 @@ public class BoxArrow : MonoBehaviour
 
     public void Attack()
     {
-        _weapon.Attack(forward.position, delaySound);
+        _weapon.Attack(start.position+Vector3.right, delaySound, start.position);
     }
 }
