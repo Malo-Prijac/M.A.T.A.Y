@@ -11,12 +11,12 @@ public class GameManager : MonoBehaviour
 
     public bool hasUnlockedAttack;
     public bool dash;
-    public bool shot;
+    public bool shoot;
     public bool doubleJump;
     
-    public bool ring = false;
+    public int stateRingQuest = 0;
     public int orb = 0;
-    private Vector3 currentSpawn;
+    public Vector3 currentSpawn;
     public Vector3 spawnWorld1;
     public Vector3 spawnWorld2;
 

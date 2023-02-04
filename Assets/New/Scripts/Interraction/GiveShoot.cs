@@ -1,25 +1,31 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class GiveShoot : MonoBehaviour
 {
     [SerializeField] private Canvas speakStatue;
     [SerializeField] private Canvas dialogue;
-    [SerializeField] private Canvas tuto;
-    private PlayerCharacterController playerCharacterController;
-    private bool giveShoot = false;
+    [SerializeField] private Canvas tutoShoot;
+    private bool printTuto = false;
+    
+    private GameManager _gameManager;
+    
+    private void Start()
+    {
+        _gameManager = GameManager.Instance;
+    }
     
     private void OnTriggerStay(Collider other)
     {
         if (Input.GetKey(KeyCode.O) && (other.CompareTag("Player")))
         {
-            playerCharacterController = other.gameObject.GetComponent<PlayerCharacterController>();
-            speakStatue.enabled=false;
-            dialogue.enabled=true;
-            giveShoot = true;
-            //DONNER LE SHOOT ICI
+            if (!_gameManager.shoot)
+            {
+                speakStatue.enabled = false;
+                dialogue.enabled = true;
+                _gameManager.shoot = true;
+                printTuto = true;
+            }
         }
     }
 
@@ -27,7 +33,10 @@ public class GiveShoot : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            speakStatue.enabled=true; 
+            if (!_gameManager.shoot)
+            {
+                speakStatue.enabled=true;
+            }
         }
     }
 
@@ -37,18 +46,18 @@ public class GiveShoot : MonoBehaviour
         {
             speakStatue.enabled = false;
             dialogue.enabled = false;
-            if (giveShoot)
+            if (printTuto)
             {
-                giveShoot = false;
-                StartCoroutine(TutoDash());
+                printTuto = false;
+                StartCoroutine(TutoShoot());
             }
         }
     }
     
-    IEnumerator TutoDash()
+    IEnumerator TutoShoot()
     {
-        tuto.enabled = true;
+        tutoShoot.enabled = true;
         yield return new WaitForSeconds(3f);
-        tuto.enabled = false;
+        tutoShoot.enabled = false;
     }
 }

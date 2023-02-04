@@ -5,15 +5,17 @@ using UnityEngine;
 
 public class Teleportation : MonoBehaviour
 {
-    [SerializeField] private Vector3 spawn;
+    private GameManager _gameManager;
     
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            if (other.gameObject.GetComponent<PlayerCharacterController>().orb == 1)
+            _gameManager = GameManager.Instance;
+            if (_gameManager.orb == 1)
             {
-                other.gameObject.transform.position = spawn;
+                _gameManager.currentSpawn = _gameManager.spawnWorld2;
+                other.gameObject.transform.position = _gameManager.currentSpawn;
             }
         }
     }

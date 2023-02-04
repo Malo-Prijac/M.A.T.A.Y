@@ -52,5 +52,6 @@ MonoBehaviour:
   doubleJump: 0
   ring: 0
   orb: 0
-  spawnWorld1: {x: 0, y: 0, z: 0}
+  currentSpawn: {x: 0, y: 0, z: 0}
+  spawnWorld1: {x: 4, y: 9, z: 12}
   spawnWorld2: {x: 0, y: 0, z: 0}

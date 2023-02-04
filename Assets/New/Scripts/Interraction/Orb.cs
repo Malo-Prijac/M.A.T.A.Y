@@ -8,20 +8,22 @@ public class Orb : MonoBehaviour
     [SerializeField] private Canvas orbFound;
     [SerializeField] private GameObject portal;
 
-    private PlayerCharacterController playerCharacterController;
-    // Start is called before the first frame update
+    private GameManager _gameManager;
     private void OnTriggerStay(Collider other)
     {
         if (Input.GetKey(KeyCode.O) && (other.CompareTag("Player")))
         {
-            playerCharacterController = other.gameObject.GetComponent<PlayerCharacterController>();
-            playerCharacterController.orb = 1;
+            _gameManager = GameManager.Instance;
+            if (_gameManager.orb == 0)
+            {
+                _gameManager.orb ++;
+                portal.transform.GetChild(3).gameObject.SetActive(true);
+                portal.transform.GetChild(4).gameObject.SetActive(true);
+                interraction.enabled=false;
+                orbFound.enabled=true;
+            }
             
-            //portal.GetComponent<Teleportation>().enabled = true;
-            portal.transform.GetChild(3).gameObject.SetActive(true);
-            portal.transform.GetChild(4).gameObject.SetActive(true);
-            interraction.enabled=false;
-            orbFound.enabled=true;
+            
         }
     }
 
@@ -29,7 +31,11 @@ public class Orb : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            interraction.enabled = true;
+            _gameManager = GameManager.Instance;
+            if (_gameManager.orb == 0)
+            {
+                interraction.enabled = true;
+            }
         }
     }
 
