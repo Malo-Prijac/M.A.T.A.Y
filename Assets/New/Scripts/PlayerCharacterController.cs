@@ -72,13 +72,17 @@ public class PlayerCharacterController : CharacterControllerBase
 
     [Header("Collisions")] [ReadOnly] [SerializeField]
     private int collisions;
-    public bool bague = false;
-    public int orb = 0;
 
     public bool Grounded
     {
         get => grounded;
         set => grounded = value;
+    }
+
+    public bool Jumping
+    {
+        get => _isJumping;
+        set => _isJumping = value;
     }
 
     private Vector3 _rigidbodyDrag;

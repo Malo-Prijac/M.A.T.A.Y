@@ -581,6 +581,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1671110417557904698, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
+      propertyPath: _delaySheath
+      value: 0.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 1671110417557904698, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
+      propertyPath: additionalJump
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5868336982018673990, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
       propertyPath: soundDamaged.volume
       value: 0.8
