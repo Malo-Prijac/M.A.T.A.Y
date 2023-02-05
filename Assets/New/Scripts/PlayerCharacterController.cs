@@ -1,5 +1,6 @@
 using System;
 using System;
+using System.Xml.Serialization;
 using UnityEngine;
 
 public class PlayerCharacterController : CharacterControllerBase
@@ -98,7 +99,7 @@ public class PlayerCharacterController : CharacterControllerBase
     {
         InputPlayer();
         CheckGrounded();
-        RotateTargetForCamera();
+        RotateTargetForCamera(_xRotation,_yRotation);
         AnimationBehavior();
         //UpdateSizeCapsuleCollision();
     }
@@ -159,7 +160,9 @@ public class PlayerCharacterController : CharacterControllerBase
     {
         UpdateVelocity();
         MovePlayer();
-        RotatePlayer(_moveDirection);
+        if(_inMotion)
+            RotatePlayer(_moveDirection);
+        print(_moveDirection);
         StepClimb();
     }
 
@@ -179,9 +182,9 @@ public class PlayerCharacterController : CharacterControllerBase
         _actualSpeed = velocity*runSpeed;
     }
 
-    public void RotateTargetForCamera()
+    public void RotateTargetForCamera(float xRot,float yRot)
     {
-        toFollow.rotation = Quaternion.Slerp(toFollow.rotation,Quaternion.Euler(_yRotation, _xRotation,0 ),dampingCamera);
+        toFollow.rotation = Quaternion.Slerp(toFollow.rotation,Quaternion.Euler(yRot, xRot,0),dampingCamera);
     }
     
     void InputPlayer()
@@ -324,6 +327,14 @@ public class PlayerCharacterController : CharacterControllerBase
         {
             Quaternion rotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * dampingRotation);
+        }
+    }
+    
+    public void RotatePlayer(Quaternion angle)
+    {
+        if (angle.eulerAngles != Vector3.zero)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, angle, Time.deltaTime * dampingRotation);
         }
     }
 
