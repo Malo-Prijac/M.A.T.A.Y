@@ -2,7 +2,7 @@ using System;
 using System;
 using UnityEngine;
 
-public class PlayerCharacterController : MonoBehaviour
+public class PlayerCharacterController : CharacterControllerBase
 {
     [Header("Animation")]
     [ReadOnly][SerializeField] private Animator characterAnimator;
@@ -26,6 +26,7 @@ public class PlayerCharacterController : MonoBehaviour
     [Header("Camera Rotation")]
     [SerializeField] private float dampingCamera = 10f;
     [SerializeField] private float speedX = 80f;
+    [SerializeField] private float lockCamY = 35f;
     private Vector2 _cameraRotate;
     
     [Header("Debug movement")]
@@ -68,15 +69,9 @@ public class PlayerCharacterController : MonoBehaviour
     [SerializeField] private float distanceFirstStep = 0.3f;
     [SerializeField] private float distanceSecondStep = 0.45f;
 
-    [Header("Jump frames")]
-    [ReadOnly] [SerializeField] private float _frameJump = 0;
-    
-    [SerializeField] private float startFrame;
-    [SerializeField] private float transitionFrame;
-    [SerializeField] private float endFrame;
-
+    [Header("Collisions")] [ReadOnly] [SerializeField]
+    private int collisions;
     public bool bague = false;
-
 
     public bool Grounded
     {
@@ -94,7 +89,7 @@ public class PlayerCharacterController : MonoBehaviour
         playerHeight = _capsuleCollider.height;
         originCenterCollider = _capsuleCollider.center.y;
         ResetJump();
-        stepRayUpper.transform.position = new Vector3(stepRayUpper.transform.position.x, stepHeight, stepRayUpper.transform.position.z);
+        stepRayUpper.transform.position = new Vector3(stepRayUpper.transform.position.x, stepRayUpper.transform.position.y+stepHeight, stepRayUpper.transform.position.z);
     }
 
     // Update is called once per frame
@@ -113,7 +108,8 @@ public class PlayerCharacterController : MonoBehaviour
         Vector3 position = transform.position;
         //grounded = Physics.Raycast(position, Vector3.down, groundDistanceMax);
         //grounded = Physics.CheckSphere(position, groundDistanceMax);
-        Collider[] hitColliders = Physics.OverlapSphere(position, groundDistanceMax);
+        Collider[] hitColliders = Physics.OverlapBox(position, new Vector3(groundDistanceMax,groundDistanceMax,groundDistanceMax));
+        //Collider[] hitColliders = Physics.OverlapSphere(position, groundDistanceMax);
         grounded = hitColliders.Length > 1 ;
         //grounded = Physics.CheckSphere(position, groundDistanceMax);
         Gizmos.color = Color.red;
@@ -141,7 +137,8 @@ public class PlayerCharacterController : MonoBehaviour
         Vector3 position = transform.position;
         // Draw a yellow sphere at the transform's position
         Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(position,groundDistanceMax);
+        //Gizmos.DrawSphere(position,groundDistanceMax);
+        Gizmos.DrawCube(position,new Vector3(groundDistanceMax,groundDistanceMax,groundDistanceMax));
     }
     /*
     
@@ -161,7 +158,7 @@ public class PlayerCharacterController : MonoBehaviour
     {
         UpdateVelocity();
         MovePlayer();
-        RotatePlayer();
+        RotatePlayer(_moveDirection);
         StepClimb();
     }
 
@@ -181,7 +178,7 @@ public class PlayerCharacterController : MonoBehaviour
         _actualSpeed = velocity*runSpeed;
     }
 
-    private void RotateTargetForCamera()
+    public void RotateTargetForCamera()
     {
         toFollow.rotation = Quaternion.Slerp(toFollow.rotation,Quaternion.Euler(_yRotation, _xRotation,0 ),dampingCamera);
     }
@@ -199,7 +196,10 @@ public class PlayerCharacterController : MonoBehaviour
         _xRotation += mouseX;
         
         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.fixedDeltaTime * speedX;
-        _yRotation -= mouseY;
+        _yRotation = MathF.Abs(_yRotation) < lockCamY ? _yRotation - mouseY : _yRotation;
+        _yRotation = _yRotation > lockCamY && mouseY > 0? _yRotation - mouseY : _yRotation; 
+        _yRotation = _yRotation < - lockCamY && mouseY < 0? _yRotation - mouseY : _yRotation;
+        //_yRotation = MathF.Abs(_yRotation - mouseY) < lockCamY ? _yRotation - mouseY : _yRotation;
 
         /*
         if (Input.GetButton("Jump") && readyToJump && grounded)
@@ -233,8 +233,64 @@ public class PlayerCharacterController : MonoBehaviour
     {
         readyToJump = true;
     }
+    /*
+    void MovePlayer()
+    {
+        _rigidbodyDrag = new Vector3(-_rb.velocity.x, 0, -_rb.velocity.z)*groundDrag;
+
+        if (_inMotion)
+        {
+            _moveDirection = toFollow.forward * _verticalInput + toFollow.right * _horizontalInput;
+            _moveDirection.y = 0;
+        }
+
+        RaycastHit hit;
+        // Check if the body's current velocity will result in a collision
+        if (_rb.SweepTest(_moveDirection, out hit, 0.1f))
+        {
+            // Nuke horizontal velocity
+            _rb.velocity = new Vector3(0, _rb.velocity.y, 0);
+            return;
+        }
+
+        _rb.AddForce(_actualSpeed * _moveDirection.normalized,ForceMode.VelocityChange);
+        _rb.AddForce(_rigidbodyDrag, ForceMode.Acceleration);
+    }
+    */
     
-    
+    void MovePlayer()
+    {
+        if (_inMotion)
+        {
+            _moveDirection = toFollow.forward * _verticalInput + toFollow.right * _horizontalInput;
+            _moveDirection.y = 0;
+        }
+        
+        _rigidbodyDrag = new Vector3(-_rb.velocity.x, 0, -_rb.velocity.z)*groundDrag;
+
+        if (!grounded)
+        {
+            _rigidbodyDrag += -_rb.velocity*airDrag;
+            //_rb.AddForce(_rigidbodyDrag*groundDrag, ForceMode.Acceleration);
+
+        }
+        if(collisions == 0 || grounded)
+            _rb.AddForce(_actualSpeed * _moveDirection.normalized,ForceMode.VelocityChange);
+        
+        _rb.AddForce(_rigidbodyDrag, ForceMode.Acceleration);
+
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        collisions++;
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        collisions--;
+    }
+    /*
     void MovePlayer()
     {
         if (_inMotion)
@@ -259,16 +315,15 @@ public class PlayerCharacterController : MonoBehaviour
         
         _rb.AddForce(_rigidbodyDrag, ForceMode.Acceleration);
 
-    }
+    }*/
 
-    void RotatePlayer()
+    public void RotatePlayer(Vector3 direction)
     {
-        if (_moveDirection != Vector3.zero)
+        if (direction != Vector3.zero)
         {
-            Quaternion rotation = Quaternion.LookRotation(_moveDirection);
-            transform.rotation = Quaternion.Slerp (transform.rotation, rotation, Time.deltaTime * dampingRotation);
+            Quaternion rotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * dampingRotation);
         }
-        
     }
 
     private void AnimationBehavior()
@@ -374,7 +429,7 @@ public class PlayerCharacterController : MonoBehaviour
 
     private void StepClimb()
     {
-        if (!_inMotion)
+        if (!grounded || !_inMotion)
             return;
         
         RaycastHit hitLower;
