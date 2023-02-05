@@ -1,7 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
+using UnityEngine.UI;
+using Image = UnityEngine.UI.Image;
+
+/*
+ Aim and shoot at the reticule
+ Cooldown UI for Dash & Shoot  
+*/
 
 public class Abilities : MonoBehaviour
 {
@@ -13,11 +22,12 @@ public class Abilities : MonoBehaviour
     [ReadOnly][SerializeField] private Animator characterAnimator;
     private static readonly int IsDashing = Animator.StringToHash("IsDashing");
 
-    [Header("Dash")]
-    [SerializeField] private float dashSpeed = 1f;
-    [SerializeField]private float dashTime = 0.5f;
-    [SerializeField]private float dashCoolDown = 1f;
+    [Header("Dash")] 
+    [SerializeField] private float dashSpeed = 20f;
+    [SerializeField] private float dashTime = 5f;
+    [SerializeField] private float dashCoolDown = 1f;
     public AudioSource dashSound;
+    [SerializeField] private Image dashImage;
 
     [Header("Jump")]
     //[SerializeField]private float jumpForce = 5f;
@@ -31,12 +41,16 @@ public class Abilities : MonoBehaviour
     [ReadOnly][SerializeField]private bool _isDashing;
     public float bulletSpeed = 100f;
 
+    [Header("Shoot")] 
     private Rigidbody _rb;
     public GameObject bulletPrefab;
-    public Transform bulletSpawn;
     public Transform targetCamera;
+    [SerializeField] private GameObject crossHair;
+    [SerializeField] private GameObject bulletSpawn;
+    public AudioSource shootSound;
 
     private PlayerCharacterController _characterController;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -45,7 +59,7 @@ public class Abilities : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         countAdditionalJump = additionalJump;
         _characterController = GetComponent<PlayerCharacterController>();
-        
+        dashImage.fillAmount = 1;
     }
 
     // Update is called once per frame
@@ -68,7 +82,16 @@ public class Abilities : MonoBehaviour
 
         if (currentDashCooldown > 0)
         {
-            currentDashCooldown -= Time.deltaTime;
+            currentDashCooldown -= 1 / dashCoolDown * Time.deltaTime;
+            dashImage.fillAmount = currentDashCooldown;
+            if (dashImage.fillAmount <= 0)
+            {
+                dashImage.fillAmount = 0;
+            }
+        }
+        else
+        {
+            dashImage.fillAmount = 1;
         }
         
         //Double Jump
@@ -78,9 +101,20 @@ public class Abilities : MonoBehaviour
         }
         
         //Shoot
-        if (Input.GetKeyDown(KeyCode.B))
+        if (Input.GetMouseButtonDown(0))
         {   
+            shootSound.Play();
             Shoot();
+        }
+        
+        //Aiming
+        if (Input.GetMouseButton(1))
+        {
+            crossHair.SetActive(true);
+        }
+        else
+        {
+            crossHair.SetActive(false);
         }
     }
 
@@ -93,9 +127,9 @@ public class Abilities : MonoBehaviour
     void Shoot()
     {
         Debug.Log("Shooting");
-        GameObject bullet = Instantiate(bulletPrefab, targetCamera.position, targetCamera.rotation);
+        GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.transform.position, bulletSpawn.transform.rotation);
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
-        rb.AddForce(bullet.transform.forward * bulletSpeed, ForceMode.VelocityChange);
+        rb.AddForce(targetCamera.forward * bulletSpeed, ForceMode.VelocityChange);
         Destroy(bullet,1);
     }
 
