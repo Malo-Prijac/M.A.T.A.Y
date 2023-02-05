@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MeleeWeapon : Weapon
 {    
-    [SerializeField] private string targetTag = "Player";
     [Header("Weapon Stats")]
     [SerializeField]protected float damage = 10f;
     [SerializeField] protected float delayDamage = 1.2f;
@@ -45,7 +44,6 @@ public class MeleeWeapon : Weapon
             if (!playerHealthSystem)
                 return;
             playerHealthSystem.TakeDamage(Damage, "skeleton");
-            print(gameObject.name);
 
         }
         _applyDamage = false;

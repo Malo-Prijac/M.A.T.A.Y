@@ -2,7 +2,7 @@ using System;
 using System;
 using UnityEngine;
 
-public class PlayerCharacterController : MonoBehaviour
+public class PlayerCharacterController : CharacterControllerBase
 {
     [Header("Animation")]
     [ReadOnly][SerializeField] private Animator characterAnimator;
@@ -70,6 +70,7 @@ public class PlayerCharacterController : MonoBehaviour
     [SerializeField] private float distanceSecondStep = 0.45f;
 
     [Header("Collisions")] [ReadOnly] [SerializeField]
+    
     private int collisions;
     public bool bague = false;
 

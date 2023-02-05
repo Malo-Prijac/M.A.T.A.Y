@@ -11,6 +11,13 @@ public class Projectile : MonoBehaviour
     private BoxCollider _collider;
     private GameManager _gameManager;
     private GameObject _owner;
+    private string targetTag;
+
+    public string TargetTag
+    {
+        get => targetTag;
+        set => targetTag = value;
+    }
 
     public GameObject Owner
     {
@@ -34,7 +41,7 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag(targetTag))
         {
             HealthSystem playerHealthSystem = collision.gameObject.GetComponent<HealthSystem>();
             if (!playerHealthSystem)

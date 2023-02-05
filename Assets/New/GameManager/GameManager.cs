@@ -5,10 +5,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private float test = 0;
-    public Transform forward;
-    public TrapArrow ta;
 
+    public bool hasMeleeWeapon;
     // Start is called before the first frame update
 
     // Static singleton instance
@@ -38,11 +36,13 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        test += Time.deltaTime;
-        if (test >= 2f)
-        {
-            test = 0;
-            StartCoroutine(ta.ActivateTrap(0));
-        }
+
+    }
+
+
+    public void EquipPlayerMeleeWeapon()
+    {
+        hasMeleeWeapon = true;
+        
     }
 }

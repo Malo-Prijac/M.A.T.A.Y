@@ -53,6 +53,8 @@ public class RangedWeapon : Weapon
         Projectile projectileScript = projectileGameObject.GetComponent<Projectile>();
         projectileScript.Damage *= DamageMulti;
         projectileScript.Owner = gameObject;
+        projectileScript.TargetTag = targetTag;
+
 
         Quaternion aim = Quaternion.LookRotation( targetPosition - transform.position).normalized;
         

@@ -10,9 +10,15 @@ public class Weapon : MonoBehaviour
 {
     [Header("Owner")]
     [SerializeField][ReadOnly]protected GameObject owner;
-    
     [SerializeField] protected Sound attackSound;
     protected AudioManager _audioManager;
+    protected string targetTag;
+
+    public string TargetTag
+    {
+        get => targetTag;
+        set => targetTag = value;
+    }
     // Start is called before the first frame update
     protected void Start()
     {
