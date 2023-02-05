@@ -293,7 +293,6 @@ public class PlayerCharacterController : MonoBehaviour
         //characterAnimator.SetBool(IsJumping, _isJumping);
 
         //characterAnimator.SetBool(IsJumping, _isJumping);
-        
     }
 
     private void MoveUpCapsuleCollision()
