@@ -19,7 +19,7 @@ public class FinishPath : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Ball"))
         {
             if (Ball.GetComponent<Timer>().time > 0)
             {
@@ -29,6 +29,7 @@ public class FinishPath : MonoBehaviour
                     go.GetComponent<Animator>().enabled = true;
                 }
                 Ball.GetComponent<Timer>().printTimer.SetActive(false);
+                Ball.GetComponent<Timer>().enabled = false;
 
             } 
         }

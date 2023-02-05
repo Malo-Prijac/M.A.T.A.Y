@@ -26,9 +26,9 @@ public class MeleeWeapon : Weapon
         
     }
     
-    public override void Attack(Vector3 targetPosition, float delaySoundAttack)
+    public override void Attack(Vector3 targetPosition, float delaySoundAttack, Vector3 startPosition = default(Vector3))
     {
-        base.Attack(targetPosition,delaySoundAttack);
+        base.Attack(targetPosition,delaySoundAttack,startPosition);
     }
     
     private void OnTriggerEnter(Collider other)
@@ -37,15 +37,14 @@ public class MeleeWeapon : Weapon
             return;
         
         //if(attackSound)
-        
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag(targetTag) || other.gameObject.CompareTag("Bush"))
         {
 
             HealthSystem playerHealthSystem = other.gameObject.GetComponent<HealthSystem>();
             if (!playerHealthSystem)
                 return;
             playerHealthSystem.TakeDamage(Damage, "skeleton");
-            
+
         }
         _applyDamage = false;
         StartCoroutine(AttackDelaying());
