@@ -153,7 +153,7 @@ public class Abilities : MonoBehaviour
 
     private void ChangeSlot()
     {
-        if (inTransition && !_attackMode)
+        if (inTransition && !_attackMode || !_hasMeleeWeapon)
             return;
         AttachWeaponToSlot(_attackMode ? weaponSlotArmed : weaponSlotUnarmed);
     }
@@ -212,8 +212,7 @@ public class Abilities : MonoBehaviour
         if (meleeWeaponToGive)
         {
             meleeWeapon = Instantiate(meleeWeaponToGive,weaponSlotUnarmed.position,weaponSlotUnarmed.rotation);
-            //AttachWeaponToSlot(weaponSlotUnarmed);
-            _currentSlot = weaponSlotUnarmed;
+            AttachWeaponToSlot(weaponSlotUnarmed);
             MeleeWeapon scriptWeapon = meleeWeapon.GetComponent<MeleeWeapon>();
             scriptWeapon.TargetTag = targetTag;
             scriptWeapon.Damage *= damageMulti;
