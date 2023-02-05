@@ -96,7 +96,8 @@ public class HealthSystem : MonoBehaviour
         if (gameObject.CompareTag("Bush"))
         {
             _audioManager.DeleteSound(sound);
-            Destroy(gameObject);
+            transform.position += new Vector3(0, -200, 0);
+            Destroy(gameObject,0.1f);
         }
 
         /*if (currentHealth <= 0)

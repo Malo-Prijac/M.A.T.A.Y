@@ -162,7 +162,6 @@ public class PlayerCharacterController : CharacterControllerBase
         MovePlayer();
         if(_inMotion)
             RotatePlayer(_moveDirection);
-        print(_moveDirection);
         StepClimb();
     }
 
@@ -275,7 +274,6 @@ public class PlayerCharacterController : CharacterControllerBase
         if (!grounded)
         {
             _rigidbodyDrag += -_rb.velocity*airDrag;
-            //_rb.AddForce(_rigidbodyDrag*groundDrag, ForceMode.Acceleration);
 
         }
         if(collisions == 0 || grounded)
@@ -294,33 +292,7 @@ public class PlayerCharacterController : CharacterControllerBase
     {
         collisions--;
     }
-    /*
-    void MovePlayer()
-    {
-        if (_inMotion)
-        {
-            _moveDirection = toFollow.forward * _verticalInput + toFollow.right * _horizontalInput;
-            _moveDirection.y = 0;
-        }
-        
-        if (grounded)
-        {
-            _rb.AddForce(_actualSpeed * _moveDirection.normalized,ForceMode.VelocityChange);
-            
-            _rigidbodyDrag = new Vector3(-_rb.velocity.x, 0, -_rb.velocity.z)*groundDrag;
-        }
-
-        if (!grounded)
-        {
-            _rigidbodyDrag = -_rb.velocity*airDrag;
-            _rb.AddForce(_rigidbodyDrag*groundDrag, ForceMode.Acceleration);
-
-        }
-        
-        _rb.AddForce(_rigidbodyDrag, ForceMode.Acceleration);
-
-    }*/
-
+    
     public void RotatePlayer(Vector3 direction)
     {
         if (direction != Vector3.zero)
@@ -347,97 +319,11 @@ public class PlayerCharacterController : CharacterControllerBase
         }
         
         characterAnimator.SetBool(IsRunning, Mathf.Approximately(_actualSpeed,runSpeed) && (_verticalInput != 0 || _horizontalInput != 0));
-        
         characterAnimator.SetFloat(VelocityHash,velocity);
-        
         characterAnimator.SetBool(IsGrounded, grounded);
-        
         characterAnimator.SetBool(IsJumping, _isJumping);
-
         characterAnimator.SetBool(IsFalling, !grounded);
-
-
-        //characterAnimator.SetBool(IsJumping, _isJumping);
-
-        //characterAnimator.SetBool(IsJumping, _isJumping);
     }
-
-    private void MoveUpCapsuleCollision()
-    {
-        Vector3 capsuleCenter = _capsuleCollider.center;
-        if (_capsuleCollider.height > playerHeight / 1.5)
-        {
-            float updatedCapsuleHeight = _capsuleCollider.height - Time.deltaTime * updateColliderSpeedUp;
-            _capsuleCollider.height = updatedCapsuleHeight;
-        }
-
-        //print("ok");
-
-        if (capsuleCenter.y < centerJumpCollider) //capsuleCenter.y <= originCenterCollider)
-        {
-            float updatedCapsuleCenter = _capsuleCollider.center.y + Time.deltaTime * updateColliderSpeedUp;
-
-            _capsuleCollider.center = new Vector3(capsuleCenter.x, updatedCapsuleCenter, capsuleCenter.z);
-        }
-
-        //flameCollider.center = new Vector3(initFlameCenter.x,initFlameCenter.y,upgradedFlameSize/2);
-
-    }
-    
-    private void MoveDownCapsuleCollision()
-    {
-        Vector3 capsuleCenter = _capsuleCollider.center;
-        if (_capsuleCollider.height < playerHeight)
-        {
-            float updatedCapsuleHeight = _capsuleCollider.height + Time.deltaTime * updateColliderSpeedDown;
-
-            _capsuleCollider.height = updatedCapsuleHeight;
-        }
-        else
-        {
-            _capsuleCollider.height = playerHeight;
-        }
-
-        if (capsuleCenter.y > originCenterCollider) //capsuleCenter.y <= originCenterCollider)
-        {
-            float updatedCapsuleCenter = _capsuleCollider.center.y - Time.deltaTime * updateColliderSpeedDown;
-
-            _capsuleCollider.center = new Vector3(capsuleCenter.x, updatedCapsuleCenter, capsuleCenter.z);
-        }
-        else
-        {
-            _capsuleCollider.center = new Vector3(capsuleCenter.x, originCenterCollider, capsuleCenter.z);
-        }
-
-    }
-    /*
-    private void UpdateSizeCapsuleCollision()
-    {
-
-        if(_jumpStarted && !grounded){
-            
-        _frameJump += Time.deltaTime*30 ;
-            
-            //jusqu'à 0.15
-            if (startFrame < _frameJump && _frameJump < transitionFrame ) // || _capsuleCollider.height > playerHeight/1.5)//flameCollider.size.z < initFlameCenter.z * stats.range && target)
-            {
-                MoveUpCapsuleCollision();
-            }
-            
-            //jusqu'à la fin
-            else if (transitionFrame < _frameJump && _frameJump < endFrame)
-            {
-                MoveDownCapsuleCollision();
-            }
-            
-            else if (_frameJump > endFrame)
-            {
-                _jumpStarted = false;
-                _frameJump = 0;
-            }
-        }
-
-    }*/
 
     private void StepClimb()
     {

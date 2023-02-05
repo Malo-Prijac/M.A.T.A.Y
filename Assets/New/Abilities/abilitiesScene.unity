@@ -10523,6 +10523,10 @@ PrefabInstance:
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 90510422}
+    - target: {fileID: 3395090066894261369, guid: b9023ca350122d846965ae20469de174, type: 3}
+      propertyPath: m_Lens.FieldOfView
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 3395090066894261374, guid: b9023ca350122d846965ae20469de174, type: 3}
       propertyPath: m_Name
       value: PlayerAimCamera
