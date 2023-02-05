@@ -59,7 +59,8 @@ public class Abilities : MonoBehaviour
     private float rotationSlotSpeed = 10;
     [SerializeField] 
     private float positionSlotSpeed = 10;
-    
+
+    private bool _hasMeleeWeapon;
     private Transform _currentSlot;
 
     private Rigidbody _rb;
@@ -67,16 +68,7 @@ public class Abilities : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (meleeWeapon && weaponSlotUnarmed)
-        {
-            meleeWeapon = Instantiate(meleeWeapon,weaponSlotUnarmed.position,weaponSlotUnarmed.rotation);
-            //AttachWeaponToSlot(weaponSlotUnarmed);
-            _currentSlot = weaponSlotUnarmed;
-            MeleeWeapon scriptWeapon = meleeWeapon.GetComponent<MeleeWeapon>();
-            scriptWeapon.TargetTag = targetTag;
-            scriptWeapon.Damage *= damageMulti;
-
-        }
+        
         characterAnimator = GetComponent<Animator>();
         canDash = true;
         _rb = GetComponent<Rigidbody>();
@@ -118,17 +110,21 @@ public class Abilities : MonoBehaviour
                 MultipleJump();
             }
 
-            if (Input.GetButtonDown("AttackMelee") && !_isDashing && _characterController.Grounded)
+            if (_hasMeleeWeapon)
             {
-                if(!_attackMode)
+                if (Input.GetButtonDown("AttackMelee") && !_isDashing && _characterController.Grounded)
+                {
+                    if(!_attackMode)
+                        StartCoroutine(ChangeCombatMode());
+                    AttackWithMeleeWeapon();
+                }
+
+                if (Input.GetButtonDown("ChangeCombatMode") && _characterController.Grounded)
+                {
                     StartCoroutine(ChangeCombatMode());
-                AttackWithMeleeWeapon();
+                }
             }
 
-            if (Input.GetButtonDown("ChangeCombatMode") && _characterController.Grounded )
-            {
-                StartCoroutine(ChangeCombatMode());
-            }
             
         }
 
@@ -209,6 +205,20 @@ public class Abilities : MonoBehaviour
         //print(rb.velocity);
         StartCoroutine(DashRoutine());
         StartCoroutine(ResetDash());
+    }
+
+    public void GiveMeleeWeaponToPlayer(GameObject meleeWeaponToGive)
+    {
+        if (meleeWeaponToGive)
+        {
+            meleeWeapon = Instantiate(meleeWeaponToGive,weaponSlotUnarmed.position,weaponSlotUnarmed.rotation);
+            //AttachWeaponToSlot(weaponSlotUnarmed);
+            _currentSlot = weaponSlotUnarmed;
+            MeleeWeapon scriptWeapon = meleeWeapon.GetComponent<MeleeWeapon>();
+            scriptWeapon.TargetTag = targetTag;
+            scriptWeapon.Damage *= damageMulti;
+            _hasMeleeWeapon = true;
+        }
     }
 
     IEnumerator ResetDash()

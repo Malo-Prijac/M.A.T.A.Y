@@ -416,6 +416,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a74fd581ad18b940a2d786dc37eac6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
   maxHealth: 100
   currentHealth: 0
   healthBar: {fileID: 0}
@@ -432,7 +433,7 @@ MonoBehaviour:
     volume: 1
     maxVolume: 1
     pitch: 1
-    type: 0
+    type: 1
     source: {fileID: 0}
     loop: 0
     fadingTime: 0
@@ -442,6 +443,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
+  _isAlive: 1
 --- !u!114 &4733516491458353238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -494,6 +496,7 @@ MonoBehaviour:
   _isRunning: 0
   _inMotion: 0
   rangeMinToFollowPlayer: 0.8
+  targetTag: Player
   hasStaticAttack: 1
   attackTag: Attack
   delayAttack: 1
