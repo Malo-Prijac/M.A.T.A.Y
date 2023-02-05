@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
     {
         currentSpawn = spawnWorld1;
         abilities = FindObjectOfType<Abilities>();
-        abilities.GiveMeleeWeaponToPlayer(meleeWeapon);
+        //abilities.GiveMeleeWeaponToPlayer(meleeWeapon);
     }
 
     // Update is called once per frame

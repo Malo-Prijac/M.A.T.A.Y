@@ -1056,7 +1056,7 @@ GameObject:
   - component: {fileID: 7339287370887994567}
   - component: {fileID: 2382302055627123646}
   - component: {fileID: 5868336982018673990}
-  - component: {fileID: 238689356507018292}
+  - component: {fileID: 1671110417557904698}
   m_Layer: 0
   m_Name: PlayerCharacter
   m_TagString: Player
@@ -1189,6 +1189,7 @@ MonoBehaviour:
   distanceSecondStep: 0.4
   collisions: 0
   bague: 0
+  orb: 0
 --- !u!114 &5868336982018673990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1229,7 +1230,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   _isAlive: 1
---- !u!114 &238689356507018292
+--- !u!114 &1671110417557904698
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1238,7 +1239,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7573659479313949081}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9e56ec426aced741ae5782bd81aa0b9, type: 3}
+  m_Script: {fileID: 11500000, guid: b86d36e58efd1904ca7973df1cd6bcfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   characterAnimator: {fileID: 0}
@@ -1248,7 +1249,7 @@ MonoBehaviour:
   dashTime: 0.6
   dashCoolDown: 1
   dashSound: {fileID: 0}
-  additionalJump: 1
+  additionalJump: 2
   countAdditionalJump: 0
   canDash: 1
   currentDashTime: 0
@@ -1261,12 +1262,12 @@ MonoBehaviour:
   _isAttackingMelee: 0
   tagAttackMelee: AttackMelee
   _attackMode: 0
-  _delaySheath: 0.75
+  _delaySheath: 0.7
   inTransition: 0
   weaponSlotUnarmed: {fileID: 9167266693305113513}
   weaponSlotArmed: {fileID: 1215868854}
-  rotationSlotSpeed: 1000
-  positionSlotSpeed: 1000
+  rotationSlotSpeed: 100
+  positionSlotSpeed: 100
 --- !u!1 &7700982079095751362
 GameObject:
   m_ObjectHideFlags: 0
