@@ -25,9 +25,8 @@ public class Abilities : MonoBehaviour
     public AudioSource dashSound;
 
     [Header("Jump")]
-    //[SerializeField]private float jumpForce = 5f;
-    [SerializeField]private int additionalJump = 2;
-    [ReadOnly][SerializeField]private int countAdditionalJump;
+    [SerializeField]private int numberJumps = 2;
+    [ReadOnly][SerializeField]private int countNumberOfJump;
     [ReadOnly][SerializeField]private bool canDash = true;
     
     [Header("Dash")]
@@ -72,7 +71,7 @@ public class Abilities : MonoBehaviour
         characterAnimator = GetComponent<Animator>();
         canDash = true;
         _rb = GetComponent<Rigidbody>();
-        countAdditionalJump = additionalJump;
+        countNumberOfJump = numberJumps;
         _characterController = GetComponent<PlayerCharacterController>();
 
     }
@@ -83,9 +82,9 @@ public class Abilities : MonoBehaviour
         AnimationBehavior();
         bool grounded = _characterController.Grounded;
 
-        if (grounded)
+        if (grounded && !_characterController.Jumping)
         {
-            countAdditionalJump = additionalJump;
+            countNumberOfJump = numberJumps;
         }
         //Dash
 
@@ -103,10 +102,8 @@ public class Abilities : MonoBehaviour
             }
             
             //Double Jump
-            if (Input.GetButtonDown("Jump") && countAdditionalJump > 0 && !_isAttackingMelee)
+            if (Input.GetButtonDown("Jump") && countNumberOfJump > 0 && !_isAttackingMelee)
             {
-                if (_attackMode)
-                    StartCoroutine(ChangeCombatMode());
                 MultipleJump();
             }
 
@@ -193,7 +190,7 @@ public class Abilities : MonoBehaviour
 
     private void MultipleJump()
     {
-        countAdditionalJump--;
+        countNumberOfJump--;
         _characterController.Jump();
     }
 
@@ -225,15 +222,8 @@ public class Abilities : MonoBehaviour
 
         canDash = true;
     }
-    /*
-    IEnumerator ResetDash()
-    {
-        yield return dashCoolDown;
 
-        isDashing = false;
-    }*/
 
-    
     IEnumerator DashRoutine()
     {
         _isDashing = true;
