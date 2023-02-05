@@ -3604,6 +3604,49 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6b206f49991082e4c8ee3d0920c5fc8a, type: 3}
   m_PrefabInstance: {fileID: 2058271277}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1081849952 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7573659479313949081, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
+  m_PrefabInstance: {fileID: 241577172}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1081849960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1081849952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b86d36e58efd1904ca7973df1cd6bcfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterAnimator: {fileID: 0}
+  _unarmedLayer: 0
+  _armedLayer: 1
+  dashSpeed: 600
+  dashTime: 0.6
+  dashCoolDown: 1
+  dashSound: {fileID: 0}
+  additionalJump: 2
+  countAdditionalJump: 0
+  canDash: 1
+  currentDashTime: 0
+  currentDashCooldown: 0
+  _isDashing: 0
+  bulletSpeed: 100
+  targetTag: Enemy
+  damageMulti: 1.5
+  meleeWeapon: {fileID: 0}
+  _isAttackingMelee: 0
+  tagAttackMelee: AttackMelee
+  _attackMode: 0
+  _delaySheath: 0.5
+  inTransition: 0
+  weaponSlotUnarmed: {fileID: 0}
+  weaponSlotArmed: {fileID: 0}
+  rotationSlotSpeed: 10
+  positionSlotSpeed: 10
 --- !u!1001 &1086015925
 PrefabInstance:
   m_ObjectHideFlags: 0
