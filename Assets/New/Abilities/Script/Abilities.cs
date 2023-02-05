@@ -21,6 +21,11 @@ public class Abilities : MonoBehaviour
     [Header("Animation")]
     [ReadOnly][SerializeField] private Animator characterAnimator;
     private static readonly int IsDashing = Animator.StringToHash("IsDashing");
+    private static readonly int IsAttackingMelee = Animator.StringToHash("IsAttackingMelee");
+    private static readonly int IsOnAttackMode = Animator.StringToHash("IsOnAttackMode");
+
+    [SerializeField]private int _unarmedLayer = 0;
+    [SerializeField]private int _armedLayer = 1;
 
     [Header("Dash")] 
     [SerializeField] private float dashSpeed = 20f;
@@ -34,8 +39,8 @@ public class Abilities : MonoBehaviour
     [SerializeField]private int additionalJump = 2;
     [ReadOnly][SerializeField]private int countAdditionalJump;
     [ReadOnly][SerializeField]private bool canDash = true;
-    public AudioSource jumpSound;
     
+    [Header("Dash")]
     [ReadOnly][SerializeField]private float currentDashTime;
     [ReadOnly][SerializeField]private float currentDashCooldown;
     [ReadOnly][SerializeField]private bool _isDashing;
@@ -54,6 +59,7 @@ public class Abilities : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         characterAnimator = GetComponent<Animator>();
         canDash = true;
         _rb = GetComponent<Rigidbody>();
@@ -73,12 +79,6 @@ public class Abilities : MonoBehaviour
             countAdditionalJump = additionalJump;
         }
         //Dash
-        if (Input.GetButtonDown("Dash") && canDash && grounded)
-        {
-            Debug.Log("Dashing");
-            Dash();
-            //StartCoroutine(DashRoutine());
-        }
 
         if (currentDashCooldown > 0)
         {
@@ -93,12 +93,41 @@ public class Abilities : MonoBehaviour
         {
             dashImage.fillAmount = 1;
         }
-        
-        //Double Jump
-        if (Input.GetButtonDown("Jump") && countAdditionalJump > 0)
+
+        if (!inTransition)
         {
-            MultipleJump();
+            if (Input.GetButtonDown("Dash") && canDash && grounded && !_isAttackingMelee)
+            {
+                Dash();
+                //StartCoroutine(DashRoutine());
+            }
+            
+            //Double Jump
+            if (Input.GetButtonDown("Jump") && countAdditionalJump > 0 && !_isAttackingMelee)
+            {
+                if (_attackMode)
+                    StartCoroutine(ChangeCombatMode());
+                MultipleJump();
+            }
+
+            if (_hasMeleeWeapon)
+            {
+                if (Input.GetButtonDown("AttackMelee") && !_isDashing && _characterController.Grounded)
+                {
+                    if(!_attackMode)
+                        StartCoroutine(ChangeCombatMode());
+                    AttackWithMeleeWeapon();
+                }
+
+                if (Input.GetButtonDown("ChangeCombatMode") && _characterController.Grounded)
+                {
+                    StartCoroutine(ChangeCombatMode());
+                }
+            }
+
+            
         }
+
         
         //Shoot
         if (Input.GetMouseButtonDown(0))
@@ -140,6 +169,19 @@ public class Abilities : MonoBehaviour
         //print(rb.velocity);
         StartCoroutine(DashRoutine());
         StartCoroutine(ResetDash());
+    }
+
+    public void GiveMeleeWeaponToPlayer(GameObject meleeWeaponToGive)
+    {
+        if (meleeWeaponToGive)
+        {
+            meleeWeapon = Instantiate(meleeWeaponToGive,weaponSlotUnarmed.position,weaponSlotUnarmed.rotation);
+            AttachWeaponToSlot(weaponSlotUnarmed);
+            MeleeWeapon scriptWeapon = meleeWeapon.GetComponent<MeleeWeapon>();
+            scriptWeapon.TargetTag = targetTag;
+            scriptWeapon.Damage *= damageMulti;
+            _hasMeleeWeapon = true;
+        }
     }
 
     IEnumerator ResetDash()
@@ -193,5 +235,9 @@ public class Abilities : MonoBehaviour
         //characterAnimator.SetFloat(VelocityHash,velocity);
         
         characterAnimator.SetBool(IsDashing, _isDashing);
+        
+        characterAnimator.SetBool(IsAttackingMelee, _isAttackingMelee);
+        characterAnimator.SetBool(IsOnAttackMode, _attackMode);
+
     }
 }
