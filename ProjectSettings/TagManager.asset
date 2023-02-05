@@ -8,6 +8,7 @@ TagManager:
   - Ground
   - Canvas
   - Enemy
+  - Bush
   layers:
   - Default
   - TransparentFX

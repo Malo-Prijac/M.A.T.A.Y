@@ -91,7 +91,12 @@ public class HealthSystem : MonoBehaviour
             }
         
         }
-        
+
+        if (gameObject.CompareTag("Bush"))
+        {
+            Destroy(gameObject);
+        }
+
         if (currentHealth <= 0)
         {
             _isAlive = false;

@@ -37,7 +37,7 @@ public class MeleeWeapon : Weapon
             return;
         
         //if(attackSound)
-        if (other.gameObject.CompareTag(targetTag))
+        if (other.gameObject.CompareTag(targetTag) || other.gameObject.CompareTag("Bush"))
         {
 
             HealthSystem playerHealthSystem = other.gameObject.GetComponent<HealthSystem>();

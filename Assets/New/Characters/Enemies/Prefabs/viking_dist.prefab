@@ -727,6 +727,7 @@ MonoBehaviour:
   _isRunning: 0
   _inMotion: 0
   rangeMinToFollowPlayer: 0.8
+  targetTag: Player
   hasStaticAttack: 1
   attackTag: Attack
   delayAttack: 1

@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour
     public Vector3 spawnWorld1;
     public Vector3 spawnWorld2;
 
+    private Abilities abilities;
+    public GameObject meleeWeapon; 
+
     // Start is called before the first frame update
 
     // Static singleton instance
@@ -44,6 +47,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         currentSpawn = spawnWorld1;
+        abilities = FindObjectOfType<Abilities>();
+        abilities.GiveMeleeWeaponToPlayer(meleeWeapon);
     }
 
     // Update is called once per frame
@@ -54,6 +59,11 @@ public class GameManager : MonoBehaviour
         {
             test = 0;
             //StartCoroutine(ta.ActivateTrap(0));
+        }
+
+        if (hasUnlockedAttack)
+        {
+            
         }
     }
 }

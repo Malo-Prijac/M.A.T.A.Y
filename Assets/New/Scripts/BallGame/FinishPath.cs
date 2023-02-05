@@ -19,7 +19,7 @@ public class FinishPath : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Ball"))
         {
             if (Ball.GetComponent<Timer>().time > 0)
             {
