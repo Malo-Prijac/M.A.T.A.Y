@@ -1201,6 +1201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a74fd581ad18b940a2d786dc37eac6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
   maxHealth: 100
   currentHealth: 0
   healthBar: {fileID: 0}
@@ -1227,6 +1228,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
+  _isAlive: 1
 --- !u!114 &238689356507018292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1249,24 +1251,22 @@ MonoBehaviour:
   additionalJump: 1
   countAdditionalJump: 0
   canDash: 1
-  jumpSound: {fileID: 0}
   currentDashTime: 0
   currentDashCooldown: 0
   _isDashing: 0
   bulletSpeed: 100
-  bulletPrefab: {fileID: 0}
-  bulletSpawn: {fileID: 0}
-  targetCamera: {fileID: 0}
+  targetTag: Enemy
+  damageMulti: 1.5
   meleeWeapon: {fileID: 0}
   _isAttackingMelee: 0
   tagAttackMelee: AttackMelee
   _attackMode: 0
-  _delaySheath: 1.5
+  _delaySheath: 0.75
   inTransition: 0
-  weaponSlotUnarmed: {fileID: 0}
-  weaponSlotArmed: {fileID: 0}
-  rotationSlotSpeed: 10
-  positionSlotSpeed: 10
+  weaponSlotUnarmed: {fileID: 9167266693305113513}
+  weaponSlotArmed: {fileID: 1215868854}
+  rotationSlotSpeed: 1000
+  positionSlotSpeed: 1000
 --- !u!1 &7700982079095751362
 GameObject:
   m_ObjectHideFlags: 0
