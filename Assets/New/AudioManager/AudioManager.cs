@@ -253,12 +253,5 @@ public class AudioManager : MonoBehaviour
         PlayerPrefs.SetFloat("volumeMusic",volumeMusic);
         PlayerPrefs.SetFloat("volumeEffects",volumeEffects);
     }
-    public void PlayClipAtPoint(Sound sound)
-    {
-        AudioSource.PlayClipAtPoint(sound.Source.clip,sound.Owner.transform.position);
-        DeleteSound(sound,sound.clip.length);
-    }
-     
-
     
 }
