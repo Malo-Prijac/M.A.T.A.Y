@@ -27,7 +27,7 @@ public class AudioManager : MonoBehaviour
         {
             //gameObject = instance;
             Destroy(gameObject);
-            //Debug.LogError("There is already a SoundManager in the game !");
+            Debug.LogError("There is already a SoundManager in the game !");
         }
     }
     #endregion

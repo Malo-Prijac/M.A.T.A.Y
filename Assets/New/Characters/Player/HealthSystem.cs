@@ -66,17 +66,18 @@ public class HealthSystem : MonoBehaviour
     
     public void TakeDamage(float damage, string reasonD, Sound sound = null)
     {
-        if (!_isAlive)
-            return;
+        //if (!_isAlive)
+            //return;
         
-        if (!OverrideSoundDamaged && sound != null)
+        _audioManager.Play(soundDamaged);
+        if (OverrideSoundDamaged && soundDamaged.clip)
         {
-            soundDamaged = sound;
+            //print("SON");
+            _audioManager.Play(soundDamaged,soundDamaged.clip.length);
         }
-        
-        if (soundDamaged.clip)
+        else if (!OverrideSoundDamaged && sound!=null)
         {
-            _audioManager.Play(soundDamaged);
+            _audioManager.Play(sound,sound.clip.length);
         }
         
         currentHealth-=damage;
@@ -94,14 +95,14 @@ public class HealthSystem : MonoBehaviour
 
         if (gameObject.CompareTag("Bush"))
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
 
-        if (currentHealth <= 0)
+        /*if (currentHealth <= 0)
         {
             _isAlive = false;
             GetComponent<CharacterControllerBase>().enabled = false;
-        }
+        }*/
     }
     
     public void PlayerDeath()
