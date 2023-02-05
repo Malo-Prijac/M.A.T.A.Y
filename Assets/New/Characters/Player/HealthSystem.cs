@@ -104,7 +104,7 @@ public class HealthSystem : MonoBehaviour
         if (!gameOver)
             return;
         gameOver.enabled=true;
-        transform.position = _gameManager.currentSpawn;
+        transform.position = spawn;
         gameOver.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = reason;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;

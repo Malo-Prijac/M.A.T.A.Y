@@ -29,7 +29,6 @@ public class FinishPath : MonoBehaviour
                     go.GetComponent<Animator>().enabled = true;
                 }
                 Ball.GetComponent<Timer>().printTimer.SetActive(false);
-                Ball.GetComponent<Timer>().enabled = false;
 
             } 
         }

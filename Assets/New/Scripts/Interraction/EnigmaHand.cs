@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,48 +8,31 @@ public class EnigmaHand : MonoBehaviour
     [SerializeField] private Canvas dialogue;
     [SerializeField] private Canvas dialogue2;
     [SerializeField] private GameObject enemy;
-    [SerializeField] private Canvas tutoFight;
-
-    private bool questFinished = false;
-    private GameManager _gameManager;
     // Start is called before the first frame update
-
-    private void Start()
-    {
-        
-    }
-
     private void OnTriggerStay(Collider other)
     {
         if (Input.GetKey(KeyCode.O) && (other.CompareTag("Player")))
         {
-            if (!questFinished)
+            speakStatue.enabled=false;
+            PlayerCharacterController playerCharacterController = other.gameObject.GetComponent<PlayerCharacterController>();
+            if (playerCharacterController.bague)
             {
-                speakStatue.enabled = false;
-                _gameManager = GameManager.Instance;
-                if (_gameManager.stateRingQuest==2)
-                {
-                    questFinished = true;
-                    _gameManager.hasUnlockedAttack = true;
-                    StartCoroutine(TutoFight());
-                }
-                else
-                {
-                    _gameManager.stateRingQuest = 1;
-                    dialogue.enabled = true;
-                }
+                enemy.SetActive(true);
+                dialogue2.enabled=true;
             }
+            else
+            {
+                dialogue.enabled=true;
+            }
+            
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!questFinished)
+        if (other.CompareTag("Player"))
         {
-            if (other.CompareTag("Player"))
-            {
-                speakStatue.enabled = true;
-            }
+            speakStatue.enabled=true; 
         }
     }
 
@@ -60,18 +42,7 @@ public class EnigmaHand : MonoBehaviour
         {
             speakStatue.enabled = false;
             dialogue.enabled = false;
+            dialogue2.enabled = false;
         }
-    }
-    
-    IEnumerator TutoFight()
-    {
-        
-        dialogue2.enabled=true;
-        yield return new WaitForSeconds(3f);
-        dialogue2.enabled = false;
-        tutoFight.enabled = true;
-        enemy.SetActive(true);
-        yield return new WaitForSeconds(3f);
-        tutoFight.enabled = false;
     }
 }

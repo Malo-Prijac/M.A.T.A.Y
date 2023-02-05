@@ -19,6 +19,7 @@ public class SwitchGate : MonoBehaviour
     [SerializeField] private float speedMoveDown = 1f;
 
     private static readonly int ButtonOn = Animator.StringToHash("ButtonOn");
+    private int compteur = 0;
 
     private void Start()
     {
@@ -31,8 +32,9 @@ public class SwitchGate : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") || other.CompareTag("Caisse"))
         {
+            compteur++;
             _meshRenderer.material = _onMaterial;
             StartCoroutine(MoveGrilleUp());
         }
@@ -43,19 +45,23 @@ public class SwitchGate : MonoBehaviour
         foreach (GameObject go in _linkedDoors)
         {
             Animator animator = go.GetComponent<Animator>();
-            animator.speed = speedMoveUp;
             animator.enabled = true;
             animator.SetBool(ButtonOn, true);
+            animator.speed = speedMoveUp;
             yield return new WaitForSeconds(delayDoorOpen);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") || other.CompareTag("Caisse"))
         {
-            _meshRenderer.material = _offMaterial;
-            StartCoroutine(MoveGrilleDown());
+            compteur--;
+            if (compteur == 0)
+            {
+                _meshRenderer.material = _offMaterial;
+                StartCoroutine(MoveGrilleDown());
+            }
         }
     }
     
@@ -64,12 +70,9 @@ public class SwitchGate : MonoBehaviour
         foreach (GameObject go in _linkedDoors)
         {
             Animator animator = go.GetComponent<Animator>();
-            if (animator.GetBool(ButtonOn))
-            {
-                animator.speed = speedMoveDown;
-                animator.enabled = true;
-                animator.SetBool(ButtonOn, false);
-            }
+            animator.enabled = true;
+            animator.SetBool(ButtonOn, false);
+            animator.speed = speedMoveDown;
             yield return new WaitForSeconds(delayDoorClose);
         }
     }

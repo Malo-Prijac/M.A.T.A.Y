@@ -1,31 +1,25 @@
 using System.Collections;
+using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class GiveDash : MonoBehaviour
 {
     [SerializeField] private Canvas speakStatue;
     [SerializeField] private Canvas dialogue;
-    [SerializeField] private Canvas tutoDash;
-    private bool printTuto = false;
+    [SerializeField] private Canvas tuto;
+    private PlayerCharacterController playerCharacterController;
+    private bool giveDash = false;
     
-    private GameManager _gameManager;
-
-    private void Start()
-    {
-        _gameManager = GameManager.Instance;
-    }
-
     private void OnTriggerStay(Collider other)
     {
         if (Input.GetKey(KeyCode.O) && (other.CompareTag("Player")))
         {
-            if (!_gameManager.dash)
-            {
-                speakStatue.enabled = false;
-                dialogue.enabled = true;
-                _gameManager.dash = true;
-                printTuto = true;
-            }
+            playerCharacterController = other.gameObject.GetComponent<PlayerCharacterController>();
+            speakStatue.enabled=false;
+            dialogue.enabled=true;
+            giveDash = true;
+            //DONNER LE DASH ICI
         }
     }
 
@@ -33,10 +27,7 @@ public class GiveDash : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (!_gameManager.dash)
-            {
-                speakStatue.enabled=true;
-            }
+            speakStatue.enabled=true; 
         }
     }
 
@@ -46,9 +37,9 @@ public class GiveDash : MonoBehaviour
         {
             speakStatue.enabled = false;
             dialogue.enabled = false;
-            if (printTuto)
+            if (giveDash)
             {
-                printTuto = false;
+                giveDash = false;
                 StartCoroutine(TutoDash());
             }
         }
@@ -56,8 +47,8 @@ public class GiveDash : MonoBehaviour
     
     IEnumerator TutoDash()
     {
-        tutoDash.enabled = true;
+        tuto.enabled = true;
         yield return new WaitForSeconds(3f);
-        tutoDash.enabled = false;
+        tuto.enabled = false;
     }
 }
