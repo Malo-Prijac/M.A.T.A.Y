@@ -181,9 +181,11 @@ public class EnemyController : MonoBehaviour
                 movingSound.Source.Stop();
             }
         }
+
+
     }
 
-    protected virtual void FixedUpdate()
+    private void FixedUpdate()
     {
         UpdateVelocity();
         FollowPlayer(_player.transform.position-transform.position);

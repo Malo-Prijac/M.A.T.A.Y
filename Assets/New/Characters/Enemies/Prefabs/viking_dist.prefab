@@ -600,14 +600,14 @@ GameObject:
   - component: {fileID: 849747670483031446}
   - component: {fileID: 516515885}
   - component: {fileID: 1939662486}
-  - component: {fileID: 1426574225}
+  - component: {fileID: 6530356524779038724}
   m_Layer: 0
   m_Name: viking_dist
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6713395715494023148
 Transform:
   m_ObjectHideFlags: 0
@@ -673,9 +673,9 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
---- !u!114 &1426574225
+--- !u!114 &6530356524779038724
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -684,11 +684,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6224279769707894102}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ff5378ca5e0db94abc136d1677723a8, type: 3}
+  m_Script: {fileID: 11500000, guid: e9d50b5eef0029d48ae3196f25fd8cda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemyAnimator: {fileID: 849747670483031446}
-  NeedWeaponSlot: 1
   weaponSlotMovement: {fileID: 6670893278465506685}
   weaponSlotAttack: {fileID: 6670893278465506685}
   rotationSlotSpeed: 10
@@ -701,7 +700,7 @@ MonoBehaviour:
   destroySound:
     spatialBlend: 1
     maxDistance: 1
-    minDistance: 15
+    minDistance: 10
     name: 
     clip: {fileID: 0}
     playOnAwake: 0
@@ -722,11 +721,12 @@ MonoBehaviour:
   runSpeed: 3
   acceleration: 0.8
   deceleration: 2
+  ratioRootMotion: 2
   groundDrag: 48
   velocity: 0
   _isRunning: 0
-  _inMotion: 0
-  rangeMinToFollowPlayer: 0.8
+  needToAim: 1
+  _isAiming: 0
   hasStaticAttack: 1
   attackTag: Attack
   delayAttack: 1
@@ -738,15 +738,15 @@ MonoBehaviour:
   canAttack: 0
   weaponType: {fileID: 4390578078104511541, guid: 5098cd4abcdef9145b9f9c0ef1b8ab5e, type: 3}
   delaySoundAttack: 0
-  movingSound:
+  attackSound:
     spatialBlend: 1
     maxDistance: 1
     minDistance: 15
     name: 
-    clip: {fileID: 8300000, guid: fe68e5b1b352b9d4f9ec2d68c996aa12, type: 3}
+    clip: {fileID: 0}
     playOnAwake: 0
-    volume: 1
-    maxVolume: 1
+    volume: 0.5
+    maxVolume: 0.5
     pitch: 1
     type: 1
     source: {fileID: 0}
@@ -758,7 +758,26 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  _isAiming: 0
+  movingSound:
+    spatialBlend: 1
+    maxDistance: 1
+    minDistance: 15
+    name: 
+    clip: {fileID: 8300000, guid: fe68e5b1b352b9d4f9ec2d68c996aa12, type: 3}
+    playOnAwake: 0
+    volume: 1
+    maxVolume: 1
+    pitch: 1
+    type: 0
+    source: {fileID: 0}
+    loop: 0
+    fadingTime: 0
+    FadingCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
 --- !u!1 &6394934257638353473
 GameObject:
   m_ObjectHideFlags: 0
