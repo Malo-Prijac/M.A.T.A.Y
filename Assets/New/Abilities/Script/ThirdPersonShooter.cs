@@ -13,6 +13,12 @@ public class ThirdPersonShooter : MonoBehaviour
     [SerializeField] private Transform bulletProjectile;
     [SerializeField] private Transform bulletSpawn;
     [SerializeField] private Transform toFollow;
+    private PlayerCharacterController playerController;
+
+    private void Start()
+    {
+        playerController = GetComponent<PlayerCharacterController>();
+    }
 
     private void Update()
     {
@@ -33,6 +39,7 @@ public class ThirdPersonShooter : MonoBehaviour
             worldAimTarget.y = transform.position.y;
             //worldAimTarget.x = transform.position.x;
             Vector3 aimDirection = (worldAimTarget - transform.position).normalized;
+            
             
             //Make the character face where he's aiming | transform.forward
             toFollow.forward = Vector3.Lerp(toFollow.forward, aimDirection, Time.deltaTime * 10f);
