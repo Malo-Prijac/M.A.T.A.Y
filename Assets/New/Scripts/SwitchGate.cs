@@ -19,7 +19,6 @@ public class SwitchGate : MonoBehaviour
     [SerializeField] private float speedMoveDown = 1f;
 
     private static readonly int ButtonOn = Animator.StringToHash("ButtonOn");
-    private int compteur = 0;
 
     private void Start()
     {
@@ -32,9 +31,8 @@ public class SwitchGate : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") || other.CompareTag("Caisse"))
+        if (other.CompareTag("Player"))
         {
-            compteur++;
             _meshRenderer.material = _onMaterial;
             StartCoroutine(MoveGrilleUp());
         }
@@ -45,23 +43,19 @@ public class SwitchGate : MonoBehaviour
         foreach (GameObject go in _linkedDoors)
         {
             Animator animator = go.GetComponent<Animator>();
+            animator.speed = speedMoveUp;
             animator.enabled = true;
             animator.SetBool(ButtonOn, true);
-            animator.speed = speedMoveUp;
             yield return new WaitForSeconds(delayDoorOpen);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player") || other.CompareTag("Caisse"))
+        if (other.CompareTag("Player"))
         {
-            compteur--;
-            if (compteur == 0)
-            {
-                _meshRenderer.material = _offMaterial;
-                StartCoroutine(MoveGrilleDown());
-            }
+            _meshRenderer.material = _offMaterial;
+            StartCoroutine(MoveGrilleDown());
         }
     }
     
@@ -70,9 +64,12 @@ public class SwitchGate : MonoBehaviour
         foreach (GameObject go in _linkedDoors)
         {
             Animator animator = go.GetComponent<Animator>();
-            animator.enabled = true;
-            animator.SetBool(ButtonOn, false);
-            animator.speed = speedMoveDown;
+            if (animator.GetBool(ButtonOn))
+            {
+                animator.speed = speedMoveDown;
+                animator.enabled = true;
+                animator.SetBool(ButtonOn, false);
+            }
             yield return new WaitForSeconds(delayDoorClose);
         }
     }
