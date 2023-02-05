@@ -124,11 +124,8 @@ public class Abilities : MonoBehaviour
                     StartCoroutine(ChangeCombatMode());
                 }
             }
-
-            
         }
 
-        
         ChangeSlot();
     }
 
