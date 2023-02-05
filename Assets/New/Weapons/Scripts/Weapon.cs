@@ -13,7 +13,13 @@ public class Weapon : MonoBehaviour
     [SerializeField] protected Sound attackSound;
     protected AudioManager _audioManager;
     protected string targetTag;
+    protected bool isAttacking;
 
+    public bool IsAttacking
+    {
+        get => isAttacking;
+        set => isAttacking = value;
+    }
     public string TargetTag
     {
         get => targetTag;
@@ -39,7 +45,7 @@ public class Weapon : MonoBehaviour
         get => owner;
         set => owner = value;
     }
-    public virtual void Attack(Vector3 targetPosition, float delaySoundAttack, Vector3 startPosition = default(Vector3))
+    public virtual void Attack(Vector3 targetPosition = default(Vector3), float delaySoundAttack = 0, Vector3 startPosition = default(Vector3))
     {
         if (attackSound.clip)
         {

@@ -96,7 +96,14 @@ public class AudioManager : MonoBehaviour
 
     public void PlayClipAtPoint(Sound sound)
     {
-        AudioSource.PlayClipAtPoint(sound.Source.clip,sound.Owner.transform.position);
+        UpdateSoundVolume();
+        AudioSource.PlayClipAtPoint(sound.Source.clip,sound.Owner.transform.position,sound.Source.volume);
+    }
+    
+    
+    public void PlayClipAtPointAndDestroy(Sound sound)
+    {
+        PlayClipAtPoint(sound);
         DeleteSound(sound,sound.clip.length);
     }
     

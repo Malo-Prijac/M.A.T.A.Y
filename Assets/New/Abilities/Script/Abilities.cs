@@ -171,6 +171,7 @@ public class Abilities : MonoBehaviour
     private void AttackWithMeleeWeapon()
     {
         _isAttackingMelee = true;
+        meleeWeapon.GetComponent<MeleeWeapon>().IsAttacking = true;
         StartCoroutine(StopAttack(tagAttackMelee));
 
     }
@@ -186,6 +187,7 @@ public class Abilities : MonoBehaviour
         {
             yield return null;
         }
+        meleeWeapon.GetComponent<MeleeWeapon>().IsAttacking = false;
         _isAttackingMelee = false;
     }
 
