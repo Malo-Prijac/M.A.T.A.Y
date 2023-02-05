@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 803d8f9e36ca21f40b9b7736d54c283e
+guid: bb22f7f9535842f44bff4f351b5a7a28
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: swordAttack
+    second: Standing Equip Bow
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -21,13 +21,9 @@ ModelImporter:
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Bone length in
-      copied configuration does not match position in animation file:\n\t'mixamorig:LeftUpLeg'
-      : position error = 149.848328 mm\n\t'mixamorig:LeftLeg' : position error =
-      7.692185 mm\n\t'mixamorig:LeftFoot' : position error = 43.383347 mm\n\t'mixamorig:LeftToeBase'
-      : position error = 158.750885 mm\n\t'mixamorig:RightUpLeg' : position error
-      = 149.712967 mm\n\t'mixamorig:RightLeg' : position error = 7.978185 mm\n\t'mixamorig:RightFoot'
-      : position error = 43.259033 mm\n\t'mixamorig:RightToeBase' : position error
-      = 164.739639 mm\n"
+      copied configuration does not match position in animation file:\n\t'mixamorig:LeftLeg'
+      : position error = 6.967660 mm\n\t'mixamorig:RightLeg' : position error = 6.974979
+      mm\n"
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -43,11 +39,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: swordAttack
+      name: Standing Equip Bow
       takeName: mixamo.com
       internalID: 0
-      firstFrame: 10
-      lastFrame: 35
+      firstFrame: 0
+      lastFrame: 27
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -61,7 +57,7 @@ ModelImporter:
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 1
       keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 1
+      keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000

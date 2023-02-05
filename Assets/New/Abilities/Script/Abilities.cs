@@ -109,7 +109,7 @@ public class Abilities : MonoBehaviour
 
             if (_hasMeleeWeapon)
             {
-                if (Input.GetButtonDown("AttackMelee") && !_isDashing && _characterController.Grounded)
+                if (Input.GetButtonDown("Attack") && !_isDashing && _characterController.Grounded)
                 {
                     if(!_attackMode)
                         StartCoroutine(ChangeCombatMode());
