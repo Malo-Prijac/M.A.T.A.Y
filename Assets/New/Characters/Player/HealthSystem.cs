@@ -68,16 +68,14 @@ public class HealthSystem : MonoBehaviour
     {
         //if (!_isAlive)
             //return;
-        
-        _audioManager.Play(soundDamaged);
         if (OverrideSoundDamaged && soundDamaged.clip)
         {
             //print("SON");
-            _audioManager.Play(soundDamaged,soundDamaged.clip.length);
+            _audioManager.PlayClipAtPoint(soundDamaged);
         }
         else if (!OverrideSoundDamaged && sound!=null)
         {
-            _audioManager.Play(sound,sound.clip.length);
+            _audioManager.PlayClipAtPoint(sound);
         }
         
         currentHealth-=damage;
@@ -95,7 +93,7 @@ public class HealthSystem : MonoBehaviour
 
         if (gameObject.CompareTag("Bush"))
         {
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
 
         /*if (currentHealth <= 0)
