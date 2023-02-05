@@ -1,4 +1,4 @@
-using System.Collections;
+    using System.Collections;
 using System.Collections.Generic;
 using MyBox;
 using TMPro;
@@ -68,14 +68,16 @@ public class HealthSystem : MonoBehaviour
     {
         //if (!_isAlive)
             //return;
+
         if (OverrideSoundDamaged && soundDamaged.clip)
         {
-            //print("SON");
-            _audioManager.PlayClipAtPoint(soundDamaged);
+            sound = soundDamaged;
         }
-        else if (!OverrideSoundDamaged && sound!=null)
+        
+        if (sound!=null)
         {
-            _audioManager.PlayClipAtPoint(sound);
+            if(sound.clip)
+                _audioManager.PlayClipAtPoint(sound);
         }
         
         currentHealth-=damage;
@@ -93,6 +95,7 @@ public class HealthSystem : MonoBehaviour
 
         if (gameObject.CompareTag("Bush"))
         {
+            _audioManager.DeleteSound(sound);
             Destroy(gameObject);
         }
 

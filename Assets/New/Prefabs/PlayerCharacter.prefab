@@ -1216,8 +1216,8 @@ MonoBehaviour:
     name: 
     clip: {fileID: 8300000, guid: ccfb2b506407d9347b1037aaf53b9bb4, type: 3}
     playOnAwake: 0
-    volume: 0.2
-    maxVolume: 0.2
+    volume: 0.8
+    maxVolume: 0.8
     pitch: 1
     type: 1
     source: {fileID: 0}

@@ -264,6 +264,7 @@ public class EnemyControllerBase : CharacterControllerBase
 
         if (_weapon)
         {
+            _weapon.IsAttacking = true;
             _targetPosition = _player.transform.position + _offSetPlayer;
             _weapon.Attack(_targetPosition,delaySoundAttack);
             //transform.rotation = Quaternion.Euler(transform.eulerAngles - offsetRotation);
@@ -284,6 +285,7 @@ public class EnemyControllerBase : CharacterControllerBase
             yield return null;
         }
         
+        _weapon.IsAttacking = false;
         _isAttacking = false;
     }
 
