@@ -19,8 +19,8 @@ public class Abilities : MonoBehaviour
     [SerializeField]private int _armedLayer = 1;
 
     [Header("Dash")]
-    [SerializeField] private float dashSpeed = 1f;
-    [SerializeField]private float dashTime = 0.5f;
+    [SerializeField] private float dashSpeed = 600f;
+    [SerializeField]private float dashTime = 0.6f;
     [SerializeField]private float dashCoolDown = 1f;
     public AudioSource dashSound;
 
