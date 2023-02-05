@@ -350,7 +350,6 @@ public class PlayerCharacterController : CharacterControllerBase
         //characterAnimator.SetBool(IsJumping, _isJumping);
 
         //characterAnimator.SetBool(IsJumping, _isJumping);
-        
     }
 
     private void MoveUpCapsuleCollision()
