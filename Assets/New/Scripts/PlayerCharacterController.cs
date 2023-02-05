@@ -70,10 +70,8 @@ public class PlayerCharacterController : CharacterControllerBase
     [SerializeField] private float distanceSecondStep = 0.45f;
 
     [Header("Collisions")] [ReadOnly] [SerializeField]
-    
     private int collisions;
     public bool bague = false;
-
 
     public bool Grounded
     {
