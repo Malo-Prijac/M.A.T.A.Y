@@ -73,6 +73,7 @@ public class PlayerCharacterController : CharacterControllerBase
     
     private int collisions;
     public bool bague = false;
+    public int orb = 0;
 
 
     public bool Grounded
