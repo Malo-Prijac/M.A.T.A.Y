@@ -93,6 +93,11 @@ public class AudioManager : MonoBehaviour
         SetUpSound(sound,owner);
         sounds.Add(sound);
     }
+
+    public void PlayClipAtPoint()
+    {
+        
+    }
     
     public void DeleteSound(Sound sound, float time = 0)
     {

@@ -567,7 +567,7 @@ PrefabInstance:
     - target: {fileID: 238689356507018292, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
       propertyPath: weaponSlotArmed
       value: 
-      objectReference: {fileID: 1526245842}
+      objectReference: {fileID: 0}
     - target: {fileID: 238689356507018292, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
       propertyPath: positionSlotSpeed
       value: 1000
@@ -579,7 +579,7 @@ PrefabInstance:
     - target: {fileID: 238689356507018292, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
       propertyPath: weaponSlotUnarmed
       value: 
-      objectReference: {fileID: 1198610261}
+      objectReference: {fileID: 0}
     - target: {fileID: 7084403590897826595, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
       propertyPath: m_RootOrder
       value: 11
@@ -4154,11 +4154,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1186246814}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &1198610261 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9167266693305113513, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
-  m_PrefabInstance: {fileID: 241577172}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1202032467
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6303,11 +6298,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1519832136}
   m_CullTransparentMesh: 1
---- !u!4 &1526245842 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1215868854, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
-  m_PrefabInstance: {fileID: 241577172}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1535213832
 GameObject:
   m_ObjectHideFlags: 0
@@ -8344,6 +8334,14 @@ PrefabInstance:
     - target: {fileID: 1578938034391488895, guid: 78fcadc743e5b994f9d4a9e254797561, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5921013350065622576, guid: 78fcadc743e5b994f9d4a9e254797561, type: 3}
+      propertyPath: meleeWeapon
+      value: 
+      objectReference: {fileID: 2711938167627569934, guid: f55c339bc21c0784ba8ed868d52d0c7f, type: 3}
+    - target: {fileID: 6484060453735366799, guid: 78fcadc743e5b994f9d4a9e254797561, type: 3}
+      propertyPath: m_RootOrder
+      value: 22
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78fcadc743e5b994f9d4a9e254797561, type: 3}
