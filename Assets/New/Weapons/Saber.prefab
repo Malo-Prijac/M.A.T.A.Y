@@ -61,12 +61,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
   attackSound:
+    spatialBlend: 1
+    maxDistance: 1
+    minDistance: 15
     name: 
     clip: {fileID: 8300000, guid: 6813bb29619e86e419170017a6c5175c, type: 3}
+    playOnAwake: 0
     volume: 1
     maxVolume: 1
     pitch: 1
-    type: 0
+    type: 1
     source: {fileID: 0}
     loop: 0
     fadingTime: 0

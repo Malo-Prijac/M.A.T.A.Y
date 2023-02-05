@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     private Abilities abilities;
     public GameObject meleeWeapon; 
 
+
+    public bool hasMeleeWeapon;
     // Start is called before the first frame update
 
     // Static singleton instance
@@ -65,5 +67,13 @@ public class GameManager : MonoBehaviour
         {
             
         }
+
+    }
+
+
+    public void EquipPlayerMeleeWeapon()
+    {
+        hasMeleeWeapon = true;
+        
     }
 }
