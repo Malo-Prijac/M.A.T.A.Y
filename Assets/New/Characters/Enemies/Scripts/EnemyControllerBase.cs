@@ -4,7 +4,7 @@ using MyBox;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class EnemyControllerBase : MonoBehaviour
+public class EnemyControllerBase : CharacterControllerBase
 {
     [SerializeField] public Animator enemyAnimator;
     //private static readonly int IsJumping = Animator.StringToHash("IsJumping");
@@ -54,6 +54,7 @@ public class EnemyControllerBase : MonoBehaviour
 
     [Header("Enemy Attack")] 
     
+    [SerializeField] private string targetTag = "Player";
     [SerializeField] protected bool hasStaticAttack;
     [SerializeField] protected string attackTag = "Attack";
     [SerializeField] protected float delayAttack = 1f;
@@ -84,6 +85,7 @@ public class EnemyControllerBase : MonoBehaviour
     protected GameObject _player;
     protected Vector3 _targetPosition;
     protected Vector3 _offSetPlayer;
+    
 
     private AudioManager _audioManager;
     // Start is called before the first frame update
@@ -97,6 +99,7 @@ public class EnemyControllerBase : MonoBehaviour
             _weapon = _weaponGameObject.GetComponent<Weapon>();
             _weapon.Owner = gameObject;
             AttachWeaponToSlot(weaponSlotMovement);
+            _weapon.TargetTag = targetTag;
         }
 
         _audioManager = AudioManager.instance;
@@ -174,13 +177,14 @@ public class EnemyControllerBase : MonoBehaviour
 
     private void ChangeSlot()
     {
-        if (_isAttacking && weaponSlotAttack)
+        switch (_isAttacking)
         {
-            AttachWeaponToSlot(weaponSlotAttack);
-        }
-        else if(!_isAttacking && weaponSlotMovement)
-        {
-            AttachWeaponToSlot(weaponSlotMovement);
+            case true when weaponSlotAttack:
+                AttachWeaponToSlot(weaponSlotAttack);
+                break;
+            case false when weaponSlotMovement:
+                AttachWeaponToSlot(weaponSlotMovement);
+                break;
         }
     }
     
@@ -250,7 +254,7 @@ public class EnemyControllerBase : MonoBehaviour
         transform.rotation = Quaternion.Slerp (transform.rotation, rotation, Time.deltaTime * rotationSpeed);
     }
 
-    virtual protected void Attack(string animationAttack)
+    virtual protected void Attack(string tagAttack)
     {
         if(_isAttacking)
             return;
@@ -266,16 +270,16 @@ public class EnemyControllerBase : MonoBehaviour
         }
 
         //StartCoroutine(CorrectAttackingPosition());
-        StartCoroutine(StopAttack(animationAttack));
+        StartCoroutine(StopAttack(tagAttack));
     }
 
     private IEnumerator StopAttack(string tagAnim)
     {
-        while (!IsAnimationCurrentAnimation(tagAnim))
+        while (!HelperAnimation.IsAnimationCurrentAnimation(enemyAnimator,tagAnim))
         {
             yield return null;
         }
-        while (AnimatorIsPlaying(tagAnim) )
+        while (HelperAnimation.AnimatorIsPlaying(enemyAnimator,tagAnim) )
         {
             yield return null;
         }
@@ -283,18 +287,7 @@ public class EnemyControllerBase : MonoBehaviour
         _isAttacking = false;
     }
 
-    protected bool IsAnimationCurrentAnimation(string tagAnim)
-    {
-        return enemyAnimator.GetCurrentAnimatorStateInfo(0).IsTag(tagAnim);
-    }
 
-    protected bool AnimatorIsPlaying(string tagAnim){
-        return AnimatorIsPlaying() && IsAnimationCurrentAnimation(tagAnim);
-    }
-    
-    protected bool AnimatorIsPlaying(){
-        return enemyAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1 < 0.95f;
-    }
 
     protected virtual void AnimationBehavior()
     {
