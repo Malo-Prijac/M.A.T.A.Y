@@ -160,7 +160,7 @@ public class PlayerCharacterController : CharacterControllerBase
     {
         UpdateVelocity();
         MovePlayer();
-        RotatePlayer();
+        RotatePlayer(_moveDirection);
         StepClimb();
     }
 
@@ -180,7 +180,7 @@ public class PlayerCharacterController : CharacterControllerBase
         _actualSpeed = velocity*runSpeed;
     }
 
-    private void RotateTargetForCamera()
+    public void RotateTargetForCamera()
     {
         toFollow.rotation = Quaternion.Slerp(toFollow.rotation,Quaternion.Euler(_yRotation, _xRotation,0 ),dampingCamera);
     }
@@ -319,14 +319,13 @@ public class PlayerCharacterController : CharacterControllerBase
 
     }*/
 
-    void RotatePlayer()
+    public void RotatePlayer(Vector3 direction)
     {
-        if (_moveDirection != Vector3.zero)
+        if (direction != Vector3.zero)
         {
-            Quaternion rotation = Quaternion.LookRotation(_moveDirection);
-            transform.rotation = Quaternion.Slerp (transform.rotation, rotation, Time.deltaTime * dampingRotation);
+            Quaternion rotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * dampingRotation);
         }
-        
     }
 
     private void AnimationBehavior()
