@@ -290,6 +290,14 @@ public class PlayerCharacterController : CharacterControllerBase
         collisions++;
     }
 
+    private void OnCollisionStay(Collision collisionInfo)
+    {
+        if (!collisionInfo.gameObject)
+        {
+            collisions--;
+        }
+    }
+
     void OnCollisionExit(Collision collision)
     {
         collisions--;
