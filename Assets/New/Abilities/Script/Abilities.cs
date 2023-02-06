@@ -68,11 +68,18 @@ public class Abilities : MonoBehaviour
     [ReadOnly] [SerializeField] private bool _inputJump;
     
     private bool _hasMeleeWeapon;
+    private bool _hasRangedWeapon;
     private Transform _currentSlot;
     private Rigidbody _rb;
     private PlayerCharacterController _characterController;
 
     private ThirdPersonShooter _tpsScript;
+
+    public bool HasRangedWeapon
+    {
+        get => _hasRangedWeapon;
+        set => _hasRangedWeapon = value;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -83,16 +90,21 @@ public class Abilities : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         countNumberOfJump = numberJumps;
         _characterController = GetComponent<PlayerCharacterController>();
+
+        _hasMeleeWeapon = false;
         if (meleeWeapon)
         {
             _meleeWeaponScript = meleeWeapon.GetComponent<MeleeWeapon>();
             _meleeWeaponScript.TargetTag = targetTag;
+            _hasMeleeWeapon = true;
         }
-        
+
+        _hasRangedWeapon = false;
         if (rangedWeapon)
         {
             _rangedWeaponScript = rangedWeapon.GetComponent<RangedWeapon>();
             _rangedWeaponScript.TargetTag = targetTag;
+            _hasRangedWeapon = true;
         }
 
     }
@@ -293,6 +305,20 @@ public class Abilities : MonoBehaviour
             scriptWeapon.TargetTag = targetTag;
             scriptWeapon.Damage *= damageMulti;
             _hasMeleeWeapon = true;
+        }
+    }
+    
+    public void GiveRangedWeaponToPlayer(GameObject rangedWeaponToGive)
+    {
+        if (rangedWeaponToGive)
+        {
+            meleeWeapon = Instantiate(rangedWeaponToGive,weaponSlotUnarmed.position,weaponSlotUnarmed.rotation);
+            AttachWeaponToSlot(weaponSlotUnarmed);
+            RangedWeapon scriptWeapon = meleeWeapon.GetComponent<RangedWeapon>();
+            _rangedWeaponScript = scriptWeapon;
+            scriptWeapon.TargetTag = targetTag;
+            scriptWeapon.DamageMulti *= damageMulti;
+            _hasRangedWeapon = true;
         }
     }
 
