@@ -55,7 +55,6 @@ public class RangedWeapon : Weapon
         projectileScript.Owner = gameObject;
         projectileScript.TargetTag = targetTag;
 
-
         Quaternion aim = Quaternion.LookRotation( targetPosition - transform.position).normalized;
         
         //projectileGameObject.transform.rotation = 

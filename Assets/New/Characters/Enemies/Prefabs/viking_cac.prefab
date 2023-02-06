@@ -985,7 +985,7 @@ GameObject:
   - component: {fileID: 4154343493366876962}
   m_Layer: 0
   m_Name: viking_cac
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1115,6 +1115,7 @@ MonoBehaviour:
   _isRunning: 0
   _inMotion: 0
   rangeMinToFollowPlayer: 0.8
+  targetTag: Player
   hasStaticAttack: 1
   attackTag: Attack
   delayAttack: 1

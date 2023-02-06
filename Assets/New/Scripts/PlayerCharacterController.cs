@@ -52,13 +52,7 @@ public class PlayerCharacterController : CharacterControllerBase
 
     [Header("Jump")]
     [SerializeField] private float jumpForce;
-    [SerializeField] private float jumpCooldown;
     [SerializeField] private float airDrag;
-    [ReadOnly][SerializeField] private bool readyToJump;
-    [SerializeField] private float updateColliderSpeedUp;
-    [SerializeField] private float updateColliderSpeedDown;
-    [SerializeField] private float centerJumpCollider;
-    [ReadOnly] [SerializeField] private float originCenterCollider;
     [SerializeField] private float jumpStartTime = 0.3f;
     [ReadOnly][SerializeField] private float jumpStartCounter = 0f;
 
@@ -73,6 +67,7 @@ public class PlayerCharacterController : CharacterControllerBase
     [Header("Collisions")] [ReadOnly] [SerializeField]
     private int collisions;
 
+    private bool _aiming;
     public bool Grounded
     {
         get => grounded;
@@ -85,6 +80,12 @@ public class PlayerCharacterController : CharacterControllerBase
         set => _isJumping = value;
     }
 
+    public float JumpStartTime
+    {
+        get => jumpStartTime;
+        set => jumpStartTime = value;
+    }
+
     private Vector3 _rigidbodyDrag;
     void Start()
     {
@@ -93,8 +94,6 @@ public class PlayerCharacterController : CharacterControllerBase
         Cursor.lockState = CursorLockMode.Locked;
         _capsuleCollider = GetComponent<CapsuleCollider>();
         playerHeight = _capsuleCollider.height;
-        originCenterCollider = _capsuleCollider.center.y;
-        ResetJump();
         stepRayUpper.transform.position = new Vector3(stepRayUpper.transform.position.x, stepRayUpper.transform.position.y+stepHeight, stepRayUpper.transform.position.z);
     }
 
@@ -164,7 +163,9 @@ public class PlayerCharacterController : CharacterControllerBase
     {
         UpdateVelocity();
         MovePlayer();
-        if(_inMotion)
+        _aiming = characterAnimator.GetBool("IsAiming");
+
+        if(_inMotion && !_aiming)
             RotatePlayer(_moveDirection);
         StepClimb();
     }
@@ -207,15 +208,7 @@ public class PlayerCharacterController : CharacterControllerBase
         _yRotation = _yRotation > lockCamY && mouseY > 0? _yRotation - mouseY : _yRotation; 
         _yRotation = _yRotation < - lockCamY && mouseY < 0? _yRotation - mouseY : _yRotation;
         //_yRotation = MathF.Abs(_yRotation - mouseY) < lockCamY ? _yRotation - mouseY : _yRotation;
-
-        /*
-        if (Input.GetButton("Jump") && readyToJump && grounded)
-        {
-            readyToJump = false;
-            Jump();
-            Invoke(nameof(ResetJump),jumpCooldown);
-        }
-        */
+        
     }
 
     public void Jump()
@@ -225,21 +218,9 @@ public class PlayerCharacterController : CharacterControllerBase
         jumpStartCounter = 0;
         _rb.velocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);
         _rb.AddForce(transform.up*jumpForce, ForceMode.VelocityChange);
-
-        /*
-        if(grounded)
-        {
-            print("ui");
-            //characterAnimator.SetBool(IsJumping, true);
-            _rb.AddForce(new Vector3(0,impulse,0), ForceMode.Impulse);
-        }
-        */
+        
     }
-
-    void ResetJump()
-    {
-        readyToJump = true;
-    }
+    
     /*
     void MovePlayer()
     {

@@ -39,17 +39,19 @@ public class Projectile : MonoBehaviour
 
     }
 
+    /*
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag(targetTag))
         {
-            HealthSystem playerHealthSystem = collision.gameObject.GetComponent<HealthSystem>();
-            if (!playerHealthSystem)
+            HealthSystem healthSystem = collision.gameObject.GetComponent<HealthSystem>();
+            if (!healthSystem)
                 return;
-            playerHealthSystem.TakeDamage(damage,"le projectile d\'un ennemi");
+            healthSystem.TakeDamage(damage,"le projectile d\'un ennemi");
         }
         Destroy(gameObject);
     }
+    */
 
     // Update is called once per frame
     void Update()
@@ -72,17 +74,15 @@ public class Projectile : MonoBehaviour
             //Destroy(gameObject);
         }
         */
-        if (other.gameObject.CompareTag("Player"))
+        print(targetTag);
+        if (other.gameObject.CompareTag(targetTag))
         {
-            HealthSystem playerHealthSystem = other.gameObject.GetComponent<HealthSystem>();
-            if (!playerHealthSystem)
+            HealthSystem healthSystem = other.gameObject.GetComponent<HealthSystem>();
+            if (!healthSystem)
                 return;
-            playerHealthSystem.TakeDamage(damage,"le projectile d\'un ennemi");
-            
-            //print("ok");
-            //_gameManager.playerHealthSystem.TakeDamage(damage,"le projectile d\'un ennemi");
-            //Destroy(gameObject);
+            healthSystem.TakeDamage(damage,"le projectile d\'un ennemi");
         }
+        Destroy(gameObject);
         
     }
 }
