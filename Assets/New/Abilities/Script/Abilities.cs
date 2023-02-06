@@ -34,7 +34,7 @@ public class Abilities : MonoBehaviour
     [Header("Jump")]
     [SerializeField]private int numberJumps = 2;
     [ReadOnly][SerializeField]private int countNumberOfJump;
-    [ReadOnly][SerializeField]private bool canDash = true;
+    [ReadOnly] [SerializeField] public bool canDash;
     
     [Header("Weapons")]
     
@@ -56,6 +56,7 @@ public class Abilities : MonoBehaviour
     [Header("Weapon Slots")]
     [SerializeField] private Transform weaponSlotUnarmed;
     [SerializeField] private Transform weaponSlotArmed;
+    [SerializeField] private Transform rangedWeaponSlotArmed;
     [SerializeField] private float rotationSlotSpeed = 10;
     [SerializeField] private float positionSlotSpeed = 10;
 
@@ -86,7 +87,7 @@ public class Abilities : MonoBehaviour
     {
         _tpsScript = GetComponent<ThirdPersonShooter>();
         characterAnimator = GetComponent<Animator>();
-        canDash = true;
+        canDash = false;
         _rb = GetComponent<Rigidbody>();
         countNumberOfJump = numberJumps;
         _characterController = GetComponent<PlayerCharacterController>();
@@ -310,11 +311,12 @@ public class Abilities : MonoBehaviour
     
     public void GiveRangedWeaponToPlayer(GameObject rangedWeaponToGive)
     {
-        if (rangedWeaponToGive)
-        {
-            meleeWeapon = Instantiate(rangedWeaponToGive,weaponSlotUnarmed.position,weaponSlotUnarmed.rotation);
-            AttachWeaponToSlot(weaponSlotUnarmed);
-            RangedWeapon scriptWeapon = meleeWeapon.GetComponent<RangedWeapon>();
+        print("OY");
+        if (rangedWeaponToGive){
+            print("TO");
+            rangedWeapon = Instantiate(rangedWeaponToGive,rangedWeaponSlotArmed.position,rangedWeaponSlotArmed.rotation);
+            AttachWeaponToSlot(rangedWeaponSlotArmed);
+            RangedWeapon scriptWeapon = rangedWeapon.GetComponent<RangedWeapon>();
             _rangedWeaponScript = scriptWeapon;
             scriptWeapon.TargetTag = targetTag;
             scriptWeapon.DamageMulti *= damageMulti;

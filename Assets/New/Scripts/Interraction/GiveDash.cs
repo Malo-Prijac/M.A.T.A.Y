@@ -25,6 +25,7 @@ public class GiveDash : MonoBehaviour
                 dialogue.enabled = true;
                 _gameManager.dash = true;
                 printTuto = true;
+                _gameManager.GiveDash();
             }
         }
     }

@@ -25,6 +25,7 @@ public class GiveShoot : MonoBehaviour
                 dialogue.enabled = true;
                 _gameManager.shoot = true;
                 printTuto = true;
+                _gameManager.GiveShoot();
             }
         }
     }

@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
 
     private Abilities abilities;
     public GameObject meleeWeapon;
+    public GameObject rangeWeapon;
 
 // Start is called before the first frame update
 
@@ -67,6 +68,22 @@ public class GameManager : MonoBehaviour
         if (hasUnlockedAttack)
         {
             abilities.GiveMeleeWeaponToPlayer(meleeWeapon);
+        }
+    }
+    
+    public void GiveShoot()
+    {
+        if (shoot)
+        {
+            abilities.GiveRangedWeaponToPlayer(rangeWeapon);
+        }
+    }
+    
+    public void GiveDash()
+    {
+        if (dash)
+        {
+            abilities.canDash = true;
         }
     }
 }
