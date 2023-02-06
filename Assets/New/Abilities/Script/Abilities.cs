@@ -40,7 +40,7 @@ public class Abilities : MonoBehaviour
     
     [SerializeField] private string targetTag = "Enemy";
     [SerializeField]private float damageMulti = 1.5f;
-    [ReadOnly][SerializeField]private GameObject meleeWeapon;
+    [SerializeField]private GameObject meleeWeapon;
     [ReadOnly][SerializeField]private bool _isAttackingMelee;
     [SerializeField]private string tagAttackMelee = "AttackMelee";
     [ReadOnly][SerializeField]private bool _attackMode;
@@ -50,13 +50,25 @@ public class Abilities : MonoBehaviour
     [SerializeField]private GameObject rangedWeapon;
     [SerializeField]private Transform shootPoint;
 
+    [SerializeField]private float aimingDelay = 1f;
+    [ReadOnly][SerializeField]private float aimingCounter;
+    [ReadOnly] [SerializeField] private bool fullAim;
+
+    public bool FullAim
+    {
+        get => fullAim;
+        set => fullAim = value;
+    }
+    
     private RangedWeapon _rangedWeaponScript;
     private MeleeWeapon _meleeWeaponScript;
 
     [Header("Weapon Slots")]
-    [SerializeField] private Transform weaponSlotUnarmed;
-    [SerializeField] private Transform weaponSlotArmed;
-    [SerializeField] private Transform rangedWeaponSlotArmed;
+    [SerializeField] private Transform UnarmedMeleeSlot;
+    [SerializeField] private Transform ArmedMeleeSlot;
+    [SerializeField] private Transform UnarmedRangedSlot;
+    [SerializeField] private Transform ArmedRangedSlot;
+
     [SerializeField] private float rotationSlotSpeed = 10;
     [SerializeField] private float positionSlotSpeed = 10;
 
@@ -68,8 +80,8 @@ public class Abilities : MonoBehaviour
     [ReadOnly] [SerializeField] private bool _inputDash;
     [ReadOnly] [SerializeField] private bool _inputJump;
     
-    private bool _hasMeleeWeapon;
-    private bool _hasRangedWeapon;
+    [SerializeField] private bool _hasMeleeWeapon;
+    [SerializeField] private bool _hasRangedWeapon;
     private Transform _currentSlot;
     private Rigidbody _rb;
     private PlayerCharacterController _characterController;
@@ -176,20 +188,26 @@ public class Abilities : MonoBehaviour
 
     }
 
-    private float aimingCounter;
-    private float aimingDelay = 1f;
+
 
     private void AimMode()
     {
+        fullAim = Mathf.Approximately(aimingCounter ,aimingDelay);
+        if (aimingDelay == 0)
+            return;
         if (_isAiming)
         {
             if(aimingCounter<aimingDelay) aimingCounter += Time.deltaTime;
+            aimingCounter = aimingCounter >= aimingDelay ? aimingDelay : aimingCounter;
         }
         else
         {
             if(aimingCounter>0) aimingCounter -= Time.deltaTime;
+            aimingCounter = aimingCounter <= 0 ? 0 : aimingCounter;
         }
-        characterAnimator.SetLayerWeight(RangedArmedLayer,aimingCounter/aimingDelay);
+
+        characterAnimator.SetLayerWeight(RangedArmedLayer,aimingCounter/(aimingDelay));
+        
     }
 
 
@@ -244,7 +262,7 @@ public class Abilities : MonoBehaviour
     {
         if (inTransition && !_attackMode || !_hasMeleeWeapon)
             return;
-        AttachWeaponToSlot(_attackMode ? weaponSlotArmed : weaponSlotUnarmed);
+        AttachWeaponToSlot(_attackMode ? ArmedMeleeSlot : UnarmedMeleeSlot);
     }
     
 
@@ -301,8 +319,8 @@ public class Abilities : MonoBehaviour
     {
         if (meleeWeaponToGive)
         {
-            meleeWeapon = Instantiate(meleeWeaponToGive,weaponSlotUnarmed.position,weaponSlotUnarmed.rotation);
-            AttachWeaponToSlot(weaponSlotUnarmed);
+            meleeWeapon = Instantiate(meleeWeaponToGive,UnarmedMeleeSlot.position,UnarmedMeleeSlot.rotation);
+            AttachWeaponToSlot(UnarmedMeleeSlot);
             MeleeWeapon scriptWeapon = meleeWeapon.GetComponent<MeleeWeapon>();
             _meleeWeaponScript = scriptWeapon;
             scriptWeapon.TargetTag = targetTag;
@@ -313,12 +331,11 @@ public class Abilities : MonoBehaviour
     
     public void GiveRangedWeaponToPlayer(GameObject rangedWeaponToGive)
     {
-        print("OY");
-        if (rangedWeaponToGive){
-            print("TO");
-            rangedWeapon = Instantiate(rangedWeaponToGive,rangedWeaponSlotArmed.position,rangedWeaponSlotArmed.rotation);
-            AttachWeaponToSlot(rangedWeaponSlotArmed);
-            RangedWeapon scriptWeapon = rangedWeapon.GetComponent<RangedWeapon>();
+        if (rangedWeaponToGive)
+        {
+            meleeWeapon = Instantiate(rangedWeaponToGive,UnarmedRangedSlot.position,UnarmedRangedSlot.rotation);
+            AttachWeaponToSlot(UnarmedRangedSlot);
+            RangedWeapon scriptWeapon = meleeWeapon.GetComponent<RangedWeapon>();
             _rangedWeaponScript = scriptWeapon;
             scriptWeapon.TargetTag = targetTag;
             scriptWeapon.DamageMulti *= damageMulti;

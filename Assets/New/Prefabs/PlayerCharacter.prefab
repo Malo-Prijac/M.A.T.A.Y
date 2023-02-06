@@ -31,6 +31,37 @@ Transform:
   m_Father: {fileID: 7084403590897826595}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &954970993
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 954970994}
+  m_Layer: 0
+  m_Name: UnarmedRangedSlot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &954970994
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 954970993}
+  m_LocalRotation: {x: -0.68543386, y: -0.4800164, z: 0.4236747, w: 0.3467917}
+  m_LocalPosition: {x: -0.112, y: 0.17, z: -0.123}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3314800282088053687}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: -176.063, y: 66.333, z: -72.582}
 --- !u!1 &1215868853
 GameObject:
   m_ObjectHideFlags: 0
@@ -41,7 +72,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1215868854}
   m_Layer: 0
-  m_Name: ArmedSlot
+  m_Name: ArmedMeleeSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,7 +134,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1634012504}
   m_Layer: 0
-  m_Name: BowSlot
+  m_Name: ArmedRangedSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -958,7 +989,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9167266693305113513}
   m_Layer: 0
-  m_Name: UnarmedSlot
+  m_Name: UnarmedMeleeSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1293,8 +1324,13 @@ MonoBehaviour:
   _isAiming: 0
   rangedWeapon: {fileID: 4390578077617248950}
   shootPoint: {fileID: 8082583352712462077}
-  weaponSlotUnarmed: {fileID: 9167266693305113513}
-  weaponSlotArmed: {fileID: 1215868854}
+  aimingDelay: 1
+  aimingCounter: 0
+  fullAim: 0
+  UnarmedMeleeSlot: {fileID: 9167266693305113513}
+  ArmedMeleeSlot: {fileID: 1215868854}
+  UnarmedRangedSlot: {fileID: 954970994}
+  ArmedRangedSlot: {fileID: 1634012504}
   rotationSlotSpeed: 100
   positionSlotSpeed: 100
   _inputAttack: 0
@@ -1303,6 +1339,8 @@ MonoBehaviour:
   _inputChangeCombat: 0
   _inputDash: 0
   _inputJump: 0
+  _hasMeleeWeapon: 0
+  _hasRangedWeapon: 0
 --- !u!114 &7097446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1318,7 +1356,7 @@ MonoBehaviour:
   aimVirtualCam: {fileID: 0}
   toFollow: {fileID: 7339287370936714867}
   mainVirtualCam: {fileID: 0}
-  weapon: {fileID: 1634012503}
+  weaponSlot: {fileID: 1634012504}
   mouseWorldPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &7700982079095751362
 GameObject:
@@ -1352,6 +1390,7 @@ Transform:
   - {fileID: 1478615081282088072}
   - {fileID: 3055816164009797668}
   - {fileID: 9167266693305113513}
+  - {fileID: 954970994}
   m_Father: {fileID: 7084403590897826595}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

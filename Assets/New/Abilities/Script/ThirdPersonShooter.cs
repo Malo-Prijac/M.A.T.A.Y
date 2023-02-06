@@ -10,19 +10,22 @@ using Cinemachine;
     [SerializeField] private CinemachineVirtualCamera aimVirtualCam;
     [SerializeField] private Transform toFollow;
     [SerializeField] private CinemachineVirtualCamera mainVirtualCam;
-    [SerializeField] private GameObject weapon;
+    [SerializeField] private Transform weaponSlot;
     
     private PlayerCharacterController _playerController;
     private Abilities _abilities;
     public Vector3 mouseWorldPosition;
 
     private Camera cam;
+
+    private Transform originWeaponSlot;
     private void Start()
     {
         _playerController = GetComponent<PlayerCharacterController>();
         _abilities = GetComponent<Abilities>();
 
         cam = FindObjectOfType<Camera>();
+        originWeaponSlot = weaponSlot;
     }
 
     private void Update()
@@ -47,7 +50,10 @@ using Cinemachine;
             direction.y = 0;
             _playerController.RotatePlayer(angle);
             //weapon.transform.LookAt(direction);
-            weapon.transform.rotation = toFollow.rotation;
+            if(_abilities.FullAim)
+                weaponSlot.rotation = toFollow.rotation;
+            else
+                weaponSlot.rotation = originWeaponSlot.rotation;
 
         }
         else
