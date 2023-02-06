@@ -13,19 +13,22 @@ using Cinemachine;
     [SerializeField] private GameObject weapon;
     
     private PlayerCharacterController _playerController;
+    private Abilities _abilities;
     public Vector3 mouseWorldPosition;
 
     private Camera cam;
     private void Start()
     {
         _playerController = GetComponent<PlayerCharacterController>();
+        _abilities = GetComponent<Abilities>();
+
         cam = FindObjectOfType<Camera>();
     }
 
     private void Update()
     {
 
-        if (Input.GetMouseButton(1))
+        if (Input.GetButton("Aim") && _abilities.HasRangedWeapon)
         {
             mainVirtualCam.gameObject.SetActive(false);
             aimVirtualCam.gameObject.SetActive(true);
