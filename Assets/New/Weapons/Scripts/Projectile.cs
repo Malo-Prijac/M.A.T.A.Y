@@ -74,7 +74,6 @@ public class Projectile : MonoBehaviour
             //Destroy(gameObject);
         }
         */
-        print(targetTag);
         if (other.gameObject.CompareTag(targetTag))
         {
             HealthSystem healthSystem = other.gameObject.GetComponent<HealthSystem>();

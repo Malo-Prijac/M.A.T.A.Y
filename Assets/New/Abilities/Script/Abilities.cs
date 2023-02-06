@@ -32,10 +32,11 @@ public class Abilities : MonoBehaviour
     [ReadOnly][SerializeField]private bool _isDashing;
 
     [Header("Jump")]
-    [SerializeField]public int numberJumps = 1;
-    [ReadOnly][SerializeField]public int countNumberOfJump;
-    [ReadOnly] [SerializeField] public bool canDash;
-    
+    [SerializeField] private int numberJumps = 1;
+    [ReadOnly][SerializeField] private int countNumberOfJump;
+    [ReadOnly] [SerializeField] private bool canDash;
+    [ReadOnly] [SerializeField] private bool hasDash;
+
     [Header("Weapons")]
     
     [SerializeField] private string targetTag = "Enemy";
@@ -54,6 +55,8 @@ public class Abilities : MonoBehaviour
     [ReadOnly][SerializeField]private float aimingCounter;
     [ReadOnly] [SerializeField] private bool fullAim;
 
+    [SerializeField]private float attackModeDelay = 1f;
+    [ReadOnly][SerializeField]private float attackModeCounter;
     public bool FullAim
     {
         get => fullAim;
@@ -99,7 +102,8 @@ public class Abilities : MonoBehaviour
     {
         _tpsScript = GetComponent<ThirdPersonShooter>();
         characterAnimator = GetComponent<Animator>();
-        canDash = false;
+        canDash = true;
+        hasDash = true;
         _rb = GetComponent<Rigidbody>();
         countNumberOfJump = numberJumps;
         _characterController = GetComponent<PlayerCharacterController>();
@@ -141,7 +145,7 @@ public class Abilities : MonoBehaviour
 
         if (!inTransition)
         {
-            if (_inputDash && canDash && grounded && !_isAttackingMelee)
+            if (_inputDash && canDash && grounded && !_isAttackingMelee && hasDash)
             {
                 Dash();
             }
@@ -156,43 +160,48 @@ public class Abilities : MonoBehaviour
 
             if (_hasMeleeWeapon)
             {
-                if (_inputAttack && !_isDashing && _characterController.Grounded)
+                if (_inputAttack && !_isDashing && _characterController.Grounded && !_isAiming)
                 {
-                    if(!_attackMode)
-                        StartCoroutine(ChangeCombatMode());
+                    if (!_attackMode)
+                        _attackMode = true;
+                        //StartCoroutine(ChangeCombatMode());
                     AttackWithMeleeWeapon();
                 }
-
-                if (_inputChangeCombat && _characterController.Grounded)
+                
+                if (_inputChangeCombat && _characterController.Grounded && !inTransition)
                 {
-                    StartCoroutine(ChangeCombatMode());
+                    _attackMode = !_attackMode;
+                    //StartCoroutine(ChangeCombatMode());
                 }
             }
             
 
             if (_isAiming)
             {
+                if (_attackMode)
+                    _attackMode = false;
+                    //StartCoroutine(ChangeCombatMode());
+
                 if (_inputAttack)
                 {
                     _rangedWeaponScript.Attack(_tpsScript.mouseWorldPosition,0,shootPoint.position);
                     //_tpsScript.mouseWorldPosition-_rangedWeaponScript.transform.position
                 }
             }
-
-
         }
-
+        
+        
         AimMode();
         ChangeSlot();
         InputPlayer();
-
+        AttackMode();
     }
 
 
 
     private void AimMode()
     {
-        fullAim = Mathf.Approximately(aimingCounter ,aimingDelay);
+        
         if (aimingDelay == 0)
             return;
         if (_isAiming)
@@ -210,6 +219,29 @@ public class Abilities : MonoBehaviour
         
     }
 
+    
+    private void AttackMode()
+    {
+        inTransition = attackModeCounter != 0 || !Mathf.Approximately(aimingCounter ,aimingDelay);
+        //inTransition = Mathf.Approximately(aimingCounter ,aimingDelay) && inTransition;
+
+        if (attackModeDelay == 0)
+            return;
+        
+        if (_attackMode)
+        {
+            if(attackModeCounter<attackModeDelay) attackModeCounter += Time.deltaTime;
+            attackModeCounter = attackModeCounter >= attackModeDelay ? attackModeDelay : attackModeCounter;
+        }
+        else
+        {
+            if(attackModeCounter>0) attackModeCounter -= Time.deltaTime;
+            attackModeCounter = attackModeCounter <= 0 ? 0 : attackModeCounter;
+        }
+
+        characterAnimator.SetLayerWeight(MeleeArmedLayer,attackModeCounter/(attackModeDelay));
+        
+    }
 
     IEnumerator ChangeLayerMask(int layer, float start, float end, float totalTime)
     {
@@ -240,22 +272,24 @@ public class Abilities : MonoBehaviour
 
     IEnumerator ChangeCombatMode()
     {
-        if (inTransition || _isDashing || _isAttackingMelee)
-            yield break;
-        
-        inTransition = true;
-        _attackMode = !_attackMode;
+        if (!inTransition && !_isDashing && !_isAttackingMelee)
+        {
+            inTransition = true;
+            _attackMode = !_attackMode;
 
-        if (_attackMode)
-            StartCoroutine(ChangeLayerMask(MeleeArmedLayer,0,1,layerWaitTime));
+            if (_attackMode)
+                StartCoroutine(ChangeLayerMask(MeleeArmedLayer,0,1,layerWaitTime));
             //characterAnimator.SetLayerWeight(_armedLayer,1);
         
-        yield return new WaitForSeconds(_delaySheath);
+            yield return new WaitForSeconds(_delaySheath);
         
-        if(!_attackMode)
-            StartCoroutine(ChangeLayerMask(MeleeArmedLayer,1,0,layerWaitTime));
+            if(!_attackMode)
+                StartCoroutine(ChangeLayerMask(MeleeArmedLayer,1,0,layerWaitTime));
             //characterAnimator.SetLayerWeight(_armedLayer,0);
-        inTransition = false;
+            inTransition = false;
+        }
+
+        yield return null;
     }
 
     private void ChangeSlot()
@@ -292,7 +326,6 @@ public class Abilities : MonoBehaviour
         {
             yield return null;
         }
-        print("ui");
         while (HelperAnimation.AnimatorIsPlaying(characterAnimator,tagAnim,MeleeArmedLayer) )
         {
             yield return null;
@@ -341,6 +374,16 @@ public class Abilities : MonoBehaviour
             scriptWeapon.DamageMulti *= damageMulti;
             _hasRangedWeapon = true;
         }
+    }
+
+    public void GiveDash()
+    {
+        hasDash = true;
+    }
+    
+    public void AddJump()
+    {
+        numberJumps++;
     }
 
     IEnumerator ResetDash()

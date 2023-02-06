@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
     {
         if (dash)
         {
-            abilities.canDash = true;
+            abilities.GiveDash();
         }
     }
     
@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
     {
         if (doubleJump)
         {
-            abilities.numberJumps = 2;
+            abilities.AddJump();
         }
     }
 }
