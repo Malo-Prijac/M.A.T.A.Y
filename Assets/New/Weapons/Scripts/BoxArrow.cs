@@ -22,6 +22,6 @@ public class BoxArrow : MonoBehaviour
 
     public void Attack()
     {
-        _weapon.Attack(start.position+Vector3.right, delaySound, start.position);
+        _weapon.Attack(start.position+start.right, delaySound, start.position);
     }
 }
