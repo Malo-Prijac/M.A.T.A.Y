@@ -120,6 +120,7 @@ public class HealthSystem : MonoBehaviour
     
     public void Respawn()
     {
+        transform.position = _gameManager.currentSpawn;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         gameOver.enabled=false;
