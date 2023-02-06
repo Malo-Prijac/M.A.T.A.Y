@@ -32,8 +32,8 @@ public class Abilities : MonoBehaviour
     [ReadOnly][SerializeField]private bool _isDashing;
 
     [Header("Jump")]
-    [SerializeField]private int numberJumps = 2;
-    [ReadOnly][SerializeField]private int countNumberOfJump;
+    [SerializeField]public int numberJumps = 1;
+    [ReadOnly][SerializeField]public int countNumberOfJump;
     [ReadOnly] [SerializeField] public bool canDash;
     
     [Header("Weapons")]
@@ -137,6 +137,8 @@ public class Abilities : MonoBehaviour
             //Double Jump
             if (_inputJump && countNumberOfJump > 0 && !_isAttackingMelee)
             {
+                print(countNumberOfJump);
+                print(numberJumps);
                 MultipleJump();
             }
 

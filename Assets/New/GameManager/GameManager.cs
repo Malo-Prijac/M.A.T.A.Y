@@ -86,4 +86,12 @@ public class GameManager : MonoBehaviour
             abilities.canDash = true;
         }
     }
+    
+    public void GiveDoubleJump()
+    {
+        if (doubleJump)
+        {
+            abilities.numberJumps = 2;
+        }
+    }
 }
