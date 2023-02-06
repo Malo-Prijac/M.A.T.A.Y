@@ -100,6 +100,7 @@ public class PlayerCharacterController : CharacterControllerBase
     // Update is called once per frame
     void Update()
     {
+        _aiming = characterAnimator.GetBool("IsAiming");
         InputPlayer();
         CheckGrounded();
         RotateTargetForCamera(_xRotation,_yRotation);
@@ -163,8 +164,6 @@ public class PlayerCharacterController : CharacterControllerBase
     {
         UpdateVelocity();
         MovePlayer();
-        _aiming = characterAnimator.GetBool("IsAiming");
-
         if(_inMotion && !_aiming)
             RotatePlayer(_moveDirection);
         StepClimb();
@@ -198,7 +197,7 @@ public class PlayerCharacterController : CharacterControllerBase
         
         _inMotion = _horizontalInput != 0 || _verticalInput != 0;
 
-        _isRunning = Input.GetButton("Run");
+        _isRunning = Input.GetButton("Run") && !_aiming;
         
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.fixedDeltaTime * speedX;
         _xRotation += mouseX;

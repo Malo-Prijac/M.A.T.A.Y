@@ -9370,6 +9370,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 7780787881319431036, guid: 9f183759ab924f044906a8e410edb69a, type: 3}
+      propertyPath: m_DefaultBlend.m_Time
+      value: 0.7
+      objectReference: {fileID: 0}
     - target: {fileID: 7780787881319431037, guid: 9f183759ab924f044906a8e410edb69a, type: 3}
       propertyPath: m_RootOrder
       value: 16
