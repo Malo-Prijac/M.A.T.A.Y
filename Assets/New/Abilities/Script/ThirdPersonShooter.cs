@@ -30,6 +30,8 @@ using Cinemachine;
 
     private void Update()
     {
+        //if (Time.timeScale == 0)
+            //return;
 
         if (Input.GetButton("Aim") && _abilities.HasRangedWeapon)
         {

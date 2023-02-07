@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
     public GameObject rangeWeapon;
     private AudioManager _audioManager;
     private Sound biomeSound;
+
+    [SerializeField] private GameObject menuPause;
+    [SerializeField] private GameObject menuSound;
     public enum BiomeType
     {
         None,
@@ -60,6 +63,12 @@ public class GameManager : MonoBehaviour
         _audioManager = AudioManager.instance;
         abilities = FindObjectOfType<Abilities>();
         
+    }
+
+    private void Update()
+    {
+        if (Input.GetButtonDown("Pause"))
+            ChangePauseState();
     }
 
     public void GiveWeapon()
@@ -108,6 +117,36 @@ public class GameManager : MonoBehaviour
                 //_audioManager.Play(biomeSoundToSet);
         
         biomeSound = biomeSoundToSet;
+    }
+
+    public void ChangePauseState()
+    {
+        Time.timeScale = 1-Time.timeScale;
+        if (!menuSound.activeSelf)
+        {
+            menuPause.SetActive(!menuPause.activeSelf);
+            if (menuPause)
+            {
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.Confined;
+            }
+            else
+            {
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+        }
+        else
+        {
+            menuSound.SetActive(false);
+            menuPause.SetActive(!menuPause.activeSelf);
+        }
+        
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }
 
