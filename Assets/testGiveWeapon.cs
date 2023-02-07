@@ -16,7 +16,6 @@ public class testGiveWeapon : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.K))
         {
             FindObjectOfType<Abilities>().GiveMeleeWeaponToPlayer(meleeWeapon);
-            print("ui");
         }
     }
 }

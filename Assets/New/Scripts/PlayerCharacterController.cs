@@ -114,7 +114,8 @@ public class PlayerCharacterController : CharacterControllerBase
         Vector3 position = transform.position;
         //grounded = Physics.Raycast(position, Vector3.down, groundDistanceMax);
         //grounded = Physics.CheckSphere(position, groundDistanceMax);
-        Collider[] hitColliders = Physics.OverlapBox(position, new Vector3(groundDistanceMax,groundDistanceMax,groundDistanceMax));
+        int layerMaskIgnored =~ LayerMask.GetMask("Ignore Raycast");
+        Collider[] hitColliders = Physics.OverlapBox(position, new Vector3(groundDistanceMax*0.8f,groundDistanceMax*1f,groundDistanceMax*0.8f),Quaternion.identity,layerMaskIgnored);
         //Collider[] hitColliders = Physics.OverlapSphere(position, groundDistanceMax);
         grounded = hitColliders.Length > 1 ;
         //grounded = Physics.CheckSphere(position, groundDistanceMax);
@@ -144,7 +145,7 @@ public class PlayerCharacterController : CharacterControllerBase
         // Draw a yellow sphere at the transform's position
         Gizmos.color = Color.yellow;
         //Gizmos.DrawSphere(position,groundDistanceMax);
-        Gizmos.DrawCube(position,new Vector3(groundDistanceMax,groundDistanceMax,groundDistanceMax));
+        Gizmos.DrawCube(position,new Vector3(groundDistanceMax*0.8f,groundDistanceMax*1f,groundDistanceMax*0.8f));
     }
     /*
     
@@ -269,7 +270,8 @@ public class PlayerCharacterController : CharacterControllerBase
 
     void OnCollisionEnter(Collision collision)
     {
-        collisions++;
+        if (! (collision.gameObject.CompareTag("Portal")))
+            collisions++;
     }
 
     void OnCollisionExit(Collision collision)
@@ -311,7 +313,7 @@ public class PlayerCharacterController : CharacterControllerBase
 
     private void StepClimb()
     {
-        if (!grounded || !_inMotion)
+        if (!grounded || !_inMotion || collisions < 1)
             return;
         
         RaycastHit hitLower;

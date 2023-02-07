@@ -5,10 +5,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private float test = 0;
-    public Transform forward;
-    public TrapArrow ta;
-
     public bool hasUnlockedAttack;
     public bool dash;
     public bool shoot;
@@ -16,15 +12,29 @@ public class GameManager : MonoBehaviour
     
     public int stateRingQuest = 0;
     public int orb = 0;
-    public Vector3 currentSpawn;
-    public Vector3 spawnWorld1;
-    public Vector3 spawnWorld2;
+    public Transform currentSpawn;
 
     private Abilities abilities;
     public GameObject meleeWeapon;
     public GameObject rangeWeapon;
+    private AudioManager _audioManager;
+    private Sound biomeSound;
+    public enum BiomeType
+    {
+        None,
+        Desert,
+        Forest
+    }
+    
+    private BiomeType biome = BiomeType.None;
 
-// Start is called before the first frame update
+    public BiomeType Biome
+    {
+        get => biome;
+        set => biome = value;
+    }
+
+    // Start is called before the first frame update
 
     // Static singleton instance
     private static GameManager instance;
@@ -46,21 +56,10 @@ public class GameManager : MonoBehaviour
     }
 
     void Start()
-    {
-        currentSpawn = spawnWorld1;
+    {        
+        _audioManager = AudioManager.instance;
         abilities = FindObjectOfType<Abilities>();
         
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        test += Time.deltaTime;
-        if (test >= 2f)
-        {
-            test = 0;
-            //StartCoroutine(ta.ActivateTrap(0));
-        }
     }
 
     public void GiveWeapon()
@@ -83,7 +82,7 @@ public class GameManager : MonoBehaviour
     {
         if (dash)
         {
-            abilities.canDash = true;
+            abilities.GiveDash();
         }
     }
     
@@ -91,7 +90,23 @@ public class GameManager : MonoBehaviour
     {
         if (doubleJump)
         {
-            abilities.numberJumps = 2;
+            abilities.AddJump();
         }
     }
+
+    public void ChangeBiome(BiomeType biomeToSet, Sound biomeSoundToSet)
+    {
+        Biome = biomeToSet;
+        if(biomeSound!= null)
+            if(biomeSound.clip)
+                _audioManager.DeleteSound(biomeSound);
+        
+        if(biomeSoundToSet!= null)
+            if(biomeSoundToSet.clip)
+                _audioManager.Play(biomeSoundToSet);
+        
+        biomeSound = biomeSoundToSet;
+    }
 }
+
+

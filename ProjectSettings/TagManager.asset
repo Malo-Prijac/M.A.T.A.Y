@@ -9,6 +9,9 @@ TagManager:
   - Canvas
   - Enemy
   - Bush
+  - Ball
+  - Weapon
+  - Portal
   layers:
   - Default
   - TransparentFX

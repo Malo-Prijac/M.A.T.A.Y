@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -1293995775083272816}
   m_Layer: 0
   m_Name: Saber
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

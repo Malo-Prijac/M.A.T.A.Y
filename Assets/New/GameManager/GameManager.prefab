@@ -48,10 +48,12 @@ MonoBehaviour:
   ta: {fileID: 0}
   hasUnlockedAttack: 0
   dash: 0
-  shot: 0
+  shoot: 0
   doubleJump: 0
-  ring: 0
+  stateRingQuest: 0
   orb: 0
   currentSpawn: {x: 0, y: 0, z: 0}
   spawnWorld1: {x: 4, y: 9, z: 12}
   spawnWorld2: {x: 0, y: 0, z: 0}
+  meleeWeapon: {fileID: 2711938167627569934, guid: f55c339bc21c0784ba8ed868d52d0c7f, type: 3}
+  rangeWeapon: {fileID: 4390578078104511541, guid: 430af508411451a479eddb6ffd03f07e, type: 3}
