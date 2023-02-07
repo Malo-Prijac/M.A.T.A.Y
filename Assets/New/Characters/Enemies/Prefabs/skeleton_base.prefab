@@ -396,6 +396,7 @@ GameObject:
   - component: {fileID: 2034510264996693194}
   - component: {fileID: -4278179761672967388}
   - component: {fileID: -1956492403920393252}
+  - component: {fileID: -2384101547589859243}
   m_Layer: 0
   m_Name: skeleton_base
   m_TagString: Enemy
@@ -559,6 +560,46 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
+--- !u!114 &-2384101547589859243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3705908304576482402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a74fd581ad18b940a2d786dc37eac6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  maxHealth: 100
+  currentHealth: 0
+  healthBar: {fileID: 0}
+  gameOver: {fileID: 0}
+  spawn: {x: 0, y: 0, z: 0}
+  OverrideSoundDamaged: 1
+  soundDamaged:
+    spatialBlend: 1
+    maxDistance: 1
+    minDistance: 15
+    name: 
+    clip: {fileID: 8300000, guid: b1808801517c72b47a00fa5530729916, type: 3}
+    playOnAwake: 0
+    volume: 1
+    maxVolume: 1
+    pitch: 1
+    type: 1
+    source: {fileID: 0}
+    loop: 0
+    fadingTime: 0
+    FadingCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  _isAlive: 1
 --- !u!1 &4445136797297013621
 GameObject:
   m_ObjectHideFlags: 0

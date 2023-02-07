@@ -270,8 +270,8 @@ public class PlayerCharacterController : CharacterControllerBase
 
     void OnCollisionEnter(Collision collision)
     {
-        //if()
-        collisions++;
+        if (! (collision.gameObject.CompareTag("Portal")))
+            collisions++;
     }
 
     void OnCollisionExit(Collision collision)

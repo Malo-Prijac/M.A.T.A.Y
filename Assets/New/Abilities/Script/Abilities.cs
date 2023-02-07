@@ -159,8 +159,8 @@ public class Abilities : MonoBehaviour
             //Double Jump
             if (_inputJump && countNumberOfJump > 0 && !_isAttackingMelee)
             {
-                print(countNumberOfJump);
-                print(numberJumps);
+                //print(countNumberOfJump);
+                //print(numberJumps);
                 MultipleJump();
             }
 
