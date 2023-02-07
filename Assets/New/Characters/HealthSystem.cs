@@ -66,7 +66,9 @@ public class HealthSystem : MonoBehaviour
     
     public void TakeDamage(float damage, string reasonD, Sound sound = null)
     {
-        //if (!_isAlive)
+        if (gameObject.tag == null)
+            return;
+            //if (!_isAlive)
             //return;
 
         if (OverrideSoundDamaged && soundDamaged.clip)
@@ -84,7 +86,6 @@ public class HealthSystem : MonoBehaviour
         
         if (gameObject.CompareTag("Player"))
         {
-
             if (_isAlive)
             {
                 reason = "Mort par "+reasonD;

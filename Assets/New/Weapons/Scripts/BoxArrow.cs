@@ -22,6 +22,7 @@ public class BoxArrow : MonoBehaviour
 
     public void Attack()
     {
+        _weapon.TargetTag = "Player";
         _weapon.Attack(start.position+start.right, delaySound, start.position);
     }
 }
