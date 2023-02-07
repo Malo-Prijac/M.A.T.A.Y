@@ -67,6 +67,8 @@ public class GameManager : MonoBehaviour
         _audioManager = AudioManager.instance;
         abilities = FindObjectOfType<Abilities>();
         GetObjectives();
+        abilities.GiveMeleeWeaponToPlayer(meleeWeapon);
+        abilities.GiveRangedWeaponToPlayer(rangeWeapon);
 
     }
 
@@ -82,7 +84,7 @@ public class GameManager : MonoBehaviour
     {
         if (hasUnlockedAttack)
         {
-            abilities.GiveMeleeWeaponToPlayer(meleeWeapon);
+            abilities._hasMeleeWeapon = true;
         }
     }
     
@@ -90,7 +92,7 @@ public class GameManager : MonoBehaviour
     {
         if (shoot)
         {
-            abilities.GiveRangedWeaponToPlayer(rangeWeapon);
+            abilities._hasMeleeWeapon = true;
         }
     }
     

@@ -85,8 +85,8 @@ public class Abilities : MonoBehaviour
     [ReadOnly] [SerializeField] private bool _inputDash;
     [ReadOnly] [SerializeField] private bool _inputJump;
     
-    [SerializeField] private bool _hasMeleeWeapon;
-    [SerializeField] private bool _hasRangedWeapon;
+    [SerializeField] public bool _hasMeleeWeapon;
+    [SerializeField] public bool _hasRangedWeapon;
     private Transform _currentSlotRanged;
     private Transform _currentSlotMelee;
 
@@ -95,6 +95,21 @@ public class Abilities : MonoBehaviour
 
     private ThirdPersonShooter _tpsScript;
 
+    private void GetObjectives()
+    {
+        hasDash = PlayerPrefs.GetInt("hasDash",0) == 1;
+        _hasMeleeWeapon = PlayerPrefs.GetInt("_hasMeleeWeapon",0) == 1;
+        _hasRangedWeapon = PlayerPrefs.GetInt("_hasRangedWeapon",0) == 1;
+        numberJumps = PlayerPrefs.GetInt("numberJumps",1);
+    }
+    private void SetObjectives()
+    {
+        PlayerPrefs.SetInt("hasDash",hasDash ? 1 : 0);
+        PlayerPrefs.SetInt("numberJumps",numberJumps);
+        PlayerPrefs.SetInt("_hasMeleeWeapon",_hasMeleeWeapon ? 1 : 0);
+        PlayerPrefs.SetInt("_hasRangedWeapon",_hasRangedWeapon ? 1 : 0);
+    }
+    
     public bool HasRangedWeapon
     {
         get => _hasRangedWeapon;
@@ -111,30 +126,28 @@ public class Abilities : MonoBehaviour
         countNumberOfJump = numberJumps;
         _characterController = GetComponent<PlayerCharacterController>();
 
-        _hasMeleeWeapon = false;
         if (meleeWeapon)
         {
             _meleeWeaponScript = meleeWeapon.GetComponent<MeleeWeapon>();
             _meleeWeaponScript.TargetTag = targetTag;
-            _hasMeleeWeapon = true;
         }
 
-        _hasRangedWeapon = false;
         if (rangedWeapon)
         {
             _rangedWeaponScript = rangedWeapon.GetComponent<RangedWeapon>();
             _rangedWeaponScript.TargetTag = targetTag;
-            _hasRangedWeapon = true;
         }
 
+        GetObjectives();
     }
 
     // Update is called once per frame
     void Update()
     {
-        _hasMeleeWeapon = meleeWeapon;
-        _hasRangedWeapon = rangedWeapon;
-        
+        SetObjectives();
+        meleeWeapon.SetActive(_hasMeleeWeapon);
+        rangedWeapon.SetActive(_hasRangedWeapon);
+
         AnimationBehavior();
         bool grounded = _characterController.Grounded;
 
@@ -198,12 +211,22 @@ public class Abilities : MonoBehaviour
         }
         
         
-        AimMode();
-        ChangeSlotMelee();
-        ChangeSlotRanged();
         InputPlayer();
-        AttackMode();
-        ShootReset();
+
+        if (_hasMeleeWeapon)
+        {
+            ChangeSlotMelee();
+            AttackMode();
+
+        }
+
+        if (_hasRangedWeapon)
+        {
+            AimMode();
+            ChangeSlotRanged();
+            ShootReset();
+
+        }
     }
 
     private void ShootReset()
