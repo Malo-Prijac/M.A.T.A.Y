@@ -144,6 +144,11 @@ public class AudioManager : MonoBehaviour
         UpdateSoundVolume();
         sound.Source.Play();
     }
+    public void Stop(Sound sound)
+    {
+        UpdateSoundVolume();
+        //sound.Source.Stop();
+    }
     
     public void Play(Sound sound, float delay)
     {
@@ -226,24 +231,26 @@ public class AudioManager : MonoBehaviour
         {
             StartCoroutine(FadeInSoundCoroutine(sound));
         }
-        
-
     }
     public IEnumerator FadeInSoundCoroutine(Sound sound)
     {
+
+        
         float x = 0f;
         sound.volume = 0f;
         while(x<1f)
         {
             x += Time.deltaTime / (sound.fadingTime);
-            
             sound.volume = sound.FadingCurve.Evaluate(x)*sound.maxVolume;
             yield return 0;
         }
+
     }
 
     public void FadeInSound(Sound sound)
     {
+        if(!sound.Source.isPlaying)
+            Play(sound);
         StartCoroutine(FadeInSoundCoroutine(sound));
     }
     public IEnumerator FadeOutSoundCoroutine(Sound sound)
@@ -252,7 +259,6 @@ public class AudioManager : MonoBehaviour
         sound.volume = 1f;
         while(x>0f)
         {
-            
             x -= Time.deltaTime / (sound.fadingTime);
             sound.volume = sound.FadingCurve.Evaluate(x)*sound.maxVolume;
             yield return 0;

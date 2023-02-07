@@ -18,7 +18,8 @@ public class GameManager : MonoBehaviour
     public GameObject meleeWeapon;
     public GameObject rangeWeapon;
     private AudioManager _audioManager;
-    private Sound biomeSound;
+    [SerializeField]private Sound biomeSound;
+    [SerializeField]private BiomeType biome = BiomeType.None;
 
     [SerializeField] private GameObject menuPause;
     [SerializeField] private GameObject menuSound;
@@ -29,7 +30,6 @@ public class GameManager : MonoBehaviour
         Forest
     }
     
-    private BiomeType biome = BiomeType.None;
 
     public BiomeType Biome
     {
@@ -106,15 +106,17 @@ public class GameManager : MonoBehaviour
     public void ChangeBiome(BiomeType biomeToSet, Sound biomeSoundToSet)
     {
         Biome = biomeToSet;
-        if(biomeSound!= null)
-            if(biomeSound.clip)
-                _audioManager.FadeOutSound(biomeSound);
-                //_audioManager.DeleteSound(biomeSound);
-        
-        if(biomeSoundToSet!= null)
-            if(biomeSoundToSet.clip)
+        if(biomeSound != null)
+            if (biomeSound.Source)
+            {
+                _audioManager.FadeInSound(biomeSound);
+            }
+
+        if(biomeSoundToSet != null)
+            if (biomeSoundToSet.Source)
+            {
                 _audioManager.FadeInSound(biomeSoundToSet);
-                //_audioManager.Play(biomeSoundToSet);
+            }
         
         biomeSound = biomeSoundToSet;
     }

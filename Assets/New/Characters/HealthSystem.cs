@@ -67,8 +67,6 @@ public class HealthSystem : MonoBehaviour
     
     public void TakeDamage(float damage, string reasonD, Sound sound = null)
     {
-        print("ok");
-
         if (OverrideSoundDamaged && soundDamaged.clip)
         {
             sound = soundDamaged;
