@@ -15,7 +15,8 @@ public class Abilities : MonoBehaviour
     private static readonly int IsAttackingMelee = Animator.StringToHash("IsAttackingMelee");
     private static readonly int IsOnAttackMode = Animator.StringToHash("IsOnAttackMode");
     private static readonly int IsAiming = Animator.StringToHash("IsAiming");
-
+    private static readonly int InputAttack = Animator.StringToHash("InputAttack");
+    
     [SerializeField]private int UnarmedLayer = 0;
     [SerializeField]private int MeleeArmedLayer = 1;
     [SerializeField]private int RangedArmedLayer = 2;
@@ -85,7 +86,9 @@ public class Abilities : MonoBehaviour
     
     [SerializeField] private bool _hasMeleeWeapon;
     [SerializeField] private bool _hasRangedWeapon;
-    private Transform _currentSlot;
+    private Transform _currentSlotRanged;
+    private Transform _currentSlotMelee;
+
     private Rigidbody _rb;
     private PlayerCharacterController _characterController;
 
@@ -129,6 +132,11 @@ public class Abilities : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        print(_isDashing);
+
+        _hasMeleeWeapon = meleeWeapon;
+        _hasRangedWeapon = rangedWeapon;
+        
         AnimationBehavior();
         bool grounded = _characterController.Grounded;
 
@@ -192,7 +200,8 @@ public class Abilities : MonoBehaviour
         
         
         AimMode();
-        ChangeSlot();
+        ChangeSlotMelee();
+        ChangeSlotRanged();
         InputPlayer();
         AttackMode();
     }
@@ -201,9 +210,11 @@ public class Abilities : MonoBehaviour
 
     private void AimMode()
     {
-        
         if (aimingDelay == 0)
             return;
+        
+        fullAim = Mathf.Approximately(aimingCounter ,aimingDelay);
+
         if (_isAiming)
         {
             if(aimingCounter<aimingDelay) aimingCounter += Time.deltaTime;
@@ -222,8 +233,7 @@ public class Abilities : MonoBehaviour
     
     private void AttackMode()
     {
-        inTransition = attackModeCounter != 0 || !Mathf.Approximately(aimingCounter ,aimingDelay);
-        //inTransition = Mathf.Approximately(aimingCounter ,aimingDelay) && inTransition;
+        inTransition = attackModeCounter != 0 && !Mathf.Approximately(attackModeCounter ,attackModeDelay);
 
         if (attackModeDelay == 0)
             return;
@@ -291,25 +301,32 @@ public class Abilities : MonoBehaviour
 
         yield return null;
     }
-
-    private void ChangeSlot()
+    
+    private void ChangeSlotMelee()
     {
-        if (inTransition && !_attackMode || !_hasMeleeWeapon)
+        if (!_hasMeleeWeapon)
             return;
-        AttachWeaponToSlot(_attackMode ? ArmedMeleeSlot : UnarmedMeleeSlot);
+        AttachWeaponToSlot(_attackMode ? ArmedMeleeSlot : UnarmedMeleeSlot,ref _currentSlotMelee,ref meleeWeapon);
+    }
+
+    private void ChangeSlotRanged()
+    {
+        if (!_hasRangedWeapon)
+            return;
+        AttachWeaponToSlot(_isAiming ? ArmedRangedSlot : UnarmedRangedSlot,ref _currentSlotRanged,ref rangedWeapon);
     }
     
 
-    private void AttachWeaponToSlot(Transform slot)
+    private void AttachWeaponToSlot(Transform slot, ref Transform currentSlot, ref GameObject weapon )
     {
-        _currentSlot = slot;
-        meleeWeapon.transform.parent = _currentSlot;
-        Vector3 interpolatedPosition = Vector3.Lerp(meleeWeapon.transform.position, _currentSlot.position,Time.deltaTime * positionSlotSpeed);
+        currentSlot = slot;
+        weapon.transform.parent = currentSlot;
+        Vector3 interpolatedPosition = Vector3.Lerp(weapon.transform.position, currentSlot.position,Time.deltaTime * positionSlotSpeed);
 
-        Quaternion interpolatedAngle = Quaternion.Slerp (meleeWeapon.transform.rotation, _currentSlot.rotation, Time.deltaTime * rotationSlotSpeed);
+        Quaternion interpolatedAngle = Quaternion.Slerp (weapon.transform.rotation, currentSlot.rotation, Time.deltaTime * rotationSlotSpeed);
 
-        meleeWeapon.transform.position = interpolatedPosition;
-        meleeWeapon.transform.rotation = interpolatedAngle;
+        weapon.transform.position = interpolatedPosition;
+        weapon.transform.rotation = interpolatedAngle;
     }
 
     private void AttackWithMeleeWeapon()
@@ -317,7 +334,6 @@ public class Abilities : MonoBehaviour
         _isAttackingMelee = true;
         _meleeWeaponScript.IsAttacking = true;
         StartCoroutine(StopAttack(tagAttackMelee));
-
     }
     
     private IEnumerator StopAttack(string tagAnim)
@@ -353,12 +369,11 @@ public class Abilities : MonoBehaviour
         if (meleeWeaponToGive)
         {
             meleeWeapon = Instantiate(meleeWeaponToGive,UnarmedMeleeSlot.position,UnarmedMeleeSlot.rotation);
-            AttachWeaponToSlot(UnarmedMeleeSlot);
+            AttachWeaponToSlot(_attackMode ? ArmedMeleeSlot : UnarmedMeleeSlot,ref _currentSlotMelee,ref meleeWeapon);
             MeleeWeapon scriptWeapon = meleeWeapon.GetComponent<MeleeWeapon>();
             _meleeWeaponScript = scriptWeapon;
             scriptWeapon.TargetTag = targetTag;
             scriptWeapon.Damage *= damageMulti;
-            _hasMeleeWeapon = true;
         }
     }
     
@@ -367,12 +382,11 @@ public class Abilities : MonoBehaviour
         if (rangedWeaponToGive)
         {
             meleeWeapon = Instantiate(rangedWeaponToGive,UnarmedRangedSlot.position,UnarmedRangedSlot.rotation);
-            AttachWeaponToSlot(UnarmedRangedSlot);
+            AttachWeaponToSlot(_isAiming ? ArmedRangedSlot : UnarmedRangedSlot,ref _currentSlotRanged,ref rangedWeapon);
             RangedWeapon scriptWeapon = meleeWeapon.GetComponent<RangedWeapon>();
             _rangedWeaponScript = scriptWeapon;
             scriptWeapon.TargetTag = targetTag;
             scriptWeapon.DamageMulti *= damageMulti;
-            _hasRangedWeapon = true;
         }
     }
 
@@ -433,6 +447,8 @@ public class Abilities : MonoBehaviour
         characterAnimator.SetBool(IsAiming, _isAiming);
         characterAnimator.SetBool(IsAttackingMelee, _isAttackingMelee);
         characterAnimator.SetBool(IsOnAttackMode, _attackMode);
+        characterAnimator.SetBool(InputAttack, _inputAttack);
+        
 
     }
 }

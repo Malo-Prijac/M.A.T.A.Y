@@ -33,7 +33,6 @@ public class MeleeWeapon : Weapon
     
     private void OnTriggerEnter(Collider other)
     {
-        print(isAttacking);
         if (!_applyDamage || !isAttacking)
             return;
         
