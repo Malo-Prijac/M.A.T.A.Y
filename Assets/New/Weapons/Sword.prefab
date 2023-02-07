@@ -67,8 +67,8 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  damage: 15
-  delayDamage: 1.2
+  damage: 30
+  delayDamage: 0.6
 --- !u!65 &8052338340267735472
 BoxCollider:
   m_ObjectHideFlags: 0
