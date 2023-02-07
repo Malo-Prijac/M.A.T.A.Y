@@ -109,7 +109,7 @@ public class GameManager : MonoBehaviour
         if(biomeSound != null)
             if (biomeSound.Source)
             {
-                _audioManager.FadeInSound(biomeSound);
+                _audioManager.FadeOutSound(biomeSound);
             }
 
         if(biomeSoundToSet != null)
