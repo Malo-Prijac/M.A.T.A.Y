@@ -6,8 +6,6 @@ public class Relic : MonoBehaviour
 {
     [SerializeField] private Canvas interraction;
     [SerializeField] private Canvas relicFound;
-    [SerializeField] private GameObject portal;
-    [SerializeField] private GameObject portalHubDesert;
     [SerializeField] private GameObject relic;
 
     private GameManager _gameManager;
@@ -19,10 +17,6 @@ public class Relic : MonoBehaviour
             if (_gameManager.relic == 0)
             {
                 _gameManager.relic ++;
-                portal.transform.GetChild(3).gameObject.SetActive(true);
-                portal.transform.GetChild(4).gameObject.SetActive(true);
-                portalHubDesert.transform.GetChild(3).gameObject.SetActive(true);
-                portalHubDesert.transform.GetChild(4).gameObject.SetActive(true);
                 interraction.enabled=false;
                 relicFound.enabled=true;
                 relic.SetActive(false);

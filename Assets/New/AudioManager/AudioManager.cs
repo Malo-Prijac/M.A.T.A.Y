@@ -109,12 +109,9 @@ public class AudioManager : MonoBehaviour
     
     public void DeleteSound(Sound sound, float time = 0)
     {
-        //AudioSource[] audioSources = sound.Owner.GetComponents<AudioSource>();
-        //AudioSource audioSource = Array.Find(audioSources, audioSources => audioSources == sound.source);
         Destroy(sound.Source,time);
         StartCoroutine(Remove(sound, time));
         print("removed");
-        //Destroy(audioSource);
     }
 
     private IEnumerator Remove(Sound sound, float time)
@@ -147,7 +144,6 @@ public class AudioManager : MonoBehaviour
     public void Stop(Sound sound)
     {
         UpdateSoundVolume();
-        //sound.Source.Stop();
     }
     
     public void Play(Sound sound, float delay)
