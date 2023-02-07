@@ -99,11 +99,13 @@ public class GameManager : MonoBehaviour
         Biome = biomeToSet;
         if(biomeSound!= null)
             if(biomeSound.clip)
-                _audioManager.DeleteSound(biomeSound);
+                _audioManager.FadeOutSound(biomeSound);
+                //_audioManager.DeleteSound(biomeSound);
         
         if(biomeSoundToSet!= null)
             if(biomeSoundToSet.clip)
-                _audioManager.Play(biomeSoundToSet);
+                _audioManager.FadeInSound(biomeSoundToSet);
+                //_audioManager.Play(biomeSoundToSet);
         
         biomeSound = biomeSoundToSet;
     }

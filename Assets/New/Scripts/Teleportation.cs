@@ -11,6 +11,7 @@ public class Teleportation : MonoBehaviour
     [SerializeField] private Transform respawnPoint;
     [SerializeField] private GameObject currentWorld;
     [SerializeField] private GameObject newWorld;
+    [SerializeField] private PlayerCharacterController _playerCharacterController;
     
     private void OnTriggerEnter(Collider other)
     {

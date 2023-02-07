@@ -215,7 +215,7 @@ public class AudioManager : MonoBehaviour
         foreach (Sound sound in sounds)
         {
             
-            StartCoroutine(FadeOutSound(sound));
+            StartCoroutine(FadeOutSoundCoroutine(sound));
             DeleteSound(sound,sound.fadingTime);
         }
     }
@@ -224,12 +224,12 @@ public class AudioManager : MonoBehaviour
     {
         foreach (Sound sound in sounds)
         {
-            StartCoroutine(FadeInSound(sound));
+            StartCoroutine(FadeInSoundCoroutine(sound));
         }
         
 
     }
-    IEnumerator FadeInSound(Sound sound)
+    public IEnumerator FadeInSoundCoroutine(Sound sound)
     {
         float x = 0f;
         sound.volume = 0f;
@@ -241,7 +241,12 @@ public class AudioManager : MonoBehaviour
             yield return 0;
         }
     }
-    IEnumerator FadeOutSound(Sound sound)
+
+    public void FadeInSound(Sound sound)
+    {
+        StartCoroutine(FadeInSoundCoroutine(sound));
+    }
+    public IEnumerator FadeOutSoundCoroutine(Sound sound)
     {
         float x = 1f;
         sound.volume = 1f;
@@ -254,6 +259,10 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void FadeOutSound(Sound sound)
+    {
+        StartCoroutine(FadeOutSoundCoroutine(sound));
+    }
     private void SavePrefs()
     {
         PlayerPrefs.SetFloat("volumeGeneral",volumeGeneral);

@@ -85,9 +85,15 @@ public class HealthSystem : MonoBehaviour
         
         currentHealth-=damage;
         
+        if (currentHealth <= 0)
+        {
+            _isAlive = false;
+            //GetComponent<CharacterControllerBase>().enabled = false;
+        }
+        
         if (gameObject.CompareTag("Player"))
         {
-            if (_isAlive)
+            if (!_isAlive)
             {
                 reason = "Mort par "+reasonD;
                 PlayerDeath();
@@ -102,11 +108,7 @@ public class HealthSystem : MonoBehaviour
             Destroy(gameObject,0.1f);
         }
 
-        /*if (currentHealth <= 0)
-        {
-            _isAlive = false;
-            GetComponent<CharacterControllerBase>().enabled = false;
-        }*/
+        
     }
     
     public void PlayerDeath()
@@ -122,12 +124,16 @@ public class HealthSystem : MonoBehaviour
     
     public void Respawn()
     {
-        transform.position = _gameManager.currentSpawn.position;
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        gameOver.enabled=false;
-        currentHealth = maxHealth;
-        _isAlive = true;
+        if (!_isAlive)
+        {
+            transform.position = _gameManager.currentSpawn.position;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            gameOver.enabled=false;
+            currentHealth = maxHealth;
+            _isAlive = true; 
+        }
+        
     }
     
     private void AnimationBehavior()
