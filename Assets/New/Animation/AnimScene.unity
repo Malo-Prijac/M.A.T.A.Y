@@ -661,6 +661,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1671110417557904698, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
+      propertyPath: aimingDelay
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1671110417557904698, guid: fec7397d728a70e47a272e2389f21cc9, type: 3}
       propertyPath: _delaySheath
       value: 0.8
       objectReference: {fileID: 0}
