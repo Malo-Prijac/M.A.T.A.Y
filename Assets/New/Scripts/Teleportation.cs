@@ -25,6 +25,7 @@ public class Teleportation : MonoBehaviour
                 currentWorld.SetActive(false);
                 _gameManager.currentSpawn = respawnPoint;
                 other.gameObject.transform.position = spawnPoint.position;
+                _playerCharacterController.collisions = 0;
             }
         }
     }
