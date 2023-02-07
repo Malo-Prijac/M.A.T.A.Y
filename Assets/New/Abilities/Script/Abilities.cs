@@ -107,7 +107,6 @@ public class Abilities : MonoBehaviour
         _tpsScript = GetComponent<ThirdPersonShooter>();
         characterAnimator = GetComponent<Animator>();
         canDash = true;
-        hasDash = true;
         _rb = GetComponent<Rigidbody>();
         countNumberOfJump = numberJumps;
         _characterController = GetComponent<PlayerCharacterController>();
