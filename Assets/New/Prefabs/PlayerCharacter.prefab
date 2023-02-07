@@ -54,14 +54,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 954970993}
-  m_LocalRotation: {x: -0.68543386, y: -0.4800164, z: 0.4236747, w: 0.3467917}
-  m_LocalPosition: {x: -0.112, y: 0.17, z: -0.123}
+  m_LocalRotation: {x: -0.8089654, y: -0.24568474, z: 0.5001, w: -0.18738723}
+  m_LocalPosition: {x: -0.058, y: 0.206, z: -0.149}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3314800282088053687}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: -176.063, y: 66.333, z: -72.582}
+  m_LocalEulerAnglesHint: {x: -213.293, y: 59.074997, z: -14.556}
 --- !u!1 &1215868853
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,14 +147,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1634012503}
-  m_LocalRotation: {x: -0.6188464, y: -0.51477003, z: 0.34600687, w: 0.48199597}
-  m_LocalPosition: {x: 0.16519825, y: -0.059025627, z: 0.05303954}
+  m_LocalRotation: {x: -0.74186057, y: -0.5505231, z: 0.0929011, w: 0.37139824}
+  m_LocalPosition: {x: 0.167, y: 0.069, z: 0.097}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4604374460221917451}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -26.664, y: -142.278, z: 97.586}
 --- !u!1 &188372071376838572
 GameObject:
   m_ObjectHideFlags: 0
@@ -1230,7 +1230,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   groundDrag: 48
-  groundDistanceMax: 0.2
+  groundDistanceMax: 0.25
   playerHeight: 0
   grounded: 0
   foot: {fileID: 1367967337}
@@ -1302,7 +1302,7 @@ MonoBehaviour:
   MeleeArmedLayer: 1
   RangedArmedLayer: 2
   layerElapsedTime: 0
-  layerWaitTime: 0.8
+  layerWaitTime: 0.73
   dashSpeed: 600
   dashTime: 0.6
   dashCoolDown: 1
@@ -1321,22 +1321,21 @@ MonoBehaviour:
   _isAttackingMelee: 0
   tagAttackMelee: AttackMelee
   _attackMode: 0
-  _delaySheath: 0.73
+  _delaySheath: 0.8
   inTransition: 0
   _isAiming: 0
-  rangedWeapon: {fileID: 0}
-  shootPoint: {fileID: 0}
-  aimingDelay: 1
+  rangedWeapon: {fileID: 4390578078104511541, guid: 430af508411451a479eddb6ffd03f07e, type: 3}
+  aimingDelay: 0.5
   aimingCounter: 0
   fullAim: 0
-  attackModeDelay: 1
+  attackModeDelay: 0.8
   attackModeCounter: 0
   UnarmedMeleeSlot: {fileID: 9167266693305113513}
   ArmedMeleeSlot: {fileID: 1215868854}
   UnarmedRangedSlot: {fileID: 954970994}
   ArmedRangedSlot: {fileID: 1634012504}
-  rotationSlotSpeed: 100
-  positionSlotSpeed: 100
+  rotationSlotSpeed: 1000
+  positionSlotSpeed: 1000
   _inputAttack: 0
   _inputAimUp: 0
   _inputAimDown: 0
