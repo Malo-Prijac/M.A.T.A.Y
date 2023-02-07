@@ -29,7 +29,6 @@ public class BiomeCollider : MonoBehaviour
             if (_gameManager.Biome != biome)
             {
                 _gameManager.ChangeBiome(biome,BiomeSound);
-                print(biome);
             }
     }
 }
