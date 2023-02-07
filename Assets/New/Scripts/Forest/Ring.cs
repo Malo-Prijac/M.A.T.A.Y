@@ -19,7 +19,7 @@ public class Ring : MonoBehaviour
     {
         if (_gameManager.stateRingQuest==1)
         {
-            if (Input.GetKey(KeyCode.O) && (other.CompareTag("Player")))
+            if (Input.GetKey(KeyCode.E) && (other.CompareTag("Player")))
             {
                 _gameManager.stateRingQuest = 2;
                 interraction.enabled=false;

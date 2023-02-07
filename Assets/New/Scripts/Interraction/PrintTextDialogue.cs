@@ -9,7 +9,7 @@ public class PrintTextDialogue : MonoBehaviour
     // Start is called before the first frame update
     private void OnTriggerStay(Collider other)
     {
-        if (Input.GetKey(KeyCode.O) && (other.CompareTag("Player")))
+        if (Input.GetKey(KeyCode.E) && (other.CompareTag("Player")))
         {
             speakStatue.enabled=false;
             dialogue.enabled=true;

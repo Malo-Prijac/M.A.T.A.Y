@@ -17,7 +17,7 @@ public class GiveDash : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (Input.GetKey(KeyCode.O) && (other.CompareTag("Player")))
+        if (Input.GetKey(KeyCode.E) && (other.CompareTag("Player")))
         {
             if (!_gameManager.dash)
             {

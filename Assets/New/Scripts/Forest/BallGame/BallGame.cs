@@ -15,7 +15,7 @@ public class BallGame : MonoBehaviour
             if (_isOn == false)
             {
                 text.enabled = true;
-                if (Input.GetKey(KeyCode.O))
+                if (Input.GetKey(KeyCode.E))
                 {
                     text.enabled = false;
                     _isOn = true;
