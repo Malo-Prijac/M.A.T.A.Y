@@ -90,15 +90,18 @@ public class HealthSystem : MonoBehaviour
             _isAlive = false;
             //GetComponent<CharacterControllerBase>().enabled = false;
         }
-        
-        if (gameObject.CompareTag("Player"))
+
+        if (!_isAlive)
         {
-            if (!_isAlive)
+            if(gameObject.CompareTag("Player"))
             {
                 reason = "Mort par "+reasonD;
                 PlayerDeath();
             }
-        
+            else if (gameObject.CompareTag("Enemy"))
+            {
+                Destroy(gameObject,5);
+            }
         }
 
         if (gameObject.CompareTag("Bush"))
