@@ -13,7 +13,7 @@ public class HealthSystem : MonoBehaviour
 
     [Header("Health Stats")]
     [SerializeField] private float maxHealth = 100f;
-    [ReadOnly][SerializeField] private float currentHealth;
+    [ReadOnly][SerializeField] public float currentHealth;
     [SerializeField] private Image healthBar;
     [SerializeField]private bool _isAlive = true;
 
@@ -58,7 +58,7 @@ public class HealthSystem : MonoBehaviour
         if (currentHealth >= 50)
         {
             currentHealth = maxHealth;
-        }
+        } 
         else
         {
             currentHealth += 50;
