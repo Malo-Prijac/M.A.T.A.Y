@@ -6,7 +6,7 @@ using UnityEngine;
 public class Teleportation : MonoBehaviour
 {
     private GameManager _gameManager;
-    [SerializeField] private int orbMin;
+    [SerializeField] private int relicMin;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private Transform respawnPoint;
     [SerializeField] private GameObject currentWorld;
@@ -19,7 +19,7 @@ public class Teleportation : MonoBehaviour
         {
             _gameManager = GameManager.Instance;
             
-            if (_gameManager.orb >= orbMin)
+            if (_gameManager.relic >= relicMin)
             {
                 newWorld.SetActive(true);
                 currentWorld.SetActive(false);

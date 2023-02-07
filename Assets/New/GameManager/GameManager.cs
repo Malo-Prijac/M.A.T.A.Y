@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public bool doubleJump;
     
     public int stateRingQuest = 0;
-    public int orb = 0;
+    public int relic = 0;
     public Transform currentSpawn;
 
     private Abilities abilities;
