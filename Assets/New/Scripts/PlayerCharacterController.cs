@@ -114,7 +114,8 @@ public class PlayerCharacterController : CharacterControllerBase
         Vector3 position = transform.position;
         //grounded = Physics.Raycast(position, Vector3.down, groundDistanceMax);
         //grounded = Physics.CheckSphere(position, groundDistanceMax);
-        Collider[] hitColliders = Physics.OverlapBox(position, new Vector3(groundDistanceMax*0.8f,groundDistanceMax*1f,groundDistanceMax*0.8f));
+        int layerMaskIgnored =~ LayerMask.GetMask("Ignore Raycast");
+        Collider[] hitColliders = Physics.OverlapBox(position, new Vector3(groundDistanceMax*0.8f,groundDistanceMax*1f,groundDistanceMax*0.8f),Quaternion.identity,layerMaskIgnored);
         //Collider[] hitColliders = Physics.OverlapSphere(position, groundDistanceMax);
         grounded = hitColliders.Length > 1 ;
         //grounded = Physics.CheckSphere(position, groundDistanceMax);
@@ -269,6 +270,7 @@ public class PlayerCharacterController : CharacterControllerBase
 
     void OnCollisionEnter(Collision collision)
     {
+        //if()
         collisions++;
     }
 
