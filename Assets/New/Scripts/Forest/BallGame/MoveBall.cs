@@ -11,28 +11,28 @@ public class MoveBall : MonoBehaviour
 
 
  
-    void Update()
+    void FixedUpdate()
     {
         //SI la touche "fl�che du haut" est maintenue appuy�e
         if (Input.GetKey(KeyCode.Z))
         {
             //Ajout de force vers l'avant au rigidbody
-            playerRigidbody.AddForce(Vector3.right * speed);
+            playerRigidbody.AddForce(Vector3.right * Time.deltaTime * speed);
         }
 
         if (Input.GetKey(KeyCode.S))
         {
-            playerRigidbody.AddForce(Vector3.left * speed);
+            playerRigidbody.AddForce(Vector3.left * Time.deltaTime * speed);
         }
 
         if (Input.GetKey(KeyCode.Q))
         {
-            playerRigidbody.AddForce(Vector3.forward * speed);
+            playerRigidbody.AddForce(Vector3.forward * Time.deltaTime * speed);
         }
 
         if (Input.GetKey(KeyCode.D))
         {
-            playerRigidbody.AddForce(Vector3.back * speed);
+            playerRigidbody.AddForce(Vector3.back * Time.deltaTime * speed);
         }
 
     }
