@@ -15,6 +15,7 @@ public class HealthSystem : MonoBehaviour
     [SerializeField] private float maxHealth = 100f;
     [ReadOnly][SerializeField] private float currentHealth;
     [SerializeField] private Image healthBar;
+    [SerializeField]private bool _isAlive = true;
 
     [SerializeField] private Canvas gameOver;
     [SerializeField] private Vector3 spawn;
@@ -23,7 +24,6 @@ public class HealthSystem : MonoBehaviour
     [SerializeField] private bool OverrideSoundDamaged;
     [ConditionalField("OverrideSoundDamaged")] [SerializeField] private Sound soundDamaged;
     
-    [ReadOnly][SerializeField]private bool _isAlive = true;
     private string reason = "";
     private AudioManager _audioManager;
     private GameManager _gameManager;
@@ -67,10 +67,7 @@ public class HealthSystem : MonoBehaviour
     
     public void TakeDamage(float damage, string reasonD, Sound sound = null)
     {
-        if (gameObject.tag == null)
-            return;
-            //if (!_isAlive)
-            //return;
+        print("ok");
 
         if (OverrideSoundDamaged && soundDamaged.clip)
         {
@@ -88,7 +85,6 @@ public class HealthSystem : MonoBehaviour
         if (currentHealth <= 0)
         {
             _isAlive = false;
-            //GetComponent<CharacterControllerBase>().enabled = false;
         }
 
         if (!_isAlive)
@@ -100,6 +96,7 @@ public class HealthSystem : MonoBehaviour
             }
             else if (gameObject.CompareTag("Enemy"))
             {
+                GetComponent<CharacterControllerBase>().enabled = false;
                 Destroy(gameObject,5);
             }
         }

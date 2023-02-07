@@ -81,7 +81,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   damage: 20
-  delayDamage: 1.2
+  delayDamage: 0.6
 --- !u!1001 &9113038024510838102
 PrefabInstance:
   m_ObjectHideFlags: 0
