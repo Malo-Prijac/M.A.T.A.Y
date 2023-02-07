@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
     {
         if (shoot)
         {
-            abilities._hasMeleeWeapon = true;
+            abilities._hasRangedWeapon = true;
         }
         abilities.SetObjectives();
     }

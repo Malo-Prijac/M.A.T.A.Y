@@ -94,7 +94,7 @@ public class EnemyControllerBase : CharacterControllerBase
     {
         _player = GameObject.FindWithTag(playerTag);
         _playerHeight = _player.GetComponent<CapsuleCollider>().height/4;
-        _offSetPlayer = new Vector3(0,_player.GetComponent<CapsuleCollider>().height/2,0);
+        _offSetPlayer = new Vector3(0,_player.GetComponent<CapsuleCollider>().height/4,0);
         if (weaponType)
         {
             _weaponGameObject = Instantiate(weaponType,new Vector3(),new Quaternion());

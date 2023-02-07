@@ -47,8 +47,6 @@ public class GiveDash : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(PlayerPrefs.GetInt("hasDash",0) == 1)
-            return;
         if (other.CompareTag("Player"))
         {
             speakStatue.enabled = false;

@@ -61,8 +61,6 @@ public class EnigmaHand : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (PlayerPrefs.GetInt("_hasMeleeWeapon", 0) == 1)
-            return;
         if (other.CompareTag("Player"))
         {
             speakStatue.enabled = false;

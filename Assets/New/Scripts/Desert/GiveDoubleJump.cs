@@ -47,8 +47,6 @@ public class GiveDoubleJump : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(PlayerPrefs.GetInt("numberJumps",1) >=2)
-            return;
         if (other.CompareTag("Player"))
         {
             speakStatue.enabled = false;
