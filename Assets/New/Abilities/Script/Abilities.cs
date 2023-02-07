@@ -390,9 +390,9 @@ public class Abilities : MonoBehaviour
     {
         if (rangedWeaponToGive)
         {
-            meleeWeapon = Instantiate(rangedWeaponToGive,UnarmedRangedSlot.position,UnarmedRangedSlot.rotation);
+            rangedWeapon = Instantiate(rangedWeaponToGive,UnarmedRangedSlot.position,UnarmedRangedSlot.rotation);
             AttachWeaponToSlot(_isAiming ? ArmedRangedSlot : UnarmedRangedSlot,ref _currentSlotRanged,ref rangedWeapon);
-            RangedWeapon scriptWeapon = meleeWeapon.GetComponent<RangedWeapon>();
+            RangedWeapon scriptWeapon = rangedWeapon.GetComponent<RangedWeapon>();
             _rangedWeaponScript = scriptWeapon;
             scriptWeapon.TargetTag = targetTag;
             scriptWeapon.DamageMulti *= damageMulti;
