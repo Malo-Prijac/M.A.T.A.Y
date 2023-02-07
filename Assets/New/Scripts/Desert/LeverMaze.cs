@@ -9,7 +9,7 @@ public class LeverMaze : MonoBehaviour
     
     private void OnTriggerStay(Collider other)
     {
-        if (Input.GetKey(KeyCode.E) && (other.CompareTag("Player")))
+        if (Input.GetKey(KeyCode.F) && (other.CompareTag("Player")))
         {
             Interraction.enabled=false;
             transform.localEulerAngles += new Vector3(180, 180, 0);

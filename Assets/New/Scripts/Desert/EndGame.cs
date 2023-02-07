@@ -11,7 +11,7 @@ public class EndGame : MonoBehaviour
     private GameManager _gameManager;
     private void OnTriggerStay(Collider other)
     {
-        if (Input.GetKey(KeyCode.E) && (other.CompareTag("Player")))
+        if (Input.GetKey(KeyCode.F) && (other.CompareTag("Player")))
         {
             _gameManager = GameManager.Instance;
             if (_gameManager.relic == 1)
