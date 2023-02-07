@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1170144067732841449}
   - component: {fileID: 1170144067732841448}
   - component: {fileID: 2084488283004128142}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ForestBiomeCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 250, y: 100, z: 250}
+  m_Size: {x: 300, y: 100, z: 250}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2084488283004128142
 MonoBehaviour:
@@ -66,13 +66,13 @@ MonoBehaviour:
     name: 
     clip: {fileID: 8300000, guid: 329cac4fc7b3cbe4686891c21f5420ae, type: 3}
     playOnAwake: 0
-    volume: 1
-    maxVolume: 1
+    volume: 0.7
+    maxVolume: 0.7
     pitch: 1
     type: 0
     source: {fileID: 0}
     loop: 1
-    fadingTime: 0
+    fadingTime: 3
     FadingCurve:
       serializedVersion: 2
       m_Curve: []
