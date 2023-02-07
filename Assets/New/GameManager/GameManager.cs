@@ -23,6 +23,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject menuPause;
     [SerializeField] private GameObject menuSound;
+    
+    [Header("Portails")]
+    [SerializeField] private GameObject portal;
+    [SerializeField] private GameObject portalHubDesert;
     public enum BiomeType
     {
         None,
@@ -62,11 +66,14 @@ public class GameManager : MonoBehaviour
     {        
         _audioManager = AudioManager.instance;
         abilities = FindObjectOfType<Abilities>();
-        
+        GetObjectives();
+
     }
 
     private void Update()
     {
+        SetObjectives();
+        UnlockPortail();
         if (Input.GetButtonDown("Pause"))
             ChangePauseState();
     }
@@ -149,6 +156,29 @@ public class GameManager : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
+    }
+    
+    private void GetObjectives()
+    {
+        stateRingQuest = PlayerPrefs.GetInt("stateRingQuest",0);
+        relic = PlayerPrefs.GetInt("relic",0);
+    }
+    private void SetObjectives()
+    {
+        PlayerPrefs.SetInt("stateRingQuest",stateRingQuest);
+        PlayerPrefs.SetInt("relic",relic);
+    }
+
+    public void UnlockPortail()
+    {
+        if (relic > 0)
+        {
+            portal.transform.GetChild(3).gameObject.SetActive(true);
+            portal.transform.GetChild(4).gameObject.SetActive(true);
+            portalHubDesert.transform.GetChild(3).gameObject.SetActive(true);
+            portalHubDesert.transform.GetChild(4).gameObject.SetActive(true);
+        }
+
     }
 }
 
