@@ -52,7 +52,6 @@ public class Abilities : MonoBehaviour
     [ReadOnly][SerializeField]private bool inTransition;
     [ReadOnly][SerializeField]private bool _isAiming;
     [SerializeField]private GameObject rangedWeapon;
-    [SerializeField]private Transform shootPoint;
 
     [SerializeField]private float aimingDelay = 1f;
     [ReadOnly][SerializeField]private float aimingCounter;
@@ -134,8 +133,6 @@ public class Abilities : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print(_isDashing);
-
         _hasMeleeWeapon = meleeWeapon;
         _hasRangedWeapon = rangedWeapon;
         
@@ -195,7 +192,7 @@ public class Abilities : MonoBehaviour
                 if (_inputAttack && Mathf.Approximately(counterShoot,delayShoot))
                 {
                     counterShoot = 0;
-                    _rangedWeaponScript.Attack(_tpsScript.mouseWorldPosition,0,shootPoint.position);
+                    _rangedWeaponScript.Attack(_tpsScript.mouseWorldPosition,0,_rangedWeaponScript.transform.position);
                     //_tpsScript.mouseWorldPosition-_rangedWeaponScript.transform.position
                 }
             }
@@ -282,7 +279,7 @@ public class Abilities : MonoBehaviour
         _inputAttack = Input.GetButtonDown("Attack");
         _inputAimDown = Input.GetButtonDown("Aim");
         _inputAimUp = Input.GetButtonUp("Aim");
-        _isAiming = Input.GetButton("Aim");
+        _isAiming = Input.GetButton("Aim") && _hasRangedWeapon;
         _inputChangeCombat = Input.GetButtonDown("ChangeCombatMode");
         _inputDash = Input.GetButtonDown("Dash");
         _inputJump = Input.GetButtonDown("Jump");
