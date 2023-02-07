@@ -24,7 +24,21 @@ public class GameManager : MonoBehaviour
     public GameObject meleeWeapon;
     public GameObject rangeWeapon;
 
-// Start is called before the first frame update
+    public enum BiomeType
+    {
+        Desert,
+        Forest
+    }
+    
+    private BiomeType biome;
+
+    public BiomeType Biome
+    {
+        get => biome;
+        set => biome = value;
+    }
+
+    // Start is called before the first frame update
 
     // Static singleton instance
     private static GameManager instance;
@@ -95,3 +109,5 @@ public class GameManager : MonoBehaviour
         }
     }
 }
+
+
