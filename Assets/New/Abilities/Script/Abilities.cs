@@ -15,7 +15,6 @@ public class Abilities : MonoBehaviour
     private static readonly int IsAttackingMelee = Animator.StringToHash("IsAttackingMelee");
     private static readonly int IsOnAttackMode = Animator.StringToHash("IsOnAttackMode");
     private static readonly int IsAiming = Animator.StringToHash("IsAiming");
-    private static readonly int InputAttack = Animator.StringToHash("InputAttack");
     
     [SerializeField]private int UnarmedLayer = 0;
     [SerializeField]private int MeleeArmedLayer = 1;
@@ -40,6 +39,9 @@ public class Abilities : MonoBehaviour
 
     [Header("Weapons")]
     
+    [SerializeField]private float delayShoot = 0.8f;
+    [ReadOnly][SerializeField]private float counterShoot;
+
     [SerializeField] private string targetTag = "Enemy";
     [SerializeField]private float damageMulti = 1.5f;
     [SerializeField]private GameObject meleeWeapon;
@@ -190,8 +192,9 @@ public class Abilities : MonoBehaviour
                     _attackMode = false;
                     //StartCoroutine(ChangeCombatMode());
 
-                if (_inputAttack)
+                if (_inputAttack && Mathf.Approximately(counterShoot,delayShoot))
                 {
+                    counterShoot = 0;
                     _rangedWeaponScript.Attack(_tpsScript.mouseWorldPosition,0,shootPoint.position);
                     //_tpsScript.mouseWorldPosition-_rangedWeaponScript.transform.position
                 }
@@ -204,8 +207,14 @@ public class Abilities : MonoBehaviour
         ChangeSlotRanged();
         InputPlayer();
         AttackMode();
+        ShootReset();
     }
 
+    private void ShootReset()
+    {
+        if(counterShoot<delayShoot) counterShoot += Time.deltaTime;
+            counterShoot = counterShoot >= delayShoot ? delayShoot : counterShoot;
+    }
 
 
     private void AimMode()
@@ -447,7 +456,6 @@ public class Abilities : MonoBehaviour
         characterAnimator.SetBool(IsAiming, _isAiming);
         characterAnimator.SetBool(IsAttackingMelee, _isAttackingMelee);
         characterAnimator.SetBool(IsOnAttackMode, _attackMode);
-        characterAnimator.SetBool(InputAttack, _inputAttack);
         
 
     }
