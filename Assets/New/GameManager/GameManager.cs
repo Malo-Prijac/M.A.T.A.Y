@@ -23,14 +23,16 @@ public class GameManager : MonoBehaviour
     private Abilities abilities;
     public GameObject meleeWeapon;
     public GameObject rangeWeapon;
-
+    private AudioManager _audioManager;
+    private Sound biomeSound;
     public enum BiomeType
     {
+        None,
         Desert,
         Forest
     }
     
-    private BiomeType biome;
+    private BiomeType biome = BiomeType.None;
 
     public BiomeType Biome
     {
@@ -60,7 +62,8 @@ public class GameManager : MonoBehaviour
     }
 
     void Start()
-    {
+    {        
+        _audioManager = AudioManager.instance;
         currentSpawn = spawnWorld1;
         abilities = FindObjectOfType<Abilities>();
         
@@ -107,6 +110,20 @@ public class GameManager : MonoBehaviour
         {
             abilities.AddJump();
         }
+    }
+
+    public void ChangeBiome(BiomeType biomeToSet, Sound biomeSoundToSet)
+    {
+        Biome = biomeToSet;
+        if(biomeSound!= null)
+            if(biomeSound.clip)
+            _audioManager.DeleteSound(biomeSound);
+        
+        if(biomeSoundToSet!= null)
+            if(biomeSoundToSet.clip)
+                _audioManager.Play(biomeSoundToSet);
+        
+        biomeSound = biomeSoundToSet;
     }
 }
 
