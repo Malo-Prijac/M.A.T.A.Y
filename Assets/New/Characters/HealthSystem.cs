@@ -24,6 +24,9 @@ public class HealthSystem : MonoBehaviour
     [SerializeField] private bool OverrideSoundDamaged;
     [ConditionalField("OverrideSoundDamaged")] [SerializeField] private Sound soundDamaged;
     
+    [SerializeField] private Sound soundGameOver;
+
+    
     private string reason = "";
     private AudioManager _audioManager;
     private GameManager _gameManager;
@@ -34,6 +37,8 @@ public class HealthSystem : MonoBehaviour
         currentHealth = maxHealth;
         _audioManager = AudioManager.instance;
         _audioManager.AddNewSound(soundDamaged, gameObject);
+        _audioManager.AddNewSound(soundGameOver, gameObject);
+
         _isAlive = true;
         //transform.position = _gameManager.currentSpawn.position;
     }
@@ -113,6 +118,8 @@ public class HealthSystem : MonoBehaviour
     {
         if (!gameOver)
             return;
+        
+        _audioManager.Play(soundGameOver);
         gameOver.enabled=true;
         transform.position = _gameManager.currentSpawn.position;
         gameOver.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = reason;
