@@ -17,6 +17,8 @@ public class GiveDash : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        if(PlayerPrefs.GetInt("hasDash",0) == 1)
+            return;
         if (Input.GetKey(KeyCode.F) && (other.CompareTag("Player")))
         {
             if (!_gameManager.dash)
@@ -32,6 +34,8 @@ public class GiveDash : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if(PlayerPrefs.GetInt("hasDash",0) == 1)
+            return;
         if (other.CompareTag("Player"))
         {
             if (!_gameManager.dash)
@@ -43,6 +47,8 @@ public class GiveDash : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if(PlayerPrefs.GetInt("hasDash",0) == 1)
+            return;
         if (other.CompareTag("Player"))
         {
             speakStatue.enabled = false;

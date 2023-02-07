@@ -20,9 +20,8 @@ public class Relic : MonoBehaviour
                 interraction.enabled=false;
                 relicFound.enabled=true;
                 relic.SetActive(false);
+                _gameManager.SetObjectives();
             }
-            
-            
         }
     }
 

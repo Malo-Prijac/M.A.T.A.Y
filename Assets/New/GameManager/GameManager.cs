@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -59,7 +60,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);    // Suppression d'une instance précédente (sécurité...sécurité...)
  
         instance = this;
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
     void Start()
@@ -69,12 +70,11 @@ public class GameManager : MonoBehaviour
         GetObjectives();
         abilities.GiveMeleeWeaponToPlayer(meleeWeapon);
         abilities.GiveRangedWeaponToPlayer(rangeWeapon);
-
+        
     }
 
     private void Update()
     {
-        SetObjectives();
         UnlockPortail();
         if (Input.GetButtonDown("Pause"))
             ChangePauseState();
@@ -86,6 +86,7 @@ public class GameManager : MonoBehaviour
         {
             abilities._hasMeleeWeapon = true;
         }
+        abilities.SetObjectives();
     }
     
     public void GiveShoot()
@@ -94,6 +95,7 @@ public class GameManager : MonoBehaviour
         {
             abilities._hasMeleeWeapon = true;
         }
+        abilities.SetObjectives();
     }
     
     public void GiveDash()
@@ -102,6 +104,7 @@ public class GameManager : MonoBehaviour
         {
             abilities.GiveDash();
         }
+        abilities.SetObjectives();
     }
     
     public void GiveDoubleJump()
@@ -110,6 +113,7 @@ public class GameManager : MonoBehaviour
         {
             abilities.AddJump();
         }
+        abilities.SetObjectives();
     }
 
     public void ChangeBiome(BiomeType biomeToSet, Sound biomeSoundToSet)
@@ -160,12 +164,12 @@ public class GameManager : MonoBehaviour
         Application.Quit();
     }
     
-    private void GetObjectives()
+    public void GetObjectives()
     {
         stateRingQuest = PlayerPrefs.GetInt("stateRingQuest",0);
         relic = PlayerPrefs.GetInt("relic",0);
     }
-    private void SetObjectives()
+    public void SetObjectives()
     {
         PlayerPrefs.SetInt("stateRingQuest",stateRingQuest);
         PlayerPrefs.SetInt("relic",relic);
@@ -180,7 +184,13 @@ public class GameManager : MonoBehaviour
             portalHubDesert.transform.GetChild(3).gameObject.SetActive(true);
             portalHubDesert.transform.GetChild(4).gameObject.SetActive(true);
         }
+    }
 
+    public void RestartGame()
+    {
+        PlayerPrefs.DeleteAll();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Time.timeScale = 1;
     }
 }
 

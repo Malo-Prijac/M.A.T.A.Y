@@ -22,6 +22,8 @@ public class EnigmaHand : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        if (PlayerPrefs.GetInt("_hasMeleeWeapon", 0) == 1)
+            return;
         if (Input.GetKey(KeyCode.F) && (other.CompareTag("Player")))
         {
             if (!questFinished)
@@ -45,6 +47,9 @@ public class EnigmaHand : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (PlayerPrefs.GetInt("_hasMeleeWeapon", 0) == 1)
+            return;
+        
         if (!questFinished)
         {
             if (other.CompareTag("Player"))
@@ -56,6 +61,8 @@ public class EnigmaHand : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (PlayerPrefs.GetInt("_hasMeleeWeapon", 0) == 1)
+            return;
         if (other.CompareTag("Player"))
         {
             speakStatue.enabled = false;

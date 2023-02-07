@@ -17,6 +17,8 @@ public class GiveDoubleJump : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        if(PlayerPrefs.GetInt("numberJumps",1) >=2)
+            return;
         if (Input.GetKey(KeyCode.F) && (other.CompareTag("Player")))
         {
             if (!_gameManager.doubleJump)
@@ -32,6 +34,8 @@ public class GiveDoubleJump : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if(PlayerPrefs.GetInt("numberJumps",1) >=2)
+            return;
         if (other.CompareTag("Player"))
         {
             if (!_gameManager.doubleJump)
@@ -43,6 +47,8 @@ public class GiveDoubleJump : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if(PlayerPrefs.GetInt("numberJumps",1) >=2)
+            return;
         if (other.CompareTag("Player"))
         {
             speakStatue.enabled = false;

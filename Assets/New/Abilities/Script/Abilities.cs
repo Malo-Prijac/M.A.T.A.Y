@@ -95,14 +95,14 @@ public class Abilities : MonoBehaviour
 
     private ThirdPersonShooter _tpsScript;
 
-    private void GetObjectives()
+    public void GetObjectives()
     {
         hasDash = PlayerPrefs.GetInt("hasDash",0) == 1;
         _hasMeleeWeapon = PlayerPrefs.GetInt("_hasMeleeWeapon",0) == 1;
         _hasRangedWeapon = PlayerPrefs.GetInt("_hasRangedWeapon",0) == 1;
         numberJumps = PlayerPrefs.GetInt("numberJumps",1);
     }
-    private void SetObjectives()
+    public void SetObjectives()
     {
         PlayerPrefs.SetInt("hasDash",hasDash ? 1 : 0);
         PlayerPrefs.SetInt("numberJumps",numberJumps);
@@ -144,9 +144,10 @@ public class Abilities : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SetObjectives();
-        meleeWeapon.SetActive(_hasMeleeWeapon);
-        rangedWeapon.SetActive(_hasRangedWeapon);
+        if (meleeWeapon)
+            meleeWeapon.SetActive(_hasMeleeWeapon);
+        if (rangedWeapon)
+            rangedWeapon.SetActive(_hasRangedWeapon);
 
         AnimationBehavior();
         bool grounded = _characterController.Grounded;
