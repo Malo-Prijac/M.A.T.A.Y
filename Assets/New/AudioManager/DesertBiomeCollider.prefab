@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8546787798906509950}
   - component: {fileID: 8546787798906509951}
   - component: {fileID: 8812685617153765913}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: DesertBiomeCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8546787798906509949}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 154.76395, y: 0, z: -38.88502}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -44,7 +44,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 250, y: 100, z: 250}
+  m_Size: {x: 250, y: 100, z: 200}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8812685617153765913
 MonoBehaviour:
@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1ec602ddc917944d99c90fe53815190, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  biome: 2
+  biome: 1
   BiomeSound:
     spatialBlend: 0
     maxDistance: 1
@@ -66,13 +66,13 @@ MonoBehaviour:
     name: 
     clip: {fileID: 8300000, guid: 7a711ef67f25fd349a3b5d6dcf21d18c, type: 3}
     playOnAwake: 0
-    volume: 1
-    maxVolume: 1
+    volume: 0.5
+    maxVolume: 0.5
     pitch: 1
     type: 0
     source: {fileID: 0}
     loop: 1
-    fadingTime: 0
+    fadingTime: 3
     FadingCurve:
       serializedVersion: 2
       m_Curve: []
