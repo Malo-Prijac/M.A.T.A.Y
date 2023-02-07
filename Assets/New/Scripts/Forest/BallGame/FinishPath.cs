@@ -19,10 +19,11 @@ public class FinishPath : MonoBehaviour
         {
             go.GetComponent<Animator>().enabled = false;
             
-            if(soundDoors != null)
-                if(soundDoors.Source)
-                    _audioManager.AddNewSound(soundDoors,go);
         }
+        
+        if(soundDoors != null)
+            if(soundDoors.clip)
+                _audioManager.AddNewSound(soundDoors,_linkedDoors[0]);
         
 
     }
