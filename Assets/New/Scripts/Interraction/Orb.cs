@@ -7,6 +7,7 @@ public class Orb : MonoBehaviour
     [SerializeField] private Canvas interraction;
     [SerializeField] private Canvas orbFound;
     [SerializeField] private GameObject portal;
+    [SerializeField] private GameObject portalHubDesert;
 
     private GameManager _gameManager;
     private void OnTriggerStay(Collider other)
@@ -19,6 +20,8 @@ public class Orb : MonoBehaviour
                 _gameManager.orb ++;
                 portal.transform.GetChild(3).gameObject.SetActive(true);
                 portal.transform.GetChild(4).gameObject.SetActive(true);
+                portalHubDesert.transform.GetChild(3).gameObject.SetActive(true);
+                portalHubDesert.transform.GetChild(4).gameObject.SetActive(true);
                 interraction.enabled=false;
                 orbFound.enabled=true;
             }

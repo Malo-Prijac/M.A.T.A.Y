@@ -5,10 +5,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private float test = 0;
-    public Transform forward;
-    public TrapArrow ta;
-
     public bool hasUnlockedAttack;
     public bool dash;
     public bool shoot;
@@ -16,9 +12,7 @@ public class GameManager : MonoBehaviour
     
     public int stateRingQuest = 0;
     public int orb = 0;
-    public Vector3 currentSpawn;
-    public Vector3 spawnWorld1;
-    public Vector3 spawnWorld2;
+    public Transform currentSpawn;
 
     private Abilities abilities;
     public GameObject meleeWeapon;
@@ -64,20 +58,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {        
         _audioManager = AudioManager.instance;
-        currentSpawn = spawnWorld1;
         abilities = FindObjectOfType<Abilities>();
         
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        test += Time.deltaTime;
-        if (test >= 2f)
-        {
-            test = 0;
-            //StartCoroutine(ta.ActivateTrap(0));
-        }
     }
 
     public void GiveWeapon()
@@ -117,7 +99,7 @@ public class GameManager : MonoBehaviour
         Biome = biomeToSet;
         if(biomeSound!= null)
             if(biomeSound.clip)
-            _audioManager.DeleteSound(biomeSound);
+                _audioManager.DeleteSound(biomeSound);
         
         if(biomeSoundToSet!= null)
             if(biomeSoundToSet.clip)

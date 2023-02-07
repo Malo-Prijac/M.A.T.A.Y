@@ -35,6 +35,7 @@ public class HealthSystem : MonoBehaviour
         _audioManager = AudioManager.instance;
         _audioManager.AddNewSound(soundDamaged, gameObject);
         _isAlive = true;
+        //transform.position = _gameManager.currentSpawn.position;
     }
     
     void Update()
@@ -113,7 +114,7 @@ public class HealthSystem : MonoBehaviour
         if (!gameOver)
             return;
         gameOver.enabled=true;
-        transform.position = _gameManager.currentSpawn;
+        transform.position = _gameManager.currentSpawn.position;
         gameOver.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = reason;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
@@ -121,7 +122,7 @@ public class HealthSystem : MonoBehaviour
     
     public void Respawn()
     {
-        transform.position = _gameManager.currentSpawn;
+        transform.position = _gameManager.currentSpawn.position;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         gameOver.enabled=false;
