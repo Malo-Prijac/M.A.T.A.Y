@@ -31,6 +31,37 @@ Transform:
   m_Father: {fileID: 7084403590897826595}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &665966487
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 665966488}
+  m_Layer: 0
+  m_Name: BulletSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &665966488
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665966487}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.918, z: 0.621}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7084403590897826595}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &954970993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1146,6 +1177,7 @@ Transform:
   - {fileID: 193485111}
   - {fileID: 5222522519074147030}
   - {fileID: 2654370400458189492}
+  - {fileID: 665966488}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1196,9 +1228,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.25
-  m_Height: 1.63
+  m_Height: 1.7
   m_Direction: 1
-  m_Center: {x: 0, y: 0.75, z: 0}
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!114 &2382302055627123646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1230,7 +1262,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   groundDrag: 48
-  groundDistanceMax: 0.25
+  groundDistanceMax: 0.3
   playerHeight: 0
   grounded: 0
   foot: {fileID: 1367967337}
@@ -1261,6 +1293,7 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   healthBar: {fileID: 0}
+  _isAlive: 1
   gameOver: {fileID: 0}
   spawn: {x: -13.40283, y: 0.5, z: -0.01}
   OverrideSoundDamaged: 1
@@ -1284,7 +1317,26 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  _isAlive: 1
+  soundGameOver:
+    spatialBlend: 0
+    maxDistance: 1
+    minDistance: 15
+    name: 
+    clip: {fileID: 8300000, guid: b6f66cfd30a59c34a8dad1f7ef480cd5, type: 3}
+    playOnAwake: 0
+    volume: 1
+    maxVolume: 1
+    pitch: 1
+    type: 1
+    source: {fileID: 0}
+    loop: 0
+    fadingTime: 0
+    FadingCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
 --- !u!114 &1671110417557904698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1309,7 +1361,7 @@ MonoBehaviour:
   currentDashTime: 0
   currentDashCooldown: 0
   _isDashing: 0
-  numberJumps: 2
+  numberJumps: 1
   countNumberOfJump: 0
   canDash: 1
   hasDash: 0
@@ -1324,7 +1376,7 @@ MonoBehaviour:
   _delaySheath: 0.8
   inTransition: 0
   _isAiming: 0
-  rangedWeapon: {fileID: 4390578078104511541, guid: 430af508411451a479eddb6ffd03f07e, type: 3}
+  rangedWeapon: {fileID: 0}
   aimingDelay: 0.5
   aimingCounter: 0
   fullAim: 0

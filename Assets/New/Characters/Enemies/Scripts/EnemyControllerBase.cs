@@ -93,7 +93,6 @@ public class EnemyControllerBase : CharacterControllerBase
     protected virtual void Start()
     {
         _player = GameObject.FindWithTag(playerTag);
-        _playerHeight = _player.GetComponent<CapsuleCollider>().height/4;
         _offSetPlayer = new Vector3(0,_player.GetComponent<CapsuleCollider>().height/4,0);
         if (weaponType)
         {
@@ -251,8 +250,11 @@ public class EnemyControllerBase : CharacterControllerBase
         if (hasStaticAttack && _isAttacking)
             return;
 
-        Vector3 playerPosition = new Vector3(_player.transform.position.x,_player.transform.position.y+_playerHeight,_player.transform.position.z);
+        Vector3 playerPosition = new Vector3(_player.transform.position.x,0,_player.transform.position.z);
         Quaternion rotation = Quaternion.LookRotation(playerPosition - transform.position);
+        Vector3 angle = rotation.eulerAngles;
+        angle.x = 0;
+        rotation = Quaternion.Euler(angle);
         transform.rotation = Quaternion.Slerp (transform.rotation, rotation, Time.deltaTime * rotationSpeed);
     }
 
