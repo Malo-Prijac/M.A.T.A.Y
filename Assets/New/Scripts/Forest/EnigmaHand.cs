@@ -33,7 +33,6 @@ public class EnigmaHand : MonoBehaviour
                 if (_gameManager.stateRingQuest==2)
                 {
                     questFinished = true;
-                    _gameManager.hasUnlockedAttack = true;
                     StartCoroutine(TutoFight());
                 }
                 else
@@ -74,7 +73,7 @@ public class EnigmaHand : MonoBehaviour
         dialogue2.enabled=true;
         yield return new WaitForSeconds(3f);
         dialogue2.enabled = false;
-        _gameManager.GiveWeapon();
+        _gameManager.GiveMeleeWeapon();
         tutoFight.enabled = true;
         enemy.SetActive(true);
         yield return new WaitForSeconds(3f);

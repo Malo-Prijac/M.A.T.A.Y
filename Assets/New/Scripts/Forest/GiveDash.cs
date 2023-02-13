@@ -21,11 +21,10 @@ public class GiveDash : MonoBehaviour
             return;
         if (Input.GetKey(KeyCode.F) && (other.CompareTag("Player")))
         {
-            if (!_gameManager.dash)
+            if (!_gameManager.hasUnlockedDash)
             {
                 speakStatue.enabled = false;
                 dialogue.enabled = true;
-                _gameManager.dash = true;
                 printTuto = true;
                 _gameManager.GiveDash();
             }
@@ -38,7 +37,7 @@ public class GiveDash : MonoBehaviour
             return;
         if (other.CompareTag("Player"))
         {
-            if (!_gameManager.dash)
+            if (!_gameManager.hasUnlockedDash)
             {
                 speakStatue.enabled=true;
             }

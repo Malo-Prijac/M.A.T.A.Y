@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Abilities : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class Abilities : MonoBehaviour
     [ReadOnly][SerializeField]private float currentDashTime;
     [ReadOnly][SerializeField]private float currentDashCooldown;
     [ReadOnly][SerializeField]private bool _isDashing;
+    [SerializeField]private Image spriteDash;
 
     [Header("Jump")]
     [SerializeField] private int numberJumps = 1;
@@ -173,8 +175,6 @@ public class Abilities : MonoBehaviour
             //Double Jump
             if (_inputJump && countNumberOfJump > 0 && !_isAttackingMelee)
             {
-                //print(countNumberOfJump);
-                //print(numberJumps);
                 MultipleJump();
             }
 
@@ -184,14 +184,12 @@ public class Abilities : MonoBehaviour
                 {
                     if (!_attackMode)
                         _attackMode = true;
-                        //StartCoroutine(ChangeCombatMode());
                     AttackWithMeleeWeapon();
                 }
                 
                 if (_inputChangeCombat && _characterController.Grounded && !inTransition)
                 {
                     _attackMode = !_attackMode;
-                    //StartCoroutine(ChangeCombatMode());
                 }
             }
             
@@ -200,13 +198,11 @@ public class Abilities : MonoBehaviour
             {
                 if (_attackMode)
                     _attackMode = false;
-                    //StartCoroutine(ChangeCombatMode());
 
                 if (_inputAttack && Mathf.Approximately(counterShoot,delayShoot))
                 {
                     counterShoot = 0;
                     _rangedWeaponScript.Attack(_tpsScript.mouseWorldPosition,0,_rangedWeaponScript.transform.position);
-                    //_tpsScript.mouseWorldPosition-_rangedWeaponScript.transform.position
                 }
             }
         }
@@ -309,28 +305,6 @@ public class Abilities : MonoBehaviour
 
     }
 
-    IEnumerator ChangeCombatMode()
-    {
-        if (!inTransition && !_isDashing && !_isAttackingMelee)
-        {
-            inTransition = true;
-            _attackMode = !_attackMode;
-
-            if (_attackMode)
-                StartCoroutine(ChangeLayerMask(MeleeArmedLayer,0,1,layerWaitTime));
-            //characterAnimator.SetLayerWeight(_armedLayer,1);
-        
-            yield return new WaitForSeconds(_delaySheath);
-        
-            if(!_attackMode)
-                StartCoroutine(ChangeLayerMask(MeleeArmedLayer,1,0,layerWaitTime));
-            //characterAnimator.SetLayerWeight(_armedLayer,0);
-            inTransition = false;
-        }
-
-        yield return null;
-    }
-    
     private void ChangeSlotMelee()
     {
         if (!_hasMeleeWeapon)
@@ -388,8 +362,6 @@ public class Abilities : MonoBehaviour
     private void Dash()
     {
         canDash = false;
-        //rb.AddForce(transform.forward*dashSpeed,ForceMode.Acceleration);
-        //print(rb.velocity);
         StartCoroutine(DashRoutine());
     }
 
@@ -428,6 +400,11 @@ public class Abilities : MonoBehaviour
     {
         numberJumps++;
     }
+    
+    public void SetDoubleJump()
+    {
+        numberJumps = 2;
+    }
 
     IEnumerator ResetDash()
     {
@@ -435,18 +412,27 @@ public class Abilities : MonoBehaviour
         canDash = true;
     }
 
+    IEnumerator SetUpDashSprite()
+    {
+        float fillCounterDash = dashCoolDown;
+
+        while (fillCounterDash > 0)
+        {
+            fillCounterDash -= Time.deltaTime;
+            if(spriteDash)
+                spriteDash.fillAmount = dashCoolDown - fillCounterDash / dashCoolDown;
+            yield return null;
+        }
+        if(spriteDash)
+            spriteDash.fillAmount = 1f;
+    }
 
     IEnumerator DashRoutine()
     {
         _isDashing = true;
         currentDashTime = dashTime;
-        //dashSound.Play();
-        Vector3 start = transform.position;
         while (currentDashTime > 0)
         {
-            //rb.velocity = transform.forward * dashSpeed;
-            //rb.velocity = transform.forward * dashSpeed;
-            //rb.AddForce(transform.forward*dashSpeed,ForceMode.VelocityChange);
             _rb.drag = 0;
             _rb.velocity = new Vector3();
             _rb.AddForce(dashSpeed*Time.deltaTime*transform.forward,ForceMode.VelocityChange);
@@ -457,6 +443,7 @@ public class Abilities : MonoBehaviour
 
         _isDashing = false;
         currentDashCooldown = dashCoolDown;
+        StartCoroutine(SetUpDashSprite());
         StartCoroutine(ResetDash());
     }
     

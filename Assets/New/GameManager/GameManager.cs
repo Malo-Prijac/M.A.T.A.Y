@@ -7,9 +7,9 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public bool hasUnlockedAttack;
-    public bool dash;
-    public bool shoot;
-    public bool doubleJump;
+    public bool hasUnlockedDash;
+    public bool hasUnlockedRangedWeapon;
+    public bool hasUnlockedDoubleJump;
     
     public int stateRingQuest = 0;
     public int relic = 0;
@@ -56,15 +56,25 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null && instance != this)
-            Destroy(gameObject);    // Suppression d'une instance précédente (sécurité...sécurité...)
+        //Singleton method
+        if (instance == null) {
+            //First run, set the instance
+            instance = this;
+            DontDestroyOnLoad(gameObject);
  
-        instance = this;
-        //DontDestroyOnLoad(gameObject);
+        } else if (instance != this) {
+            //Instance is not the same as the one we have, destroy old one, and reset to newest one
+            Destroy(instance.gameObject);
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     void Start()
-    {        
+    {
+        hasUnlockedAttack = false;
+        hasUnlockedDash = false;
+        
         _audioManager = AudioManager.instance;
         abilities = FindObjectOfType<Abilities>();
         GetObjectives();
@@ -80,39 +90,31 @@ public class GameManager : MonoBehaviour
             ChangePauseState();
     }
 
-    public void GiveWeapon()
+    public void GiveMeleeWeapon()
     {
-        if (hasUnlockedAttack)
-        {
-            abilities._hasMeleeWeapon = true;
-        }
+        hasUnlockedAttack = true;
+        abilities._hasMeleeWeapon = true;
         abilities.SetObjectives();
     }
     
     public void GiveShoot()
     {
-        if (shoot)
-        {
-            abilities._hasRangedWeapon = true;
-        }
+        hasUnlockedRangedWeapon = true;
+        abilities._hasRangedWeapon = true;
         abilities.SetObjectives();
     }
     
     public void GiveDash()
     {
-        if (dash)
-        {
-            abilities.GiveDash();
-        }
+        hasUnlockedDash = true;
+        abilities.GiveDash();
         abilities.SetObjectives();
     }
     
     public void GiveDoubleJump()
     {
-        if (doubleJump)
-        {
-            abilities.AddJump();
-        }
+        hasUnlockedDoubleJump = true;
+        abilities.SetDoubleJump();
         abilities.SetObjectives();
     }
 

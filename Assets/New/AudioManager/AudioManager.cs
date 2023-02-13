@@ -18,16 +18,17 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
     private void CreateSingleton()
     {
-        if (instance == null)
-        {
+        //Singleton method
+        if (instance == null) {
+            //First run, set the instance
             instance = this;
-            //DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            //gameObject = instance;
-            Destroy(gameObject);
-            Debug.LogError("There is already a SoundManager in the game !");
+            DontDestroyOnLoad(gameObject);
+ 
+        } else if (instance != this) {
+            //Instance is not the same as the one we have, destroy old one, and reset to newest one
+            Destroy(instance.gameObject);
+            instance = this;
+            DontDestroyOnLoad(gameObject);
         }
     }
     #endregion

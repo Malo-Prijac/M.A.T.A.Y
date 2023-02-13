@@ -21,11 +21,10 @@ public class GiveDoubleJump : MonoBehaviour
             return;
         if (Input.GetKey(KeyCode.F) && (other.CompareTag("Player")))
         {
-            if (!_gameManager.doubleJump)
+            if (!_gameManager.hasUnlockedDoubleJump)
             {
                 speakStatue.enabled = false;
                 dialogue.enabled = true;
-                _gameManager.doubleJump = true;
                 printTuto = true;
                 _gameManager.GiveDoubleJump();
             }
@@ -38,7 +37,7 @@ public class GiveDoubleJump : MonoBehaviour
             return;
         if (other.CompareTag("Player"))
         {
-            if (!_gameManager.doubleJump)
+            if (!_gameManager.hasUnlockedDoubleJump)
             {
                 speakStatue.enabled=true;
             }

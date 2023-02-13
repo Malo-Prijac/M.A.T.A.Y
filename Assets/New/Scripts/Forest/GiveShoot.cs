@@ -21,11 +21,10 @@ public class GiveShoot : MonoBehaviour
             return;
         if (Input.GetKey(KeyCode.F) && (other.CompareTag("Player")))
         {
-            if (!_gameManager.shoot)
+            if (!_gameManager.hasUnlockedRangedWeapon)
             {
                 speakStatue.enabled = false;
                 dialogue.enabled = true;
-                _gameManager.shoot = true;
                 printTuto = true;
                 _gameManager.GiveShoot();
             }
@@ -38,7 +37,7 @@ public class GiveShoot : MonoBehaviour
             return;
         if (other.CompareTag("Player"))
         {
-            if (!_gameManager.shoot)
+            if (!_gameManager.hasUnlockedRangedWeapon)
             {
                 speakStatue.enabled=true;
             }

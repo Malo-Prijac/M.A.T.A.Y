@@ -44,16 +44,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afa9626d8f3d87249af8d1ad2de72611, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forward: {fileID: 0}
-  ta: {fileID: 0}
   hasUnlockedAttack: 0
-  dash: 0
-  shoot: 0
-  doubleJump: 0
+  hasUnlockedDash: 0
+  hasUnlockedRangedWeapon: 0
+  hasUnlockedDoubleJump: 0
   stateRingQuest: 0
-  orb: 0
-  currentSpawn: {x: 0, y: 0, z: 0}
-  spawnWorld1: {x: 4, y: 9, z: 12}
-  spawnWorld2: {x: 0, y: 0, z: 0}
+  relic: 0
+  currentSpawn: {fileID: 0}
   meleeWeapon: {fileID: 2711938167627569934, guid: f55c339bc21c0784ba8ed868d52d0c7f, type: 3}
   rangeWeapon: {fileID: 4390578078104511541, guid: 430af508411451a479eddb6ffd03f07e, type: 3}
+  biomeSound:
+    spatialBlend: 1
+    maxDistance: 1
+    minDistance: 15
+    name: 
+    clip: {fileID: 0}
+    playOnAwake: 0
+    volume: 1
+    maxVolume: 1
+    pitch: 1
+    type: 0
+    source: {fileID: 0}
+    loop: 0
+    fadingTime: 0
+    FadingCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  biome: 0
+  menuPause: {fileID: 0}
+  menuSound: {fileID: 0}
+  portal: {fileID: 0}
+  portalHubDesert: {fileID: 0}
