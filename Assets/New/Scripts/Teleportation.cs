@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Teleportation : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class Teleportation : MonoBehaviour
     [SerializeField] private GameObject currentWorld;
     [SerializeField] private GameObject newWorld;
     [SerializeField] private PlayerCharacterController _playerCharacterController;
-    
+    [SerializeField] private GameManager.SceneToLoad _sceneToLoad;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -21,11 +22,12 @@ public class Teleportation : MonoBehaviour
             
             if (_gameManager.relic >= relicMin)
             {
-                newWorld.SetActive(true);
-                currentWorld.SetActive(false);
-                _gameManager.currentSpawn = respawnPoint;
-                other.gameObject.transform.position = spawnPoint.position;
+                //newWorld.SetActive(true);
+                //currentWorld.SetActive(false);
+                //_gameManager.currentSpawn = respawnPoint;
+                //other.gameObject.transform.position = spawnPoint.position;
                 _playerCharacterController.collisions = 0;
+                SceneManager.LoadScene((int)_sceneToLoad);
             }
         }
     }

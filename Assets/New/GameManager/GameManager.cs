@@ -4,8 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class GameManager : MonoBehaviour
 {
+    public enum SceneToLoad
+    {
+    SCENE_HUB = 0,
+    SCENE_FOREST = 1,
+    SCENE_DESERT = 2
+    }
+
+
     public bool hasUnlockedAttack;
     public bool hasUnlockedDash;
     public bool hasUnlockedRangedWeapon;
@@ -181,10 +190,18 @@ public class GameManager : MonoBehaviour
     {
         if (relic > 0)
         {
-            portal.transform.GetChild(3).gameObject.SetActive(true);
-            portal.transform.GetChild(4).gameObject.SetActive(true);
-            portalHubDesert.transform.GetChild(3).gameObject.SetActive(true);
-            portalHubDesert.transform.GetChild(4).gameObject.SetActive(true);
+            if (portal)
+            {
+                portal.transform.GetChild(3).gameObject.SetActive(true);
+                portal.transform.GetChild(4).gameObject.SetActive(true);
+            }
+
+            if (portalHubDesert)
+            {
+                portalHubDesert.transform.GetChild(3).gameObject.SetActive(true);
+                portalHubDesert.transform.GetChild(4).gameObject.SetActive(true);
+            }
+
         }
     }
 

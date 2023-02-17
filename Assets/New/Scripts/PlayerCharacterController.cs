@@ -89,6 +89,7 @@ public class PlayerCharacterController : CharacterControllerBase
     private Vector3 _rigidbodyDrag;
     void Start()
     {
+        _xRotation = transform.eulerAngles.y;
         characterAnimator = GetComponent<Animator>();
         _rb = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
