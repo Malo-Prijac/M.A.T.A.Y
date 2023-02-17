@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/HUB.unity
     guid: 9bc2833577d47dd43a95b1275d78450b
   - enabled: 1
-    path: Assets/GAME.unity
+    path: Assets/FOREST.unity
     guid: af25de92064146f4a94341267bae605f
+  - enabled: 1
+    path: Assets/DESERT.unity
+    guid: a8ced11e38a772e4282811b9c99be081
   m_configObjects: {}
