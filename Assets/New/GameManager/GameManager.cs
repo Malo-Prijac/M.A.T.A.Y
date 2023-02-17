@@ -208,7 +208,7 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         PlayerPrefs.DeleteAll();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene((int)SceneToLoad.SCENE_HUB);
         Time.timeScale = 1;
     }
 }
