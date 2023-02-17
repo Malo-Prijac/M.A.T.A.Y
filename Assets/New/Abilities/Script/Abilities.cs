@@ -97,12 +97,14 @@ public class Abilities : MonoBehaviour
 
     private ThirdPersonShooter _tpsScript;
 
+
     public void GetObjectives()
     {
         hasDash = PlayerPrefs.GetInt("hasDash",0) == 1;
         _hasMeleeWeapon = PlayerPrefs.GetInt("_hasMeleeWeapon",0) == 1;
         _hasRangedWeapon = PlayerPrefs.GetInt("_hasRangedWeapon",0) == 1;
         numberJumps = PlayerPrefs.GetInt("numberJumps",1);
+        spriteDash.enabled = hasDash;
     }
     public void SetObjectives()
     {
@@ -121,6 +123,7 @@ public class Abilities : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        spriteDash.enabled = false;
         _tpsScript = GetComponent<ThirdPersonShooter>();
         characterAnimator = GetComponent<Animator>();
         canDash = true;
@@ -394,6 +397,7 @@ public class Abilities : MonoBehaviour
     public void GiveDash()
     {
         hasDash = true;
+        spriteDash.enabled = true;
     }
     
     public void AddJump()
