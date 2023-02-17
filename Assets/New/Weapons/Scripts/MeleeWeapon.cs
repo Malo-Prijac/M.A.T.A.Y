@@ -7,8 +7,8 @@ public class MeleeWeapon : Weapon
     [Header("Weapon Stats")]
     [SerializeField]protected float damage = 10f;
     [SerializeField] protected float delayDamage = 1.2f;
-    private bool _applyDamage = true;
-
+    private bool _applyDamage = false;
+    private bool _hasAttacked = false;
     public float Damage
     {
         get => damage;
@@ -23,7 +23,15 @@ public class MeleeWeapon : Weapon
     // Update is called once per frame
     void Update()
     {
-        
+        if (isAttacking && !_applyDamage && !_hasAttacked)
+        {
+            _applyDamage = true;
+            _hasAttacked = true;
+        }
+
+        if (!isAttacking)
+            _hasAttacked = false;
+        //
     }
     
     public override void Attack(Vector3 targetPosition = default(Vector3), float delaySoundAttack = 0, Vector3 startPosition = default(Vector3))
@@ -47,7 +55,6 @@ public class MeleeWeapon : Weapon
 
         }
         _applyDamage = false;
-        StartCoroutine(AttackDelaying());
     }
     
     private IEnumerator AttackDelaying()

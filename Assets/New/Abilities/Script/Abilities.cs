@@ -187,7 +187,8 @@ public class Abilities : MonoBehaviour
                 {
                     if (!_attackMode)
                         _attackMode = true;
-                    AttackWithMeleeWeapon();
+                    else
+                        AttackWithMeleeWeapon();
                 }
                 
                 if (_inputChangeCombat && _characterController.Grounded && !inTransition)
