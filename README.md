@@ -19,13 +19,13 @@ Un projet de jeu vidéo développé avec **Unity** et **C#**.
 
 ## 🎮 À propos
 
-**M.A.T.A.Y** est une démonstration de jeu vidéo créée avec le moteur **Unity**. Ce projet explore les mécaniques de gameplay et la conception d'une expérience interactive.
+**M.A.T.A.Y** est une démonstration de jeu vidéo créée avec le moteur **Unity**.
 
 ### Technologies utilisées
 
 - **Engine** : Unity
 - **Langage** : C#
-- 
+  
 ---
 
 ## Démarrage rapide (Jouer au jeu)
