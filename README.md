@@ -25,7 +25,6 @@ Un projet de jeu vidéo développé avec **Unity** et **C#**.
 
 - **Engine** : Unity
 - **Langage** : C#
-- **Version Control** : Git & GitHub
 
 ---
 
@@ -67,17 +66,6 @@ Pour jouer ou tester le jeu :
 
 ## 📁 Structure du projet
 
-```
-M.A.T.A.Y/
-├── Assets/                 # Ressources du jeu (scripts, sprites, modèles, etc.)
-├── Packages/               # Dépendances et packages Unity
-├── ProjectSettings/        # Configuration du projet Unity
-├── UIElementsSchema/       # Schémas UI Elements
-├── UMotionData/            # Données UMotion (animation)
-├── .gitignore              # Fichiers ignorés par Git
-└── README.md               # Ce fichier
-```
-
 ### Dossiers principaux
 
 - **Assets/** : Contient tous les assets du jeu
@@ -91,31 +79,17 @@ M.A.T.A.Y/
 
 ---
 
-## ⚙️ Prérequis
-
-- **Unity 2020.3 LTS** ou supérieur (adapter selon votre version)
-- **.NET Framework** 4.x ou supérieur
-- **Espace disque** : ~2-5 GB (selon les assets)
-
----
-
 ## 📚 Ressources
 
 - 📄 [MATAY SOLUCE.pdf](./MATAY%20SOLUCE.pdf) - Guide de solution
-- 📄 [MATAY SOLUCE.docx](./MATAY%20SOLUCE.docx) - Documentation détaillée
 
 ---
 
 ## 👤 Auteur
 
-**Malo-Prijac**
+**Antoine Pennaranda**
+**Antonin Soulier**
+**Malo Prijac**
+**Théo Larregle**
 
 ---
-
-## 📝 Licence
-
-Ce projet est créé à des fins éducatives et de démonstration.
-
----
-
-**Bon développement ! 🚀**
