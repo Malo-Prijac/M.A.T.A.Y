@@ -9,11 +9,10 @@ Un projet de jeu vidéo développé avec **Unity** et **C#**.
 ## 📋 Table des matières
 
 - [À propos](#à-propos)
-- [🚀 Démarrage rapide (Jouer au jeu)](#-démarrage-rapide-jouer-au-jeu)
+- [Démarrage rapide (Jouer au jeu)](#-démarrage-rapide-jouer-au-jeu)
 - [Installation (Développement)](#installation-développement)
 - [Utilisation](#utilisation)
 - [Structure du projet](#structure-du-projet)
-- [Prérequis](#prérequis)
 - [Ressources](#ressources)
 
 ---
@@ -26,13 +25,10 @@ Un projet de jeu vidéo développé avec **Unity** et **C#**.
 
 - **Engine** : Unity
 - **Langage** : C#
-- **Version Control** : Git & GitHub
-
+- 
 ---
 
-## 🚀 Démarrage rapide (Jouer au jeu)
-
-### Pour les utilisateurs (sans Unity)
+## Démarrage rapide (Jouer au jeu)
 
 Si vous voulez simplement **jouer au jeu** sans avoir besoin d'installer Unity :
 
@@ -45,9 +41,7 @@ Si vous voulez simplement **jouer au jeu** sans avoir besoin d'installer Unity :
 
 3. **Lancez le jeu**
    - Localisez le fichier `.exe` dans le dossier
-   - Double-cliquez dessus pour lancer le jeu ! 🎮
-
-**C'est tout !** Vous pouvez maintenant jouer sans passer par Unity. ✨
+   - Double-cliquez dessus pour lancer le jeu !
 
 ---
 
@@ -79,7 +73,7 @@ Si vous voulez simplement **jouer au jeu** sans avoir besoin d'installer Unity :
 
 4. **Charger la scène principale**
    - Dans l'éditeur Unity, naviguez vers la scène principale
-   - Cliquez sur "Play" (▶️) pour lancer le jeu
+   - Cliquez sur "Play" pour lancer le jeu
 
 ---
 
@@ -90,7 +84,7 @@ Si vous voulez simplement **jouer au jeu** sans avoir besoin d'installer Unity :
 Pour jouer ou tester le jeu directement dans Unity :
 
 1. Ouvrez le projet dans Unity
-2. Appuyez sur le bouton **Play** (▶️) dans l'éditeur
+2. Appuyez sur le bouton **Play** dans l'éditeur
 3. Explorez et testez les mécaniques du jeu
 
 ### Pour créer votre propre Build
@@ -107,17 +101,6 @@ Si vous voulez créer une version compilée :
 
 ## 📁 Structure du projet
 
-```
-M.A.T.A.Y/
-├── Assets/                 # Ressources du jeu (scripts, sprites, modèles, etc.)
-├── Packages/               # Dépendances et packages Unity
-├── ProjectSettings/        # Configuration du projet Unity
-├── UIElementsSchema/       # Schémas UI Elements
-├── UMotionData/            # Données UMotion (animation)
-├── .gitignore              # Fichiers ignorés par Git
-└── README.md               # Ce fichier
-```
-
 ### Dossiers principaux
 
 - **Assets/** : Contient tous les assets du jeu
@@ -131,25 +114,9 @@ M.A.T.A.Y/
 
 ---
 
-## ⚙️ Prérequis
-
-### Pour jouer
-
-- **Windows 10/11** (ou compatible)
-- **~500 MB à 2 GB** d'espace disque (selon la taille du build)
-
-### Pour développer
-
-- **Unity 2020.3 LTS** ou supérieur (adapter selon votre version)
-- **.NET Framework** 4.x ou supérieur
-- **Espace disque** : ~5-10 GB (pour Unity + assets)
-
----
-
 ## 📚 Ressources
 
 - 📄 [MATAY SOLUCE.pdf](./MATAY%20SOLUCE.pdf) - Guide de solution
-- 📄 [MATAY SOLUCE.docx](./MATAY%20SOLUCE.docx) - Documentation détaillée
 - 🎮 [Releases](https://github.com/Malo-Prijac/M.A.T.A.Y/releases) - Télécharger le jeu compilé
 
 ---
@@ -162,11 +129,3 @@ M.A.T.A.Y/
 **Théo Larregle**
 
 ---
-
-## 📝 Licence
-
-Ce projet est créé à des fins éducatives et de démonstration.
-
----
-
-**Bon jeu ! 🚀**
