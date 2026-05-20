@@ -9,7 +9,8 @@ Un projet de jeu vidéo développé avec **Unity** et **C#**.
 ## 📋 Table des matières
 
 - [À propos](#à-propos)
-- [Installation](#installation)
+- [🚀 Démarrage rapide (Jouer au jeu)](#-démarrage-rapide-jouer-au-jeu)
+- [Installation (Développement)](#installation-développement)
 - [Utilisation](#utilisation)
 - [Structure du projet](#structure-du-projet)
 - [Prérequis](#prérequis)
@@ -25,17 +26,42 @@ Un projet de jeu vidéo développé avec **Unity** et **C#**.
 
 - **Engine** : Unity
 - **Langage** : C#
+- **Version Control** : Git & GitHub
 
 ---
 
-## 📦 Installation
+## 🚀 Démarrage rapide (Jouer au jeu)
 
-### Prérequis
+### Pour les utilisateurs (sans Unity)
+
+Si vous voulez simplement **jouer au jeu** sans avoir besoin d'installer Unity :
+
+1. **Téléchargez la version compilée**
+   - Allez sur la page [**Releases**](https://github.com/Malo-Prijac/M.A.T.A.Y/releases)
+   - Téléchargez la dernière version (fichier `.zip`)
+
+2. **Décompressez le fichier**
+   - Extrayez le contenu du zip dans un dossier
+
+3. **Lancez le jeu**
+   - Localisez le fichier `.exe` dans le dossier
+   - Double-cliquez dessus pour lancer le jeu ! 🎮
+
+**C'est tout !** Vous pouvez maintenant jouer sans passer par Unity. ✨
+
+---
+
+## 📦 Installation (Développement)
+
+### Pour les développeurs qui veulent modifier le projet
+
+#### Prérequis
 
 - **Unity** (version compatible avec le projet)
 - **Git**
+- **Visual Studio** ou **Visual Studio Code** (pour éditer le code)
 
-### Étapes
+#### Étapes
 
 1. **Cloner le repository**
    ```bash
@@ -48,23 +74,49 @@ Un projet de jeu vidéo développé avec **Unity** et **C#**.
    - Cliquez sur "Open Project"
    - Sélectionnez le dossier du projet
 
-3. **Charger la scène principale**
+3. **Attendre le chargement**
+   - Unity va télécharger et compiler les assets (peut prendre quelques minutes)
+
+4. **Charger la scène principale**
    - Dans l'éditeur Unity, naviguez vers la scène principale
-   - Cliquez sur "Play" pour lancer le jeu
+   - Cliquez sur "Play" (▶️) pour lancer le jeu
 
 ---
 
 ## 🎮 Utilisation
 
-Pour jouer ou tester le jeu :
+### Pour jouer en développement
+
+Pour jouer ou tester le jeu directement dans Unity :
 
 1. Ouvrez le projet dans Unity
 2. Appuyez sur le bouton **Play** (▶️) dans l'éditeur
 3. Explorez et testez les mécaniques du jeu
 
+### Pour créer votre propre Build
+
+Si vous voulez créer une version compilée :
+
+1. Dans Unity, allez sur **File** → **Build Settings**
+2. Cliquez sur **Build** ou **Build and Run**
+3. Choisissez un dossier de destination
+4. Attendez que Unity compile le jeu
+5. Zippez le dossier résultant pour le partager
+
 ---
 
 ## 📁 Structure du projet
+
+```
+M.A.T.A.Y/
+├── Assets/                 # Ressources du jeu (scripts, sprites, modèles, etc.)
+├── Packages/               # Dépendances et packages Unity
+├── ProjectSettings/        # Configuration du projet Unity
+├── UIElementsSchema/       # Schémas UI Elements
+├── UMotionData/            # Données UMotion (animation)
+├── .gitignore              # Fichiers ignorés par Git
+└── README.md               # Ce fichier
+```
 
 ### Dossiers principaux
 
@@ -79,13 +131,30 @@ Pour jouer ou tester le jeu :
 
 ---
 
-## 📚 Ressources
+## ⚙️ Prérequis
 
-- 📄 [MATAY SOLUCE.pdf](./MATAY%20SOLUCE.pdf) - Guide de solution
+### Pour jouer
+
+- **Windows 10/11** (ou compatible)
+- **~500 MB à 2 GB** d'espace disque (selon la taille du build)
+
+### Pour développer
+
+- **Unity 2020.3 LTS** ou supérieur (adapter selon votre version)
+- **.NET Framework** 4.x ou supérieur
+- **Espace disque** : ~5-10 GB (pour Unity + assets)
 
 ---
 
-## 👤 Auteur
+## 📚 Ressources
+
+- 📄 [MATAY SOLUCE.pdf](./MATAY%20SOLUCE.pdf) - Guide de solution
+- 📄 [MATAY SOLUCE.docx](./MATAY%20SOLUCE.docx) - Documentation détaillée
+- 🎮 [Releases](https://github.com/Malo-Prijac/M.A.T.A.Y/releases) - Télécharger le jeu compilé
+
+---
+
+## 👤 Auteurs
 
 **Antoine Pennaranda**
 **Antonin Soulier**
@@ -93,3 +162,11 @@ Pour jouer ou tester le jeu :
 **Théo Larregle**
 
 ---
+
+## 📝 Licence
+
+Ce projet est créé à des fins éducatives et de démonstration.
+
+---
+
+**Bon jeu ! 🚀**
