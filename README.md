@@ -53,13 +53,28 @@ Si vous voulez simplement **jouer au jeu** sans avoir besoin d'installer Unity :
 
 - **Unity** (version compatible avec le projet)
 - **Git**
-- **Visual Studio** ou **Visual Studio Code** (pour éditer le code)
 
 #### Étapes
 
 Vous avez deux options pour installer le projet :
 
-##### Option 1 : Cloner le repository
+##### Option 1 : Télécharger le Unity Package
+
+1. **Téléchargez le Unity Package**
+   - Allez sur la page [**Releases**](https://github.com/Malo-Prijac/M.A.T.A.Y/releases)
+   - Téléchargez le fichier `.unitypackage`
+
+2. **Importer le package dans Unity**
+   - Ouvrez ou créez un projet Unity
+   - Allez sur **Assets** → **Import Package** → **Custom Package**
+   - Sélectionnez le fichier `.unitypackage` téléchargé
+   - Cliquez sur "Import"
+
+3. **Charger la scène principale**
+   - Dans l'éditeur Unity, naviguez vers la scène principale
+   - Cliquez sur "Play" pour lancer le jeu
+  
+##### Option 2 : Cloner le repository
 
 1. **Cloner le repository**
    ```bash
@@ -76,22 +91,6 @@ Vous avez deux options pour installer le projet :
    - Unity va télécharger et compiler les assets (peut prendre quelques minutes)
 
 4. **Charger la scène principale**
-   - Dans l'éditeur Unity, naviguez vers la scène principale
-   - Cliquez sur "Play" pour lancer le jeu
-
-##### Option 2 : Télécharger le Unity Package
-
-1. **Téléchargez le Unity Package**
-   - Allez sur la page [**Releases**](https://github.com/Malo-Prijac/M.A.T.A.Y/releases)
-   - Téléchargez le fichier `.unitypackage`
-
-2. **Importer le package dans Unity**
-   - Ouvrez ou créez un projet Unity
-   - Allez sur **Assets** → **Import Package** → **Custom Package**
-   - Sélectionnez le fichier `.unitypackage` téléchargé
-   - Cliquez sur "Import"
-
-3. **Charger la scène principale**
    - Dans l'éditeur Unity, naviguez vers la scène principale
    - Cliquez sur "Play" pour lancer le jeu
 
