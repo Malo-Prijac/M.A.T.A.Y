@@ -25,7 +25,7 @@ Un projet de jeu vidéo développé avec **Unity** et **C#**.
 
 - **Engine** : Unity
 - **Langage** : C#
-  
+   
 ---
 
 ## Démarrage rapide (Jouer au jeu)
@@ -57,6 +57,10 @@ Si vous voulez simplement **jouer au jeu** sans avoir besoin d'installer Unity :
 
 #### Étapes
 
+Vous avez deux options pour installer le projet :
+
+##### Option 1 : Cloner le repository
+
 1. **Cloner le repository**
    ```bash
    git clone git@github.com:Malo-Prijac/M.A.T.A.Y.git
@@ -72,6 +76,22 @@ Si vous voulez simplement **jouer au jeu** sans avoir besoin d'installer Unity :
    - Unity va télécharger et compiler les assets (peut prendre quelques minutes)
 
 4. **Charger la scène principale**
+   - Dans l'éditeur Unity, naviguez vers la scène principale
+   - Cliquez sur "Play" pour lancer le jeu
+
+##### Option 2 : Télécharger le Unity Package
+
+1. **Téléchargez le Unity Package**
+   - Allez sur la page [**Releases**](https://github.com/Malo-Prijac/M.A.T.A.Y/releases)
+   - Téléchargez le fichier `.unitypackage`
+
+2. **Importer le package dans Unity**
+   - Ouvrez ou créez un projet Unity
+   - Allez sur **Assets** → **Import Package** → **Custom Package**
+   - Sélectionnez le fichier `.unitypackage` téléchargé
+   - Cliquez sur "Import"
+
+3. **Charger la scène principale**
    - Dans l'éditeur Unity, naviguez vers la scène principale
    - Cliquez sur "Play" pour lancer le jeu
 
