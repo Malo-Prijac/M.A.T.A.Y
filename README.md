@@ -74,7 +74,7 @@ Vous avez deux options pour installer le projet :
    - Dans l'éditeur Unity, naviguez vers la scène principale
    - Cliquez sur "Play" pour lancer le jeu
   
-##### Option 2 : Cloner le repository
+##### Option 2 : Cloner le repository (Peut-être quelques bugs sur cette version)
 
 1. **Cloner le repository**
    ```bash
